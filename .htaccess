@@ -1,0 +1,150 @@
+# ==============================================================================
+# ARQUIVO .HTACCESS OTIMIZADO
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# MÓDULO DE REESCRITA (ESSENCIAL PARA URLS AMIGÁVEIS)
+# ------------------------------------------------------------------------------
+# Ativa o motor de reescrita de URLs do servidor Apache.
+RewriteEngine On
+
+
+# ------------------------------------------------------------------------------
+# SEO: FORÇAR CONEXÃO SEGURA (HTTPS)
+# ------------------------------------------------------------------------------
+# Redireciona todo o tráfego de http:// para https://
+# Isso é um fator de ranqueamento no Google e aumenta a segurança.
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# ------------------------------------------------------------------------------
+# SEO: USAR UMA VERSÃO CANÔNICA DO DOMÍNIO (SEM "WWW")
+# ------------------------------------------------------------------------------
+# Redireciona de https://www.vanescolarparana.com para https://vanescolarparana.com
+# Isso evita conteúdo duplicado aos olhos do Google.
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+
+# ------------------------------------------------------------------------------
+# SEO: REMOVER "index.html" DA URL
+# ------------------------------------------------------------------------------
+# Esta é a solução para o seu problema principal.
+# Redireciona permanentemente a URL com /index.html para a raiz /.
+RewriteCond %{THE_REQUEST} /index\.html [NC]
+RewriteRule ^index\.html$ / [L,R=301]
+
+# Define que 'index.html' é o arquivo padrão para diretórios.
+DirectoryIndex index.html
+
+
+# ------------------------------------------------------------------------------
+# DESEMPENHO: APROVEITAR O CACHE DO NAVEGADOR
+# ------------------------------------------------------------------------------
+# Instrui o navegador do visitante a guardar arquivos (imagens, CSS, JS)
+# por um longo período, fazendo o site carregar muito mais rápido em visitas futuras.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+
+# ------------------------------------------------------------------------------
+# SEGURANÇA: PROTEGER ARQUIVOS SENSÍVEIS E MELHORAR CONFIGURAÇÕES
+# ------------------------------------------------------------------------------
+# Bloqueia o acesso direto a este próprio arquivo .htaccess.
+<Files .htaccess>
+  order allow,deny
+  deny from all
+</Files>
+
+# Impede que usuários possam ver a lista de arquivos de um diretório.
+Options -Indexes
+
+
+
+# -------------------------------------
+# REDIRECIONAMENTOS - VAN ESCOLAR PARANÁ
+# Data: 18/10/2025
+# -------------------------------------
+
+Redirect 301 /van-escolar-em-curitiba/ https://vanescolarparana.com/curitiba/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-barreirinha-curitiba/ https://vanescolarparana.com/curitiba/barreirinha/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-boa-vista-curitiba/ https://vanescolarparana.com/curitiba/boa-vista/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-butiatuvinha-curitiba/ https://vanescolarparana.com/curitiba/butiatuvinha/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-cachoeira-curitiba/ https://vanescolarparana.com/curitiba/cachoeira/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-campina-do-siqueira-curitiba/ https://vanescolarparana.com/curitiba/campina-do-siqueira/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-cascatinha-curitiba/ https://vanescolarparana.com/curitiba/cascatinha/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-caximba-curitiba/ https://vanescolarparana.com/curitiba/caximba/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-cidade-industrial-de-curitiba/ https://vanescolarparana.com/curitiba/cidade-industrial/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-fazendinha-curitiba/ https://vanescolarparana.com/curitiba/fazendinha/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-guabirotuba-curitiba/ https://vanescolarparana.com/curitiba/guabirotuba/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-santa-candida-curitiba/ https://vanescolarparana.com/curitiba/santa-candida/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-santa-felicidade-curitiba/ https://vanescolarparana.com/curitiba/santa-felicidade/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-santa-quiteria-curitiba/ https://vanescolarparana.com/curitiba/santa-quiteria/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-nas-merces-curitiba/ https://vanescolarparana.com/curitiba/van-escolar-nas-merces/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-vila-izabel-curitiba/ https://vanescolarparana.com/curitiba/vila-izabel/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-na-vista-alegre-curitiba/ https://vanescolarparana.com/curitiba/vista-alegre/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-abranches-curitiba/ https://vanescolarparana.com/curitiba/abranches/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-agua-verde-curitiba/ https://vanescolarparana.com/curitiba/agua-verde/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-ahu-curitiba/ https://vanescolarparana.com/curitiba/ahu/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-alto-boqueirao-curitiba/ https://vanescolarparana.com/curitiba/alto-boqueirao/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-alto-da-rua-xv-curitiba/ https://vanescolarparana.com/curitiba/alto-da-rua-xv/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-atuba-curitiba/ https://vanescolarparana.com/curitiba/atuba/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-bacacheri-curitiba/ https://vanescolarparana.com/curitiba/bacacheri/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-bairro-alto-curitiba/ https://vanescolarparana.com/curitiba/bairro-alto/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-batel-curitiba/ https://vanescolarparana.com/curitiba/batel/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-bigorrilho-curitiba/ https://vanescolarparana.com/curitiba/bigorrilho/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-bom-retiro-curitiba/ https://vanescolarparana.com/curitiba/bom-retiro/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-boqueirao-curitiba/ https://vanescolarparana.com/curitiba/boqueirao/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-cabral-curitiba/ https://vanescolarparana.com/curitiba/cabral/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-caiua-curitiba/ https://vanescolarparana.com/curitiba/caiua/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-cajuru-curitiba/ https://vanescolarparana.com/curitiba/cajuru/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-campo-comprido-curitiba/ https://vanescolarparana.com/curitiba/campo-comprido/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-campo-de-santana-curitiba/ https://vanescolarparana.com/curitiba/campo-de-santana/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-capao-da-imbuia-curitiba/ https://vanescolarparana.com/curitiba/capao-da-imbuia/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-capao-raso-curitiba/ https://vanescolarparana.com/curitiba/capao-raso/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-centro-civico-curitiba/ https://vanescolarparana.com/curitiba/centro-civico/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-centro-curitiba/ https://vanescolarparana.com/curitiba/centro/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-cristo-rei-curitiba/ https://vanescolarparana.com/curitiba/cristo-rei/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-fanny-curitiba/ https://vanescolarparana.com/curitiba/fanny/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-ganchinho-curitiba/ https://vanescolarparana.com/curitiba/ganchinho/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-guaira-curitiba/ https://vanescolarparana.com/curitiba/guaira/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-hauer-curitiba/ https://vanescolarparana.com/curitiba/hauer/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-hugo-lange-curitiba/ https://vanescolarparana.com/curitiba/hugo-lange/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-jardim-botanico-curitiba/ https://vanescolarparana.com/curitiba/jardim-botanico/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-jardim-das-americas-curitiba/ https://vanescolarparana.com/curitiba/jardim-das-americas/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-jardim-social-curitiba/ https://vanescolarparana.com/curitiba/jardim-social/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-juveve-curitiba/ https://vanescolarparana.com/curitiba/juveve/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-lindoia-curitiba/ https://vanescolarparana.com/curitiba/lindoia/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-mossungue-curitiba/ https://vanescolarparana.com/curitiba/mossungue/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-novo-mundo-curitiba/ https://vanescolarparana.com/curitiba/novo-mundo/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-orleans-curitiba/ https://vanescolarparana.com/curitiba/orleans/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-parolin-curitiba/ https://vanescolarparana.com/curitiba/parolin/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-pilarzinho-curitiba/ https://vanescolarparana.com/curitiba/pilarzinho/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-pinheirinho-curitiba/ https://vanescolarparana.com/curitiba/pinheirinho/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-portao-curitiba/ https://vanescolarparana.com/curitiba/portao/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-prado-velho-curitiba/ https://vanescolarparana.com/curitiba/prado-velho/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-santo-inacio-curitiba/ https://vanescolarparana.com/curitiba/santo-inacio/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-sao-braz-curitiba/ https://vanescolarparana.com/curitiba/sao-braz/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-sao-francisco-curitiba/ https://vanescolarparana.com/curitiba/sao-francisco/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-sao-lourenco-curitiba/ https://vanescolarparana.com/curitiba/sao-lourenco/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-seminario-curitiba/ https://vanescolarparana.com/curitiba/seminario/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-sitio-cercado-curitiba/ https://vanescolarparana.com/curitiba/sitio-cercado/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-nos-reboucas-curitiba/ https://vanescolarparana.com/curitiba/van-escolar-nos-reboucas/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-taboao-curitiba/ https://vanescolarparana.com/curitiba/taboao/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-taruma-curitiba/ https://vanescolarparana.com/curitiba/taruma/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-tatuquara-curitiba/ https://vanescolarparana.com/curitiba/tatuquara/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-tingui-curitiba/ https://vanescolarparana.com/curitiba/tingui/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-uberaba-curitiba/ https://vanescolarparana.com/curitiba/uberaba/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-umbara-curitiba/ https://vanescolarparana.com/curitiba/umbara/
+Redirect 301 /van-escolar-em-curitiba/van-escolar-no-xaxim-curitiba/ https://vanescolarparana.com/curitiba/xaxim/

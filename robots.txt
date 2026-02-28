@@ -1,0 +1,12 @@
+# robots.txt para Van Escolar Paraná
+
+# Bloqueia pastas que não devem ser rastreadas (opcional)
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+
+# Permite o rastreamento de tudo o mais
+Allow: /
+
+# Sitemap do site
+Sitemap: https://www.vanescolarparana.com.br/sitemap.xml
