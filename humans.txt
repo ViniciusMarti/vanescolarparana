@@ -1,0 +1,29 @@
+/* TEAM */
+Developer: Vinicius Oliveira
+Website: https://www.vanescolarparana.com.br
+Role: Criador e mantenedor do site
+
+Designer: IA + ajustes manuais
+Role: Identidade visual e UX simplificada
+
+SEO & Content: Vinicius Oliveira
+Role: Estratégia de SEO, conteúdo e estrutura de páginas
+
+/* SITE */
+Last update: 2025-10-13
+Language: Portuguese (Brazil)
+Doctype: HTML5
+Standards: W3C Validated
+Framework: Tailwind CSS
+CMS/Stack: HTML estático + SEO otimizado
+Hosting: (adicione o nome do seu provedor, ex: Hostinger, VPS próprio, etc.)
+
+/* CONTACT */
+Email: contato@vanescolarparana.com.br
+Location: Curitiba - Paraná, Brasil
+
+/* THANKS */
+Special thanks to: Pais, motoristas e escolas que ajudam a conectar famílias e transportes seguros.
+
+/* ABOUT */
+Van Escolar Paraná é um projeto informativo e gratuito que conecta pais a vans escolares de Curitiba e região, promovendo segurança, praticidade e confiança no transporte infantil.
