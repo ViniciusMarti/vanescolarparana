@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vans Escolares em Londrina | Em Breve</title>
+  <meta name="description" content="Em breve você poderá encontrar vans escolares em Londrina." />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#111;color:#fff;padding:.5rem .75rem;border-radius:.5rem;z-index:9999}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <a href="#conteudo" class="skip-link">Ir para o conteúdo</a>
+
+  <div id="app" class="flex min-h-screen flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <nav class="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Principal">
+        <div class="flex items-center justify-between h-20">
+          <a href="/index.html" class="flex items-center" aria-label="Página inicial">
+            <img src="/logo-van-escolar-parana.png" alt="Logo Van Escolar Paraná" class="h-12 w-auto"/>
+          </a>
+          <div class="flex items-center space-x-2 md:space-x-6">
+            <a href="/sobre/" class="hidden sm:block text-gray-600 hover:text-blue-600 font-medium">Sobre</a>
+            <a href="/informativos/" class="hidden sm:block text-gray-600 hover:text-blue-600 font-medium">Informativos</a>
+            <a href="/destaque-sua-van/" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-colors">Destaque sua Van</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main id="conteudo" class="flex-grow flex items-center justify-center">
+      <div class="text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-6">Vans Escolares em Londrina</h1>
+        <p class="text-lg text-gray-600">Em breve você poderá encontrar todas as informações sobre transporte escolar nesta cidade.</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-inner py-8 mt-12">
+      <div class="container mx-auto text-center text-gray-500 text-sm">
+        &copy; 2026 Van Escolar Paraná. Todos os direitos reservados.
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
