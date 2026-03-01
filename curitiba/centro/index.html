@@ -441,6 +441,32 @@
 
         renderVans();
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Busca todos os links que contêm wa.me ou whatsapp.com
+  var linksWA = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]');
+  
+  linksWA.forEach(function(link) {
+    link.addEventListener('click', function() {
+      // Pega o nome da cidade pela URL (ex: /curitiba/ -> curitiba)
+      var pathParts = window.location.pathname.split('/');
+      var cidade = pathParts[1] || 'home';
+      
+      // Envia o evento para o GA4
+      gtag('event', 'whatsapp_contact', {
+        'event_category': 'conversion',
+        'event_label': link.href,
+        'city': cidade,
+        'page_location': window.location.href
+      });
+      
+      console.log('Conversão WhatsApp registrada para a cidade: ' + cidade);
+    });
+  });
+});
+</script>
+
 </body>
 </html>
 
