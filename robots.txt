@@ -1,27 +1,22 @@
+# Robots.txt - Van Escolar Paraná
 User-agent: *
 Allow: /
 
-# Bloqueio de Bots de IA (Treino e Rastreio)
+# Bloqueio de Bots de IA
 User-agent: GPTBot
 Disallow: /
-
 User-agent: ChatGPT-User
 Disallow: /
-
 User-agent: Google-Extended
 Disallow: /
-
 User-agent: CCBot
 Disallow: /
-
 User-agent: Anthropic-ai
 Disallow: /
-
 User-agent: Claude-Web
 Disallow: /
-
 User-agent: OAI-SearchBot
 Disallow: /
 
-# Sitemap oficial para o Google/Bing
-Sitemap: https://www.vanescolarparana.com.br/sitemap.xml
+# Sitemap oficial
+Sitemap: https://www.vanescolarparana.com/sitemap.xml
