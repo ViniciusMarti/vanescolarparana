@@ -1,50 +1,304 @@
-﻿<!DOCTYPE html>
-<html lang='pt-BR'>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta name="robots" content="noai, noimageai">
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WKBVRTDG');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vans Escolares em Curitiba - Van Escolar Paraná</title>
+    <meta name="description" content="Lista completa de transportadores escolares em Curitiba. Escolha o bairro e fale direto com o motorista.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ETL54HBEXL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WKBVRTDG');</script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKBVRTDG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-  gtag('config', 'G-ETL54HBEXL');
-</script>
-<meta charset='UTF-8'/><title>Vans Escolares em Curitiba</title></head>
-<body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WKBVRTDG"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<h1>Vans Escolares em Curitiba</h1>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Busca todos os links que contêm wa.me ou whatsapp.com
-  var linksWA = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]');
-  
-  linksWA.forEach(function(link) {
-    link.addEventListener('click', function() {
-      // Pega o nome da cidade pela URL (ex: /curitiba/ -> curitiba)
-      var pathParts = window.location.pathname.split('/');
-      var cidade = pathParts[1] || 'home';
-      
-      // Envia o evento para o GA4
-      gtag('event', 'whatsapp_contact', {
-        'event_category': 'conversion',
-        'event_label': link.href,
-        'city': cidade,
-        'page_location': window.location.href
-      });
-      
-      console.log('Conversão WhatsApp registrada para a cidade: ' + cidade);
-    });
-  });
-});
-</script>
+    <header class="bg-white/90 backdrop-blur border-b border-gray-100 sticky top-0 z-50">
+        <nav class="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+            <a href="/" class="flex items-center gap-3">
+                <img src="/logo-van-escolar-parana.png" alt="Van Escolar Paraná" class="h-10" />
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="/sobre/" class="hidden sm:inline text-gray-600 hover:text-blue-700 font-medium">Sobre</a>
+                <a href="/destaque-sua-van/" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700">Destaque sua Van</a>
+            </div>
+        </nav>
+    </header>
 
+    <main>
+        <section class="bg-blue-600 text-white py-16 text-center">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Vans em Curitiba</h1>
+                <p class="text-lg opacity-90">Selecione o bairro abaixo para ver os motoristas que atendem sua região.</p>
+            </div>
+        </section>
+
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    
+        <a href="/curitiba/abranches.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Abranches</span>
+        </a>
+        <a href="/curitiba/agua-verde.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Agua Verde</span>
+        </a>
+        <a href="/curitiba/ahu.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Ahu</span>
+        </a>
+        <a href="/curitiba/alto-boqueirao.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Alto Boqueirao</span>
+        </a>
+        <a href="/curitiba/alto-da-gloria.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Alto Da Gloria</span>
+        </a>
+        <a href="/curitiba/alto-da-rua-xv.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Alto Da Rua Xv</span>
+        </a>
+        <a href="/curitiba/atuba.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Atuba</span>
+        </a>
+        <a href="/curitiba/augusta.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Augusta</span>
+        </a>
+        <a href="/curitiba/bacacheri.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Bacacheri</span>
+        </a>
+        <a href="/curitiba/bairro-alto.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Bairro Alto</span>
+        </a>
+        <a href="/curitiba/barreirinha.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Barreirinha</span>
+        </a>
+        <a href="/curitiba/batel.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Batel</span>
+        </a>
+        <a href="/curitiba/bigorrilho.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Bigorrilho</span>
+        </a>
+        <a href="/curitiba/boa-vista.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Boa Vista</span>
+        </a>
+        <a href="/curitiba/bom-retiro.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Bom Retiro</span>
+        </a>
+        <a href="/curitiba/boqueirao.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Boqueirao</span>
+        </a>
+        <a href="/curitiba/butiatuvinha.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Butiatuvinha</span>
+        </a>
+        <a href="/curitiba/cabral.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Cabral</span>
+        </a>
+        <a href="/curitiba/cachoeira.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Cachoeira</span>
+        </a>
+        <a href="/curitiba/cajuru.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Cajuru</span>
+        </a>
+        <a href="/curitiba/campina-do-siqueira.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Campina Do Siqueira</span>
+        </a>
+        <a href="/curitiba/campo-comprido.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Campo Comprido</span>
+        </a>
+        <a href="/curitiba/campo-de-santana.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Campo De Santana</span>
+        </a>
+        <a href="/curitiba/capao-da-imbuia.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Capao Da Imbuia</span>
+        </a>
+        <a href="/curitiba/capao-raso.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Capao Raso</span>
+        </a>
+        <a href="/curitiba/cascatinha.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Cascatinha</span>
+        </a>
+        <a href="/curitiba/caximba.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Caximba</span>
+        </a>
+        <a href="/curitiba/centenario.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Centenario</span>
+        </a>
+        <a href="/curitiba/centro.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Centro</span>
+        </a>
+        <a href="/curitiba/centro-civico.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Centro Civico</span>
+        </a>
+        <a href="/curitiba/champagnat.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Champagnat</span>
+        </a>
+        <a href="/curitiba/cidade-industrial.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Cidade Industrial</span>
+        </a>
+        <a href="/curitiba/cristo-rei.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Cristo Rei</span>
+        </a>
+        <a href="/curitiba/fanny.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Fanny</span>
+        </a>
+        <a href="/curitiba/fazendinha.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Fazendinha</span>
+        </a>
+        <a href="/curitiba/ganchinho.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Ganchinho</span>
+        </a>
+        <a href="/curitiba/guabirotuba.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Guabirotuba</span>
+        </a>
+        <a href="/curitiba/guaira.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Guaira</span>
+        </a>
+        <a href="/curitiba/hauer.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Hauer</span>
+        </a>
+        <a href="/curitiba/hugo-lange.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Hugo Lange</span>
+        </a>
+        <a href="/curitiba/jardim-botanico.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Jardim Botanico</span>
+        </a>
+        <a href="/curitiba/jardim-das-americas.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Jardim Das Americas</span>
+        </a>
+        <a href="/curitiba/jardim-social.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Jardim Social</span>
+        </a>
+        <a href="/curitiba/juveve.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Juveve</span>
+        </a>
+        <a href="/curitiba/lamenha-pequena.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Lamenha Pequena</span>
+        </a>
+        <a href="/curitiba/lindoia.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Lindoia</span>
+        </a>
+        <a href="/curitiba/merces.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Merces</span>
+        </a>
+        <a href="/curitiba/mossungue.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Mossungue</span>
+        </a>
+        <a href="/curitiba/novo-mundo.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Novo Mundo</span>
+        </a>
+        <a href="/curitiba/orleans.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Orleans</span>
+        </a>
+        <a href="/curitiba/parolin.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Parolin</span>
+        </a>
+        <a href="/curitiba/pilarzinho.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Pilarzinho</span>
+        </a>
+        <a href="/curitiba/pinheirinho.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Pinheirinho</span>
+        </a>
+        <a href="/curitiba/portao.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Portao</span>
+        </a>
+        <a href="/curitiba/prado-velho.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Prado Velho</span>
+        </a>
+        <a href="/curitiba/reboucas.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Reboucas</span>
+        </a>
+        <a href="/curitiba/riviera.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Riviera</span>
+        </a>
+        <a href="/curitiba/santa-candida.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Santa Candida</span>
+        </a>
+        <a href="/curitiba/santa-efigenia.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Santa Efigenia</span>
+        </a>
+        <a href="/curitiba/santa-felicidade.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Santa Felicidade</span>
+        </a>
+        <a href="/curitiba/santa-helena.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Santa Helena</span>
+        </a>
+        <a href="/curitiba/santa-quiteria.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Santa Quiteria</span>
+        </a>
+        <a href="/curitiba/santo-inacio.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Santo Inacio</span>
+        </a>
+        <a href="/curitiba/sao-braz.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Sao Braz</span>
+        </a>
+        <a href="/curitiba/sao-francisco.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Sao Francisco</span>
+        </a>
+        <a href="/curitiba/sao-joao.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Sao Joao</span>
+        </a>
+        <a href="/curitiba/sao-lourenco.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Sao Lourenco</span>
+        </a>
+        <a href="/curitiba/sao-miguel.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Sao Miguel</span>
+        </a>
+        <a href="/curitiba/seminario.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Seminario</span>
+        </a>
+        <a href="/curitiba/sitio-cercado.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Sitio Cercado</span>
+        </a>
+        <a href="/curitiba/taboao.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Taboao</span>
+        </a>
+        <a href="/curitiba/taruma.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Taruma</span>
+        </a>
+        <a href="/curitiba/tatuquara.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Tatuquara</span>
+        </a>
+        <a href="/curitiba/tingui.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Tingui</span>
+        </a>
+        <a href="/curitiba/uberaba.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Uberaba</span>
+        </a>
+        <a href="/curitiba/umbara.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Umbara</span>
+        </a>
+        <a href="/curitiba/vila-formosa.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Vila Formosa</span>
+        </a>
+        <a href="/curitiba/vila-izabel.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Vila Izabel</span>
+        </a>
+        <a href="/curitiba/vila-oficinas.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Vila Oficinas</span>
+        </a>
+        <a href="/curitiba/vista-alegre.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Vista Alegre</span>
+        </a>
+        <a href="/curitiba/xaxim.html" class="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all text-center">
+            <span class="text-gray-800 font-bold group-hover:text-blue-600">Xaxim</span>
+        </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <img src="/logo-van-escolar-parana.png" class="h-8 mx-auto mb-4 opacity-50 grayscale invert">
+            <p class="text-gray-400 text-sm">&copy; 2026 Van Escolar Paraná. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html>
