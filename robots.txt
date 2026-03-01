@@ -1,12 +1,27 @@
-# robots.txt para Van Escolar Paraná
-
-# Bloqueia pastas que não devem ser rastreadas (opcional)
 User-agent: *
-Disallow: /admin/
-Disallow: /private/
-
-# Permite o rastreamento de tudo o mais
 Allow: /
 
-# Sitemap do site
+# Bloqueio de Bots de IA (Treino e Rastreio)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# Sitemap oficial para o Google/Bing
 Sitemap: https://www.vanescolarparana.com.br/sitemap.xml
