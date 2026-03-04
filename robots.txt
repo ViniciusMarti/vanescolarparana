@@ -2,19 +2,25 @@
 User-agent: *
 Allow: /
 
-# Bloqueio de Bots de IA
+# Bloqueio de Bots de IA (Crawler de treinamento)
 User-agent: GPTBot
 Disallow: /
+
 User-agent: ChatGPT-User
 Disallow: /
+
 User-agent: Google-Extended
 Disallow: /
+
 User-agent: CCBot
 Disallow: /
+
 User-agent: Anthropic-ai
 Disallow: /
+
 User-agent: Claude-Web
 Disallow: /
+
 User-agent: OAI-SearchBot
 Disallow: /
 
