@@ -28,9 +28,17 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 
 # ------------------------------------------------------------------------------
-# SEO: REMOVER "index.html" DA URL
+# SEO: URLs LIMPAS (REMOVER .HTML)
 # ------------------------------------------------------------------------------
-# Esta é a solução para o seu problema principal.
+# 1. Redireciona de /pagina.html para /pagina (para o usuário e Google)
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [L,R=301]
+
+# 2. Serve o arquivo .html internamente se a URL não tiver extensão
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
 # Redireciona permanentemente a URL com /index.html para a raiz /.
 RewriteCond %{THE_REQUEST} /index\.html [NC]
 RewriteRule ^index\.html$ / [L,R=301]
