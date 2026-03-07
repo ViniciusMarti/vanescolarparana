@@ -28,6 +28,14 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 
 # ------------------------------------------------------------------------------
+# SEO: REMOVER BARRA FINAL (TRAILING SLASH) DE ARQUIVOS
+# ------------------------------------------------------------------------------
+# Redireciona de /pagina/ para /pagina para evitar conteúdo duplicado e erro 500 em arquivos.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+
+# ------------------------------------------------------------------------------
 # SEO: URLs LIMPAS (REMOVER .HTML)
 # ------------------------------------------------------------------------------
 # 1. Redireciona de /pagina.html para /pagina (para o usuário e Google)
