@@ -35,10 +35,19 @@ try {
         `prefixo` VARCHAR(50),
         `bairro` VARCHAR(255) NOT NULL,
         `vencimento` DATE NOT NULL,
+        `valor_pago` DECIMAL(10,2) DEFAULT 0.00,
+        `data_pagamento` DATE DEFAULT NULL,
+        `data_criacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         INDEX (`permissionario`),
         INDEX (`bairro`),
-        INDEX (`vencimento`)
+        INDEX (`vencimento`),
+        INDEX (`data_pagamento`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+    // Verificar se as colunas novas existem (caso a tabela já existisse)
+    $pdo->exec("ALTER TABLE `destaques_premium` ADD COLUMN IF NOT EXISTS `valor_pago` DECIMAL(10,2) DEFAULT 0.00;");
+    $pdo->exec("ALTER TABLE `destaques_premium` ADD COLUMN IF NOT EXISTS `data_pagamento` DATE DEFAULT NULL;");
+    $pdo->exec("ALTER TABLE `destaques_premium` ADD COLUMN IF NOT EXISTS `data_criacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;");
 } catch (Exception $e) {}
 
 // Login / Logout
@@ -90,25 +99,34 @@ $error_msg = "";
 if (isset($_POST['add_destaque'])) {
     $perm = $_POST['permissionario'];
     $pref = $_POST['prefixo'];
-    $venc = $_POST['vencimento'];
     $bairros = $_POST['bairros'] ?? [];
+    $periodo = isset($_POST['periodo']) ? (int)$_POST['periodo'] : 0;
+    $bonus_percent = isset($_POST['bonus']) ? (int)$_POST['bonus'] : 0;
+    $valor_total = (float)($_POST['valor_pago'] ?? 0);
+    $data_pagto = $_POST['data_pagamento'] ?: date('Y-m-d');
 
     if (empty($bairros)) {
         $error_msg = "Selecione pelo menos um bairro!";
-    } elseif (empty($venc)) {
-        $error_msg = "Defina uma data de vencimento!";
+    } elseif ($periodo <= 0) {
+        $error_msg = "Período inválido!";
     } else {
         try {
+            $dias_adicionais = floor($periodo * (1 + ($bonus_percent / 100)));
+            $valor_por_bairro = $valor_total / count($bairros);
+            
             foreach ($bairros as $b) {
-                // Remove qualquer destaque antigo deste motorista neste bairro
-                $stmt = $pdo->prepare("DELETE FROM `destaques_premium` WHERE `permissionario` = ? AND `prefixo` = ? AND `bairro` = ?");
-                $stmt->execute([$perm, $pref, $b]);
+                $check_stmt = $pdo->prepare("SELECT vencimento FROM `destaques_premium` WHERE permissionario = ? AND bairro = ? AND vencimento >= CURDATE() ORDER BY vencimento DESC LIMIT 1");
+                $check_stmt->execute([$perm, $b]);
+                $atual = $check_stmt->fetch();
                 
-                // Insere o novo
-                $stmt = $pdo->prepare("INSERT INTO `destaques_premium` (`permissionario`, `prefixo`, `bairro`, `vencimento`) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$perm, $pref, $b, $venc]);
+                $base_data = $atual ? new DateTime($atual['vencimento']) : new DateTime();
+                $base_data->modify("+$dias_adicionais days");
+                $nova_data = $base_data->format('Y-m-d');
+
+                $ins = $pdo->prepare("INSERT INTO `destaques_premium` (permissionario, prefixo, bairro, vencimento, valor_pago, data_pagamento) VALUES (?, ?, ?, ?, ?, ?)");
+                $ins->execute([$perm, $pref, $b, $nova_data, $valor_por_bairro, $data_pagto]);
             }
-            $success = "Destaques atualizados com sucesso para " . count($bairros) . " bairros!";
+            $success = "Venda registrada! Ganhos: R$ " . number_format($valor_total, 2, ',', '.') . " | +$dias_adicionais dias em " . count($bairros) . " bairros.";
         } catch (Exception $e) { $error_msg = "Erro: " . $e->getMessage(); }
     }
 }
@@ -131,6 +149,17 @@ if (!empty($search)) {
 // LISTAGEM ATIVA
 $ativos = $pdo->query("SELECT * FROM `destaques_premium` WHERE `vencimento` >= CURDATE() ORDER BY `vencimento` ASC")->fetchAll();
 $aba = $_GET['aba'] ?? 'buscar';
+
+// Dados para Relatório
+$hoje = date('Y-m-d');
+$mes_atual = date('Y-m');
+$stats = $pdo->query("SELECT 
+    SUM(valor_pago) as total,
+    SUM(CASE WHEN data_pagamento LIKE '$mes_atual%' THEN valor_pago ELSE 0 END) as mes_atual,
+    COUNT(DISTINCT permissionario) as total_clientes
+FROM `destaques_premium`")->fetch();
+
+$ultimas_vendas = $pdo->query("SELECT * FROM `destaques_premium` ORDER BY id DESC LIMIT 20")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -153,7 +182,8 @@ $aba = $_GET['aba'] ?? 'buscar';
             <div class="flex items-center gap-4">
                 <nav class="flex bg-slate-100 p-1 rounded-xl mr-6">
                     <a href="?aba=buscar" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'buscar' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Nova Venda</a>
-                    <a href="?aba=ativos" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'ativos' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Ativos (<?php echo count($ativos); ?>)</a>
+                    <a href="?aba=ativos" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'ativos' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Bairros Ativos (<?php echo count($ativos); ?>)</a>
+                    <a href="?aba=relatorio" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'relatorio' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Relatórios 📊</a>
                 </nav>
                 <a href="?logout=1" class="text-xs font-bold text-slate-400 hover:text-red-500">Sair</a>
             </div>
@@ -200,9 +230,35 @@ $aba = $_GET['aba'] ?? 'buscar';
                                             <h3 class="text-2xl font-black text-slate-800"><?php echo htmlspecialchars($res['permissionario']); ?></h3>
                                             <p class="text-slate-500 font-bold uppercase text-[10px] tracking-widest mt-1">Prefixo: <?php echo htmlspecialchars($res['prefixo'] ?: '---'); ?></p>
                                         </div>
-                                        <div class="flex items-center gap-4">
-                                            <label class="text-sm font-black text-slate-700">Destaque até:</label>
-                                            <input type="date" name="vencimento" required class="p-4 bg-white border border-slate-200 rounded-2xl font-bold shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                        <div class="flex flex-wrap items-center gap-4">
+                                            <div class="flex flex-col">
+                                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1">Período</label>
+                                                <select name="periodo" class="p-4 bg-white border border-slate-200 rounded-2xl font-bold shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                                    <option value="7">7 Dias</option>
+                                                    <option value="15">15 Dias</option>
+                                                    <option value="30" selected>30 Dias (Mensal)</option>
+                                                    <option value="365">365 Dias (Anual)</option>
+                                                </select>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1">Bônus Extra</label>
+                                                <select name="bonus" class="p-4 bg-white border border-slate-200 rounded-2xl font-bold shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                                    <option value="0" selected>Sem Bônus</option>
+                                                    <option value="10">10% de Bônus</option>
+                                                    <option value="20">20% de Bônus</option>
+                                                    <option value="30">30% de Bônus (Máx)</option>
+                                                </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                        <div class="flex flex-col">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-1">Valor Total Pago (R$)</label>
+                                            <input type="number" step="0.01" name="valor_pago" required placeholder="0,00" class="p-4 bg-white border border-slate-200 rounded-2xl font-black text-blue-600 text-lg shadow-sm outline-none">
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label class="text-[10px] font-black text-slate-400 uppercase mb-1">Data do Pagamento</label>
+                                            <input type="date" name="data_pagamento" value="<?php echo date('Y-m-d'); ?>" class="p-4 bg-white border border-slate-200 rounded-2xl font-bold shadow-sm outline-none">
                                         </div>
                                     </div>
 
@@ -226,6 +282,53 @@ $aba = $_GET['aba'] ?? 'buscar';
                 <?php elseif ($search): ?>
                     <p class="text-center py-20 text-slate-400 font-bold">Nenhum motorista encontrado para esta busca.</p>
                 <?php endif; ?>
+            </section>
+
+        <?php elseif ($aba == 'relatorio'): ?>
+            <section class="space-y-8">
+                <!-- Dashboard Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-white">
+                        <p class="text-slate-400 font-black text-[10px] uppercase tracking-widest mb-2">Total Histórico</p>
+                        <h3 class="text-4xl font-black text-slate-800">R$ <?php echo number_format($stats['total'] ?: 0, 2, ',', '.'); ?></h3>
+                    </div>
+                    <div class="bg-blue-600 p-8 rounded-[2.5rem] shadow-xl shadow-blue-100 border border-blue-500">
+                        <p class="text-blue-200 font-black text-[10px] uppercase tracking-widest mb-2">Ganhos no Mês</p>
+                        <h3 class="text-4xl font-black text-white">R$ <?php echo number_format($stats['mes_atual'] ?: 0, 2, ',', '.'); ?></h3>
+                    </div>
+                    <div class="bg-slate-900 p-8 rounded-[2.5rem] shadow-xl border border-slate-800">
+                        <p class="text-slate-400 font-black text-[10px] uppercase tracking-widest mb-2">Clientes Únicos</p>
+                        <h3 class="text-4xl font-black text-white"><?php echo $stats['total_clientes']; ?></h3>
+                    </div>
+                </div>
+
+                <!-- Lista de Transações -->
+                <div class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-white">
+                    <h2 class="text-2xl font-black text-slate-800 mb-8">Últimas Ativações</h2>
+                    <div class="overflow-hidden border border-slate-100 rounded-3xl">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b border-slate-100">
+                                <tr>
+                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase">Data Pagto</th>
+                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase">Motorista / Bairro</th>
+                                    <th class="p-6 text-[10px] font-black text-slate-400 uppercase text-right">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50">
+                                <?php foreach ($ultimas_vendas as $v): ?>
+                                    <tr class="hover:bg-slate-50 transition-all">
+                                        <td class="p-6 text-sm font-bold text-slate-500"><?php echo date('d/m/Y', strtotime($v['data_pagamento'])); ?></td>
+                                        <td class="p-6">
+                                            <p class="font-black text-slate-800 leading-none"><?php echo htmlspecialchars($v['permissionario']); ?></p>
+                                            <p class="text-[10px] font-bold text-slate-400 mt-1 uppercase"><?php echo htmlspecialchars($v['bairro']); ?></p>
+                                        </td>
+                                        <td class="p-6 text-right font-black text-blue-600 text-lg">R$ <?php echo number_format($v['valor_pago'], 2, ',', '.'); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
         <?php else: // ABA ATIVOS ?>

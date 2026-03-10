@@ -57,7 +57,7 @@
           <p class="text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto font-medium leading-relaxed mb-12">Seja a primeira opção dos pais no seu bairro. Apareça no topo e aumente seus contatos em até 5x.</p>
           <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#solicitar" class="px-10 py-5 bg-white text-blue-700 rounded-full font-black text-xl shadow-2xl hover:bg-blue-50 transition-all active:scale-95">Quero Me Destacar</a>
-            <span class="text-blue-200 font-medium">Apenas R$ 20,00/mês por bairro</span>
+            <span class="text-blue-200 font-medium tracking-wide">Planos a partir de R$ 20,00</span>
           </div>
         </div>
       </div>
@@ -98,34 +98,59 @@
       </div>
     </section>
 
-    <!-- Comparação Visual -->
+    <!-- Planos de Destaque -->
     <section class="py-24 bg-white">
       <div class="container mx-auto px-6 lg:px-12">
-        <div class="max-w-5xl mx-auto bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col md:flex-row">
-            <div class="p-12 md:w-1/2">
-                <h2 class="text-3xl font-black text-white mb-6">Como os pais vêem você</h2>
-                <p class="text-slate-400 mb-8 font-medium">Imagine entrar em um bairro e ver esse destaque. Quem você contrataria?</p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Design Diferenciado</div>
-                    <div class="flex items-center gap-3 text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Badge de Estrela</div>
-                    <div class="flex items-center gap-3 text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Botão WhatsApp em Destaque</div>
-                </div>
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-black text-slate-800 tracking-tight">Escolha seu Plano</h2>
+          <p class="text-slate-500 font-medium text-lg mt-2">Valores por van e por bairro selecionado</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <!-- 7 Dias -->
+          <div class="bg-white border-2 border-slate-100 p-8 rounded-[2rem] flex flex-col items-center text-center hover:border-blue-200 transition-all">
+            <span class="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">Express</span>
+            <h3 class="text-2xl font-black text-slate-800 mb-2">7 Dias</h3>
+            <div class="text-3xl font-black text-blue-600 mb-6">R$ 20,00</div>
+            <p class="text-slate-500 text-sm font-medium leading-relaxed">Ideal para testes rápidos ou reforço em períodos de rematrícula.</p>
+          </div>
+          <!-- 15 Dias -->
+          <div class="bg-white border-2 border-slate-100 p-8 rounded-[2rem] flex flex-col items-center text-center hover:border-blue-200 transition-all">
+            <span class="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">Intermediário</span>
+            <h3 class="text-2xl font-black text-slate-800 mb-2">15 Dias</h3>
+            <div class="text-3xl font-black text-blue-600 mb-6">R$ 35,00</div>
+            <p class="text-slate-500 text-sm font-medium leading-relaxed">Equilíbrio perfeito para preencher as últimas vagas da van.</p>
+          </div>
+          <!-- Mensal -->
+          <div class="bg-blue-600 p-8 rounded-[2.5rem] flex flex-col items-center text-center shadow-xl shadow-blue-200 relative overflow-hidden transform scale-105">
+            <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-xl uppercase">Mais Vendido</div>
+            <span class="text-sm font-black text-blue-200 uppercase tracking-widest mb-4">Profissional</span>
+            <h3 class="text-2xl font-black text-white mb-2">Mensal</h3>
+            <div class="text-4xl font-black text-white mb-6">R$ 60,00</div>
+            <p class="text-blue-100 text-sm font-medium leading-relaxed">Garanta sua presença constante no topo do bairro o mês todo.</p>
+          </div>
+          <!-- Anual -->
+          <div class="bg-slate-900 p-8 rounded-[2.5rem] flex flex-col items-center text-center hover:bg-slate-800 transition-all">
+            <span class="text-sm font-black text-amber-400 uppercase tracking-widest mb-4">Empresarial</span>
+            <h3 class="text-2xl font-black text-white mb-2">Anual</h3>
+            <div class="text-3xl font-black text-white mb-2">R$ 490,00</div>
+            <p class="text-emerald-400 text-xs font-bold mb-6">Economia de R$ 230,00</p>
+            <p class="text-slate-400 text-sm font-medium leading-relaxed">Presença garantida o ano inteiro com o melhor custo-benefício.</p>
+          </div>
+        </div>
+
+        <!-- Pacotes Multi-Bairros -->
+        <div class="mt-16 bg-emerald-50 border-2 border-emerald-100 rounded-[2.5rem] p-10 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div class="h-20 w-20 bg-emerald-500 text-white rounded-3xl flex items-center justify-center text-4xl shadow-lg shadow-emerald-200">
+                <i class="fa-solid fa-layer-group"></i>
             </div>
-            <div class="p-8 md:w-1/2 bg-slate-800 flex items-center justify-center">
-                <div class="w-full max-w-sm bg-yellow-50 border-2 border-yellow-300 rounded-[2rem] p-6 shadow-xl relative">
-                    <span class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-black px-4 py-1.5 rounded-bl-2xl rounded-tr-2xl leading-none uppercase">⭐ Destaque</span>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="h-12 w-12 bg-yellow-200 rounded-xl flex items-center justify-center text-yellow-700"><i class="fa-solid fa-bus"></i></div>
-                        <div>
-                            <h4 class="font-black text-slate-900 leading-tight">Sua Van Aqui</h4>
-                            <p class="text-xs text-slate-500 font-bold">TOP DO BAIRRO</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/50 p-4 rounded-xl mb-6 text-sm text-slate-600 font-medium">
-                        "Atendemos com segurança e carinho as escolas da região..."
-                    </div>
-                    <div class="w-full py-4 bg-[#25D366] text-white rounded-xl font-black text-center shadow-lg">Falar no WhatsApp</div>
-                </div>
+            <div class="flex-1">
+                <h3 class="text-2xl font-black text-emerald-900 mb-2">Pacote Multi-Bairros</h3>
+                <p class="text-emerald-800/80 font-medium">Precisa de destaque em mais de uma região? Oferecemos descontos progressivos para 3 ou mais bairros. Consulte nossa equipe!</p>
+            </div>
+            <div class="text-center md:text-right">
+                <span class="block text-emerald-600 font-black text-2xl">Até 30% OFF</span>
+                <span class="text-emerald-500 text-xs font-bold uppercase tracking-widest leading-none">Desconto no total</span>
             </div>
         </div>
       </div>
@@ -141,17 +166,17 @@
           </div>
 
           <div class="selection-area p-8 md:p-14">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10 pb-10 border-b border-slate-100">
-                <div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10 pb-10 border-b border-slate-100">
+                <div class="md:col-span-2 lg:col-span-1">
                     <label class="block text-slate-700 font-bold mb-3 text-lg" for="nome">Seu Nome / Nome Comercial</label>
                     <input class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all" id="nome" placeholder="Ex: João da Van" type="text" />
                 </div>
                 <div>
-                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="whatsMotorista">WhatsApp de Contato</label>
+                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="whatsMotorista">WhatsApp</label>
                     <input class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all" id="whatsMotorista" placeholder="(41) 99999-9999" type="tel" />
                 </div>
                 <div>
-                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="cidade">Selecione a Cidade</label>
+                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="cidade">Cidade</label>
                     <select class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all appearance-none bg-white" id="cidade">
                         <option value="Curitiba">Curitiba</option>
                         <option value="São José dos Pinhais">São José dos Pinhais</option>
@@ -160,6 +185,15 @@
                         <option value="Londrina">Londrina</option>
                         <option value="Maringá">Maringá</option>
                         <option value="Ponta Grossa">Ponta Grossa</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="plano">Plano de Destaque</label>
+                    <select class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all appearance-none bg-white" id="plano">
+                        <option value="7">Express (7 dias) - R$ 20,00</option>
+                        <option value="15">Intermediário (15 dias) - R$ 35,00</option>
+                        <option value="30" selected>Profissional (Mensal) - R$ 60,00</option>
+                        <option value="365">Anual - R$ 490,00</option>
                     </select>
                 </div>
             </div>
@@ -179,7 +213,7 @@
             <div class="flex flex-col lg:flex-row items-center justify-between gap-8 p-10 bg-blue-50 rounded-[2rem] border border-blue-100">
                 <div>
                   <p class="text-blue-700 font-black text-2xl mb-1">Total do Investimento</p>
-                  <p class="text-blue-600/70 font-bold text-lg">R$ 20,00 x <span id="qtdSelecionados">0</span> bairros</p>
+                  <p class="text-blue-600/70 font-bold text-lg" id="resumoValores">R$ 0,00</p>
                 </div>
                 <div class="text-center lg:text-right">
                     <button class="whatsapp-button px-10 py-5 rounded-full font-black text-xl shadow-xl flex items-center gap-4" id="enviarWhats">
@@ -315,6 +349,9 @@
     const nomeEl = document.getElementById('nome');
     const whatsMotoristaEl = document.getElementById('whatsMotorista');
 
+    const planoEl = document.getElementById('plano');
+    const resumoValoresEl = document.getElementById('resumoValores');
+
     const datasetByCity = (city) => {
       if (city === "Curitiba") return CURITIBA;
       if (city === "São José dos Pinhais") return SJP;
@@ -346,7 +383,7 @@
 
     function renderLista(city, filtro = "") {
       const items = datasetByCity(city);
-      const normalized = filtro.trim().toLowerCase();
+      const normalized = filtro.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       
       listaItensEl.innerHTML = "";
       items
@@ -370,9 +407,41 @@
       return Array.from(document.querySelectorAll('input[data-item]:checked')).map(i => i.value);
     }
 
+    function calcularTotal() {
+        const qtd = getSelecionados().length;
+        const plano = planoEl.value;
+        let precoBase = 0;
+        
+        if (plano === "7") precoBase = 20;
+        else if (plano === "15") precoBase = 35;
+        else if (plano === "30") precoBase = 60;
+        else if (plano === "365") precoBase = 490;
+        
+        let total = qtd * precoBase;
+        let desconto = 0;
+        
+        // Descontos progressivos Multi-Bairros
+        if (qtd >= 5) desconto = 0.30; // 30% para 5+ bairros
+        else if (qtd >= 3) desconto = 0.15; // 15% para 3+ bairros
+        
+        const valorFinal = total * (1 - desconto);
+        return { total, valorFinal, desconto: desconto * 100, precoBase, planoLabel: planoEl.options[planoEl.selectedIndex].text };
+    }
+
     function atualizarResumo() {
+      const res = calcularTotal();
       const qtd = getSelecionados().length;
-      if (qtdSelecionadosEl) qtdSelecionadosEl.textContent = qtd;
+      
+      if (qtd === 0) {
+          resumoValoresEl.innerHTML = "R$ 0,00";
+          return;
+      }
+      
+      let html = `<span class="text-3xl">R$ ${res.valorFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>`;
+      if (res.desconto > 0) {
+          html += `<br><span class="text-emerald-500 text-sm font-bold uppercase tracking-tight">Economia de ${res.desconto}% aplicada!</span>`;
+      }
+      resumoValoresEl.innerHTML = html;
     }
 
     enviarWhatsBtn.addEventListener('click', () => {
@@ -380,24 +449,27 @@
       const whatsMotorista = (whatsMotoristaEl.value || "").trim();
       const city = cidadeEl.value;
       const itens = getSelecionados();
+      const res = calcularTotal();
 
       if (!nome) { alert("Por favor, informe seu nome."); return; }
       if (!whatsMotorista) { alert("Informe seu WhatsApp para contato."); return; }
       if (itens.length === 0) { alert("Selecione pelo menos um bairro ou escola para destacar."); return; }
 
-      const valor = itens.length * 20;
       const msg = `Olá! Tenho interesse em destacar minha van no site Van Escolar Paraná.
 
 📌 *DADOS DO MOTORISTA*
 Nome: ${nome}
 WhatsApp: ${whatsMotorista}
 Cidade: ${city}
-Bairros/Escolas: ${itens.join(', ')}
+
+📋 *PLANILHA DO PEDIDO*
+Plano: ${res.planoLabel}
+Bairros (${itens.length}): ${itens.join(', ')}
 
 💰 *VALOR TOTAL*
-R$ ${valor},00 (Mensal)
+R$ ${res.valorFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})} ${res.desconto > 0 ? '(Com '+res.desconto+'% de desconto multi-bairro)' : ''}
 
-Após sua confirmação, realizarei o pagamento via PIX para o CNPJ 64.170.450/0001-05. Aguardo retorno para ativação!`;
+Após sua confirmação, realizarei o pagamento via PIX. Aguardo retorno para ativação!`;
 
       window.open(`https://wa.me/${NUMERO_ADMIN}?text=${encodeURIComponent(msg)}`, "_blank");
     });
@@ -408,6 +480,8 @@ Após sua confirmação, realizarei o pagamento via PIX para o CNPJ 64.170.450/0
       renderLista(city, "");
       atualizarResumo();
     });
+
+    planoEl.addEventListener('change', atualizarResumo);
 
     buscaEl.addEventListener('input', (e) => renderLista(cidadeEl.value, e.target.value));
 
