@@ -172,9 +172,12 @@ $aba = $_GET['aba'] ?? 'buscar';
                 <?php if (!empty($search_results)): ?>
                     <div class="grid grid-cols-1 gap-6">
                         <?php foreach ($search_results as $res): 
-                            $bairros_raw = $res['bairro_referencia'];
-                            $bairros_lista = array_map('trim', explode(',', $bairros_raw));
-                            // Limpeza de hífens se o dado vier sujo
+                            $bairros_raw = $res['bairro_referencia'] ?? '';
+                            if (is_string($bairros_raw) && $bairros_raw !== '') {
+                                $bairros_lista = array_map('trim', explode(',', $bairros_raw));
+                            } else {
+                                $bairros_lista = [];
+                            }
                             $bairros_lista = array_filter($bairros_lista);
                         ?>
                             <div class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
