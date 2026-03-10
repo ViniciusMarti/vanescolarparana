@@ -167,7 +167,7 @@ try {
       <div class="hidden md:flex items-center gap-8 text-sm md:text-base">
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>
-        <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-blue-600 hover:shadow-lg transition-all active:scale-95" href="/destaque-sua-van/"><span class="px-6 py-2.5 transition-all duration-75 bg-blue-600 rounded-full hover:bg-opacity-0">Destaque sua Van</span></a>
+        <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:shadow-lg hover:scale-105 transition-all active:scale-95 px-6 py-2.5" href="/destaque-sua-van/">⭐ Destaque sua Van</a>
       </div>
     </nav>
   </header>
@@ -238,10 +238,37 @@ try {
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <div class="bg-slate-100 p-12 rounded-3xl text-center text-slate-500 font-medium">
-                Nenhum motorista cadastrado especificamente para este bairro no momento. Use a busca no topo ou confira os bairros vizinhos abaixo.
+            <div class="bg-slate-50 p-16 rounded-[3rem] text-center border-4 border-dashed border-slate-200 group hover:border-blue-200 transition-all duration-500">
+                <div class="w-24 h-24 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce">🚐</div>
+                <h3 class="text-3xl font-black text-slate-800 mb-4">Nenhum motorista disponível em <?php echo $neighborhood['title']; ?></h3>
+                <p class="text-slate-500 font-medium text-xl mb-10 max-w-xl mx-auto">Ainda não temos transportadores cadastrados para esta região específica. Seja o pioneiro e domine as buscas aqui!</p>
+                <a href="/destaque-sua-van/" class="inline-flex items-center gap-4 px-12 py-6 bg-blue-600 text-white rounded-full font-black text-2xl shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all">
+                    <span>QUERO SER O PRIMEIRO</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                </a>
             </div>
-        <?php endif; ?>
+<?php endif; ?>
+
+        <!-- Publicidade Estratégica para Motoristas -->
+        <div class="mt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-950 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-[0_30px_60px_-15px_rgba(30,58,138,0.5)] group">
+            <!-- Efeito de Luz -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full -mr-32 -mt-32 blur-[100px] group-hover:bg-blue-400/30 transition-all duration-700"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full -ml-32 -mb-32 blur-[80px]"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 text-center lg:text-left">
+                <div class="max-w-2xl">
+                    <span class="inline-block px-4 py-1.5 bg-blue-500/20 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-widest text-blue-300 mb-6 border border-blue-500/30">Área do Transportador</span>
+                    <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">Você é motorista em <span class="text-blue-400"><?php echo $neighborhood['title']; ?></span>?</h2>
+                    <p class="text-xl text-blue-100/80 font-medium leading-relaxed">Não perca mais clientes por não ser visto. Leve sua van para o topo agora mesmo e multiplique seus contatos no WhatsApp.</p>
+                </div>
+                <div class="flex flex-col items-center gap-4">
+                    <a href="/destaque-sua-van/" class="px-12 py-6 bg-white text-blue-900 rounded-full font-black text-2xl shadow-xl hover:bg-blue-50 hover:scale-105 active:scale-95 transition-all whitespace-nowrap">
+                        Aparecer no Topo ⭐
+                    </a>
+                    <p class="text-blue-300 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">Planos a partir de R$ 20,00</p>
+                </div>
+            </div>
+        </div>
       </div>
     </section>
 
@@ -278,5 +305,15 @@ try {
   <script>
     // Script adicional se necessário
   </script>
+
+  <!-- Botão Flutuante Espaço do Motorista -->
+  <a href="/destaque-sua-van/" class="fixed bottom-8 right-8 z-[200] group">
+    <div class="bg-blue-600 text-white flex items-center gap-4 px-8 py-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 relative overflow-hidden">
+      <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
+      <span class="text-2xl">⭐</span>
+      <span class="font-black text-sm uppercase tracking-widest hidden lg:inline">É Motorista? Apareça no Topo!</span>
+      <span class="font-black text-xs uppercase tracking-widest lg:hidden">Apareça no Topo 🚐</span>
+    </div>
+  </a>
 </body>
 </html>

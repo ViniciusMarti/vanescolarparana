@@ -397,6 +397,25 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
       </div>
     </section>
 
+    <!-- Área do Motorista (Incentivo) -->
+    <section class="py-20 bg-slate-50">
+      <div class="container mx-auto px-6 lg:px-12">
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-900 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-12 group">
+          <div class="relative z-10 text-center md:text-left">
+            <h2 class="text-4xl font-black mb-4 tracking-tight leading-tight">Você é motorista de Van Escolar?</h2>
+            <p class="text-blue-100 text-xl font-medium max-w-xl">Receba mais contatos de pais no seu bairro todos os dias. Apareça no topo das buscas do Paraná!</p>
+          </div>
+          <div class="relative z-10">
+            <a href="/destaque-sua-van/" class="inline-block px-12 py-6 bg-white text-blue-700 rounded-full font-black text-2xl shadow-xl hover:bg-blue-50 transition-all active:scale-95 whitespace-nowrap">
+              Destaque seu Negócio 🚛
+            </a>
+          </div>
+          <!-- Efeito de Luz -->
+          <div class="absolute -top-24 -right-24 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all duration-700"></div>
+        </div>
+      </div>
+    </section>
+
   </main>
   <footer class="bg-gray-900 text-white py-12 text-center text-sm">
       <img src="/logo-negativa.png" alt="Van Escolar Paraná" class="h-8 mx-auto mb-6 opacity-80">
@@ -433,14 +452,29 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
             </div>
           </a>
         `).join('');
-        results.classList.remove('hidden');
       } else {
-        results.innerHTML = '<div class="p-6 text-slate-500 text-sm">Nenhum bairro encontrado.</div>';
-        results.classList.remove('hidden');
+        results.innerHTML = `
+          <div class="p-10 text-center">
+            <p class="text-slate-500 font-bold mb-6">Bairro ou cidade não encontrados.</p>
+            <a href="/destaque-sua-van/" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-black text-sm hover:scale-105 transition-all shadow-lg shadow-blue-100">
+              É MOTORISTA? APAREÇA AQUI! 🚛
+            </a>
+          </div>`;
       }
+      results.classList.remove('hidden');
     });
 
     document.addEventListener('click', e => { if (!results.contains(e.target) && e.target !== input) results.classList.add('hidden'); });
   </script>
+
+  <!-- Botão Flutuante Espaço do Motorista -->
+  <a href="/destaque-sua-van/" class="fixed bottom-8 right-8 z-[200] group">
+    <div class="bg-blue-600 text-white flex items-center gap-4 px-8 py-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 relative overflow-hidden">
+      <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
+      <span class="text-2xl">⭐</span>
+      <span class="font-black text-sm uppercase tracking-widest hidden lg:inline">É Motorista? Apareça no Topo!</span>
+      <span class="font-black text-xs uppercase tracking-widest lg:hidden">Apareça no Topo 🚐</span>
+    </div>
+  </a>
 </body>
 </html>
