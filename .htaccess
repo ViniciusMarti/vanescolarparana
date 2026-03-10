@@ -51,8 +51,16 @@ RewriteRule ^(.*)$ $1.html [L]
 RewriteCond %{THE_REQUEST} /index\.html [NC]
 RewriteRule ^index\.html$ / [L,R=301]
 
-# Define que 'index.html' é o arquivo padrão para diretórios.
-DirectoryIndex index.html
+# Define que 'index.php' ou 'index.html' é o arquivo padrão para diretórios.
+DirectoryIndex index.php index.html
+
+# ------------------------------------------------------------------------------
+# DINÂMICO: CURITIBA (BAIRROS)
+# ------------------------------------------------------------------------------
+# Redireciona /cidade/bairro para o controlador PHP
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(curitiba|londrina|maringa|foz-do-iguacu|ponta-grossa|sao-jose-dos-pinhais)/([^/.]+)/?$ $1/neighborhood.php?bairro=$2 [L,QSA]
 
 
 # ------------------------------------------------------------------------------
