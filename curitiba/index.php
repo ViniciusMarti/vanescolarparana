@@ -5,9 +5,22 @@ require_once __DIR__ . '/../config/db.php';
 $neighborhoods_json = file_get_contents(__DIR__ . '/neighborhood_data.json');
 $neighborhoods_data = json_decode($neighborhoods_json, true);
 
-// No index de Curitiba, podemos querer saber o total de vans
+// 1. Detector de Tabelas Robusto
 try {
-    $table_name = 'vans';
+    $stmt = $pdo->query("SHOW TABLES");
+    $all_tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $table_name = 'vans'; 
+    $candidates = ['u582732852_vans_curitiba', 'vans']; 
+    foreach($all_tables as $t) if(!in_array($t, $candidates)) $candidates[] = $t;
+    foreach ($candidates as $candidate) {
+        if (!in_array($candidate, $all_tables)) continue;
+        $check = $pdo->query("SHOW COLUMNS FROM `$candidate` LIKE 'bairro_referencia'");
+        if ($check->fetch()) {
+            $table_name = $candidate;
+            break;
+        }
+    }
+    
     $stmt = $pdo->query("SELECT COUNT(*) FROM `$table_name` WHERE `bairro_referencia` IS NOT NULL");
     $total_vans = $stmt->fetchColumn();
 } catch (PDOException $e) {

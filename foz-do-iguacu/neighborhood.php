@@ -20,33 +20,43 @@ if (!$bairro_slug || !isset($neighborhoods_data[$bairro_slug])) {
     exit;
 }
 
+// 1. Detector de Tabelas Robusto (Garante que pegamos a tabela que tem os dados das vans)
+try {
+    $stmt = $pdo->query("SHOW TABLES");
+    $all_tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $table_name = 'vans'; // Default
+    
+    $candidates = ['u582732852_vans_curitiba', 'vans']; 
+    foreach($all_tables as $t) if(!in_array($t, $candidates)) $candidates[] = $t;
+
+    foreach ($candidates as $candidate) {
+        if (!in_array($candidate, $all_tables)) continue;
+        $check = $pdo->query("SHOW COLUMNS FROM `$candidate` LIKE 'bairro_referencia'");
+        if ($check->fetch()) {
+            $table_name = $candidate;
+            break;
+        }
+    }
+
+    // Garante que a tabela de destaques existe para não quebrar a query principal
+    if (!in_array('destaques_premium', $all_tables)) {
+        $pdo->exec("CREATE TABLE IF NOT EXISTS `destaques_premium` (
+            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `permissionario` VARCHAR(255) NOT NULL,
+            `prefixo` VARCHAR(50),
+            `bairro` VARCHAR(255) NOT NULL,
+            `vencimento` DATE NOT NULL,
+            INDEX (`permissionario`), INDEX (`bairro`), INDEX (`vencimento`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+    }
+} catch (Exception $e) { $table_name = 'vans'; }
+
 $neighborhood = $neighborhoods_data[$bairro_slug];
 $nome_bairro_exibicao = str_replace('-', ' ', $bairro_slug);
-$nome_bairro_exibicao = ucwords($nome_bairro_exibicao);
-
-// Tenta buscar no banco de dados. 
-// Como não temos certeza do nome da tabela, vamos assumir 'vans' ou buscar dinamicamente se necessário.
-// Mas para este projeto, vamos usar 'vans' como nome padrão da tabela se não for informada.
-// O usuário mencionou o nome do banco como 'u582732852_vans_curitiba'.
-$table_name = 'vans'; // Nome padrão
-
-try {
-    // Verifica se a tabela 'vans' existe
-    $pdo->query("SELECT 1 FROM `$table_name` LIMIT 1");
-} catch (PDOException $e) {
-    // Se falhar, tenta listar tabelas e pegar a primeira que parece conter vans
-    try {
-        $stmt = $pdo->query("SHOW TABLES");
-        $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        if (!empty($tables)) {
-            // Tenta 'u582732852_vans_curitiba' ou a primeira disponível
-            if (in_array('u582732852_vans_curitiba', $tables)) {
-                $table_name = 'u582732852_vans_curitiba';
-            } else {
-                $table_name = $tables[0];
-            }
-        }
-    } catch (Exception $ex) {}
+if ($bairro_slug == 'ahu') {
+    $nome_bairro_exibicao = 'Ahú';
+} else {
+    $nome_bairro_exibicao = ucwords($nome_bairro_exibicao);
 }
 
 $vans = [];
@@ -67,6 +77,9 @@ try {
         'bairro_query' => '%' . $nome_bairro_exibicao . '%'
     ]);
     $vans = $stmt->fetchAll();
+    
+    // DEBUG OCULTO (Veja no código fonte da página)
+    echo "\n<!-- DEBUG: Bairro: $nome_bairro_exibicao | Tabela: $table_name | Encontrados: " . count($vans) . " -->\n";
     
     // Se não retornar nada com o nome bonito, tenta buscar pelo slug aproximado
     if (empty($vans)) {
