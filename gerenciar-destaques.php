@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 session_start();
 require_once __DIR__ . '/config/db.php';
 
@@ -10,16 +7,24 @@ require_once __DIR__ . '/config/db.php';
  */
 $senha_mestra = "parana2026"; 
 
-// 1. Migração Automática / Detector de Tabelas
+// 1. Migração Automática / Detector de Tabelas Robusto
 try {
     $stmt = $pdo->query("SHOW TABLES");
-    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    $table_main = 'vans';
-    if (!in_array('vans', $tables) && !empty($tables)) {
-        if (in_array('u582732852_vans_curitiba', $tables)) {
-            $table_main = 'u582732852_vans_curitiba';
-        } else {
-            $table_main = $tables[0];
+    $all_tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $table_main = 'vans'; // Default
+    
+    // Lista de candidatas
+    $candidates = ['u582732852_vans_curitiba', 'vans']; 
+    foreach($all_tables as $t) if(!in_array($t, $candidates)) $candidates[] = $t;
+
+    foreach ($candidates as $candidate) {
+        if (!in_array($candidate, $all_tables)) continue;
+        
+        // Verifica se esta tabela tem a coluna necessária
+        $check = $pdo->query("SHOW COLUMNS FROM `$candidate` LIKE 'bairro_referencia'");
+        if ($check->fetch()) {
+            $table_main = $candidate;
+            break;
         }
     }
 
