@@ -203,12 +203,20 @@ try {
                     $whatsapp_link = "https://wa.me/55" . $celular_limpo . "?text=" . $msg_whatsapp;
                     $is_premium = (isset($van['is_premium_active']) && $van['is_premium_active'] == 1);
                 ?>
-                <div class="van-card bg-white p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                    <div class="space-y-3 flex-1">
+                <div class="van-card <?php echo $is_premium ? 'ring-4 ring-amber-400 border-amber-200 bg-amber-50/50 shadow-xl shadow-amber-100' : 'bg-white border-slate-100 shadow-sm'; ?> p-6 sm:p-8 rounded-[2.5rem] hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+                    <?php if ($is_premium): ?>
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-200/20 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                    <?php endif; ?>
+                    
+                    <div class="space-y-4 flex-1 relative z-10">
                         <?php if ($is_premium): ?>
-                            <span class="bg-blue-100 text-blue-700 text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest">⭐ Motorista em Destaque</span>
+                            <div class="flex items-center">
+                                <span class="bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-amber-200 flex items-center gap-2">
+                                    <span>⭐</span> Motorista em Destaque
+                                </span>
+                            </div>
                         <?php endif; ?>
-                        <h3 class="text-2xl font-black text-slate-900 leading-tight"><?php echo htmlspecialchars($van['permissionario']); ?></h3>
+                        <h3 class="text-3xl font-black text-slate-900 leading-tight"><?php echo htmlspecialchars($van['permissionario']); ?></h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-sm font-medium text-slate-500">
                             <p><strong>Van Ano:</strong> <?php echo htmlspecialchars($van['ano'] ?: '---'); ?></p>
                             <p><strong>Placa:</strong> <?php echo htmlspecialchars($van['modelo_placa'] ?: '---'); ?></p>
