@@ -51,16 +51,21 @@ try {
 
 $vans = [];
 try {
-    // Busca vans priorizando as que têm premium_until válido (maior ou igual a hoje)
-    // Ordenamos primeiro por quem é premium e depois por prefixo ou ano
-    $query = "SELECT *, 
-              CASE WHEN premium_until >= CURDATE() THEN 1 ELSE 0 END as is_premium_active 
-              FROM `$table_name` 
-              WHERE `bairro_referencia` LIKE :bairro 
-              ORDER BY is_premium_active DESC, `permissionario` ASC";
+    // Nova lógica: Verifica na tabela 'destaques_premium' se este motorista pagou destaque especificamente para ESTE bairro
+    $query = "SELECT v.*, 
+              (SELECT COUNT(*) FROM `destaques_premium` d 
+               WHERE (d.permissionario = v.permissionario AND d.prefixo = v.prefixo) 
+               AND d.bairro = :bairro_nome 
+               AND d.vencimento >= CURDATE()) as is_premium_active 
+              FROM `$table_name` v 
+              WHERE v.bairro_referencia LIKE :bairro_query 
+              ORDER BY is_premium_active DESC, v.permissionario ASC";
               
     $stmt = $pdo->prepare($query);
-    $stmt->execute(['bairro' => '%' . $nome_bairro_exibicao . '%']);
+    $stmt->execute([
+        'bairro_nome' => $nome_bairro_exibicao,
+        'bairro_query' => '%' . $nome_bairro_exibicao . '%'
+    ]);
     $vans = $stmt->fetchAll();
     
     // Se não retornar nada com o nome bonito, tenta buscar pelo slug aproximado
@@ -69,17 +74,15 @@ try {
            return str_replace(['á', 'à', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç'], ['a', 'a', 'a', 'a', 'e', 'e', 'i', 'o', 'o', 'o', 'u', 'c'], mb_strtolower($str));
        }
        $bairro_clean = removeAccents($nome_bairro_exibicao);
-       $query = "SELECT *, 
-                 CASE WHEN premium_until >= CURDATE() THEN 1 ELSE 0 END as is_premium_active 
-                 FROM `$table_name` 
-                 WHERE `bairro_referencia` LIKE :bairro 
-                 ORDER BY is_premium_active DESC, `permissionario` ASC";
        $stmt = $pdo->prepare($query);
-       $stmt->execute(['bairro' => '%' . $bairro_clean . '%']);
+       $stmt->execute([
+           'bairro_nome' => $nome_bairro_exibicao,
+           'bairro_query' => '%' . $bairro_clean . '%'
+       ]);
        $vans = $stmt->fetchAll();
     }
 } catch (PDOException $e) {
-    // echo "DEBUG: Erro ao buscar vans: " . $e->getMessage();
+    // echo "DEBUG: Erro: " . $e->getMessage();
 }
 
 ?>
