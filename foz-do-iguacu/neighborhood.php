@@ -129,7 +129,7 @@ try {
   <meta content="<?php echo $neighborhood['description']; ?>" name="description" />
   <meta content="#2563eb" name="theme-color" />
   
-  <link href="/logo-van-escolar-parana.png" rel="icon" type="image/png" />
+  <link href="/icone-favicon.png" rel="icon" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
   
   <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -163,7 +163,7 @@ try {
 
   <header class="glass-nav sticky top-0 z-[100] transition-all duration-300">
     <nav class="container mx-auto flex h-20 items-center justify-between px-6 lg:px-12">
-      <a class="flex items-center gap-4 group" href="/"><img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-van-escolar-parana.png" /></a>
+      <a class="flex items-center gap-4 group" href="/"><img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-comum.png" /></a>
       <div class="hidden md:flex items-center gap-8 text-sm md:text-base">
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>

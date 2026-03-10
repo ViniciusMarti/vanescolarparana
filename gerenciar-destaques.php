@@ -59,13 +59,14 @@ if (!isset($_SESSION['admin_logged'])) {
     <head>
         <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login - Gestão de Destaques</title>
+        <link href="/icone-favicon.png" rel="icon" type="image/png" />
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     </head>
     <body class="bg-slate-100 flex items-center justify-center h-screen px-4 font-['Inter']">
         <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md border border-white">
             <div class="text-center mb-8">
-                <div class="bg-blue-600 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-200"><span class="text-4xl text-white">⭐</span></div>
+                <img src="/logo-comum.png" alt="Logo" class="h-16 mx-auto mb-6">
                 <h1 class="text-3xl font-black text-slate-800">Destaques</h1>
                 <p class="text-slate-500 mt-2 font-medium">Gestão Premium por Bairro</p>
             </div>
@@ -136,6 +137,7 @@ $aba = $_GET['aba'] ?? 'buscar';
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Destaques ⭐ Van Escolar Paraná</title>
+    <link href="/icone-favicon.png" rel="icon" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>body { font-family: 'Inter', sans-serif; }</style>

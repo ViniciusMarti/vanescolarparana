@@ -25,7 +25,7 @@ try {
   <title>Vans Escolares em <?php echo $cidade_nome; ?> - Encontre por Bairro | Van Escolar Paraná</title>
   <meta content="Lista completa de transportadores escolares em <?php echo $cidade_nome; ?> organizada por bairros. Escolha sua região e fale direto com o motorista pelo WhatsApp." name="description" />
   <meta content="#2563eb" name="theme-color" />
-  <link href="/logo-van-escolar-parana.png" rel="icon" type="image/png" />
+  <link href="/icone-favicon.png" rel="icon" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -43,7 +43,7 @@ try {
   <noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-WKBVRTDG" style="display:none;visibility:hidden" width="0"></iframe></noscript>
   <header class="glass-nav sticky top-0 z-[100]">
     <nav class="container mx-auto flex h-20 items-center justify-between px-6 lg:px-12">
-      <a class="flex items-center gap-4 group" href="/"><img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-van-escolar-parana.png" /></a>
+      <a class="flex items-center gap-4 group" href="/"><img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-comum.png" /></a>
       <div class="hidden md:flex items-center gap-8 text-sm md:text-base">
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>
@@ -104,7 +104,7 @@ try {
   </main>
   <footer class="bg-white py-12 border-t border-slate-200 text-center">
     <div class="container mx-auto px-6 lg:px-12">
-      <img alt="Van Escolar Paraná" class="h-8 mx-auto mb-6 opacity-60 grayscale" src="/logo-van-escolar-parana.png" />
+      <img alt="Van Escolar Paraná" class="h-8 mx-auto mb-6 opacity-60 grayscale" src="/logo-comum.png" />
       <p class="font-bold text-gray-700 mb-2">Van Escolar Paraná</p>
       <p class="text-gray-500 text-sm">Conectando pais e transportadores em todo o Paraná.</p>
       <div class="mt-8 text-xs text-gray-400">© <?php echo date('Y'); ?> Todos os direitos reservados.</div>

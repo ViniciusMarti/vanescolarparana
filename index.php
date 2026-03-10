@@ -76,7 +76,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
   <meta content="https://www.vanescolarparana.com/static/og-cover-1200x630.jpg" property="og:image" />
   <meta content="summary_large_image" name="twitter:card" />
   <!-- Favicon -->
-  <link href="/logo-van-escolar-parana.png" rel="icon" type="image/png" />
+  <link href="/icone-favicon.png" rel="icon" type="image/png" />
   <!-- Performance: preconnect/dns-prefetch -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -158,7 +158,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
       <a class="flex items-center gap-4 group" href="/">
         <div class="relative overflow-hidden p-1 rounded-lg">
           <img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
-            src="/logo-van-escolar-parana.png" />
+            src="/logo-comum.png" />
         </div>
       </a>
       <div class="hidden md:flex items-center gap-8">
@@ -399,6 +399,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
 
   </main>
   <footer class="bg-gray-900 text-white py-12 text-center text-sm">
+      <img src="/logo-negativa.png" alt="Van Escolar Paraná" class="h-8 mx-auto mb-6 opacity-80">
       <p>© <?php echo date('Y'); ?> Van Escolar Paraná. Todos os direitos reservados.</p>
   </footer>
 
