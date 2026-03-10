@@ -5,7 +5,7 @@ require_once __DIR__ . '/config/db.php';
 /**
  * CONFIGURAÇÃO
  */
-$senha_mestra = "parana2026"; 
+$senha_mestra = "N*tUdaTZDU5wbz"; 
 
 // 1. Migração Automática / Detector de Tabelas Robusto
 try {
