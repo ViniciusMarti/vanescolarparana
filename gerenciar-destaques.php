@@ -2,6 +2,27 @@
 session_start();
 require_once __DIR__ . '/config/db.php';
 
+// Endpoint AJAX para captura de Leads (Antes de qualquer output)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_action']) && $_POST['ajax_action'] === 'capture_lead') {
+    header('Content-Type: application/json');
+    try {
+        $ins = $pdo->prepare("INSERT INTO `leads_destaque` (nome, whatsapp, cidade, plano, bairros, valor_total) VALUES (?, ?, ?, ?, ?, ?)");
+        $ins->execute([
+            $_POST['nome'] ?? 'N/A',
+            $_POST['whatsapp'] ?? 'N/A',
+            $_POST['cidade'] ?? 'N/A',
+            $_POST['plano'] ?? 'N/A',
+            $_POST['bairros'] ?? '',
+            (float)($_POST['valor_total'] ?? 0)
+        ]);
+        echo json_encode(['status' => 'success', 'id' => $pdo->lastInsertId()]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    }
+    exit;
+}
+
 /**
  * CONFIGURAÇÃO
  */
@@ -48,6 +69,19 @@ try {
     $pdo->exec("ALTER TABLE `destaques_premium` ADD COLUMN IF NOT EXISTS `valor_pago` DECIMAL(10,2) DEFAULT 0.00;");
     $pdo->exec("ALTER TABLE `destaques_premium` ADD COLUMN IF NOT EXISTS `data_pagamento` DATE DEFAULT NULL;");
     $pdo->exec("ALTER TABLE `destaques_premium` ADD COLUMN IF NOT EXISTS `data_criacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;");
+
+    // Nova tabela para Leads (Interessados)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `leads_destaque` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `nome` VARCHAR(255) NOT NULL,
+        `whatsapp` VARCHAR(50) NOT NULL,
+        `cidade` VARCHAR(100),
+        `plano` VARCHAR(100),
+        `bairros` TEXT,
+        `valor_total` DECIMAL(10,2),
+        `status` ENUM('novo', 'contatado', 'fechado', 'perdido') DEFAULT 'novo',
+        `data_criacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 } catch (Exception $e) {}
 
 // Login / Logout
@@ -160,6 +194,11 @@ $stats = $pdo->query("SELECT
 FROM `destaques_premium`")->fetch();
 
 $ultimas_vendas = $pdo->query("SELECT * FROM `destaques_premium` ORDER BY id DESC LIMIT 20")->fetchAll();
+
+// Leads
+if ($aba == 'leads') {
+    $leads = $pdo->query("SELECT * FROM `leads_destaque` ORDER BY data_criacao DESC LIMIT 50")->fetchAll();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -183,6 +222,7 @@ $ultimas_vendas = $pdo->query("SELECT * FROM `destaques_premium` ORDER BY id DES
                 <nav class="flex bg-slate-100 p-1 rounded-xl mr-6">
                     <a href="?aba=buscar" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'buscar' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Nova Venda</a>
                     <a href="?aba=ativos" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'ativos' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Bairros Ativos (<?php echo count($ativos); ?>)</a>
+                    <a href="?aba=leads" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'leads' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Interessados (Leads) 📱</a>
                     <a href="?aba=relatorio" class="px-5 py-2 rounded-lg text-sm font-bold transition-all <?php echo $aba == 'relatorio' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'; ?>">Relatórios 📊</a>
                 </nav>
                 <a href="?logout=1" class="text-xs font-bold text-slate-400 hover:text-red-500">Sair</a>
@@ -282,6 +322,56 @@ $ultimas_vendas = $pdo->query("SELECT * FROM `destaques_premium` ORDER BY id DES
                 <?php elseif ($search): ?>
                     <p class="text-center py-20 text-slate-400 font-bold">Nenhum motorista encontrado para esta busca.</p>
                 <?php endif; ?>
+            </section>
+
+        <?php elseif ($aba == 'leads'): ?>
+            <section class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-white">
+                <div class="mb-10 flex justify-between items-end">
+                    <div>
+                        <h2 class="text-3xl font-black text-slate-800">Interessados (Leads)</h2>
+                        <p class="text-slate-500 font-medium">Motoristas que preencheram o formulário mas talvez ainda não tenham confirmado.</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 border-b border-slate-100 uppercase text-[10px] font-black text-slate-400">
+                            <tr>
+                                <th class="p-6">Data/Hora</th>
+                                <th class="p-6">Motorista</th>
+                                <th class="p-6">Plano / Valor</th>
+                                <th class="p-6">Bairros</th>
+                                <th class="p-6">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50 italic">
+                            <?php foreach ($leads as $l): ?>
+                                <tr class="hover:bg-slate-50 transition-all NOT-italic">
+                                    <td class="p-6 text-xs text-slate-400 font-bold"><?php echo date('d/m/Y H:i', strtotime($l['data_criacao'])); ?></td>
+                                    <td class="p-6">
+                                        <p class="font-black text-slate-800"><?php echo htmlspecialchars($l['nome']); ?></p>
+                                        <p class="text-blue-600 font-bold text-xs"><?php echo htmlspecialchars($l['whatsapp']); ?></p>
+                                    </td>
+                                    <td class="p-6">
+                                        <p class="font-bold text-slate-700 text-sm"><?php echo htmlspecialchars($l['plano']); ?></p>
+                                        <p class="font-black text-emerald-600">R$ <?php echo number_format($l['valor_total'], 2, ',', '.'); ?></p>
+                                    </td>
+                                    <td class="p-6">
+                                        <div class="max-w-[200px] truncate text-xs text-slate-500 font-medium" title="<?php echo htmlspecialchars($l['bairros']); ?>">
+                                            <?php echo htmlspecialchars($l['bairros']); ?>
+                                        </div>
+                                    </td>
+                                    <td class="p-6 text-right">
+                                        <a href="https://wa.me/55<?php echo preg_replace('/\D/','',$l['whatsapp']); ?>" target="_blank" class="px-4 py-2 bg-emerald-500 text-white rounded-lg text-xs font-black shadow-lg shadow-emerald-100 hover:bg-emerald-600 transition-all inline-block">Chamar no Whats</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <?php if (empty($leads)): ?>
+                                <tr><td colspan="5" class="p-10 text-center text-slate-400 font-bold italic">Nenhum interessado captado ainda.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
         <?php elseif ($aba == 'relatorio'): ?>

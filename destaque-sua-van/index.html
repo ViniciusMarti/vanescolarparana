@@ -165,19 +165,40 @@
             <p class="mt-4 text-slate-500 text-xl font-medium">Selecione sua cidade e bairros abaixo.</p>
           </div>
 
-          <div class="selection-area p-8 md:p-14">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10 pb-10 border-b border-slate-100">
-                <div class="md:col-span-2 lg:col-span-1">
-                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="nome">Seu Nome / Nome Comercial</label>
-                    <input class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all" id="nome" placeholder="Ex: João da Van" type="text" />
+          <div class="selection-area p-8 md:p-14 overflow-hidden">
+            <!-- Step Indicators -->
+            <div class="flex items-center justify-between mb-12 max-w-2xl mx-auto px-4">
+                <div class="step-indicator active flex flex-col items-center gap-2" id="step-id-1">
+                    <span class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-black">1</span>
+                    <span class="text-[10px] font-black uppercase text-slate-400">Identificação</span>
+                </div>
+                <div class="h-[2px] bg-slate-200 flex-1 mx-4 -mt-6"></div>
+                <div class="step-indicator flex flex-col items-center gap-2" id="step-id-2">
+                    <span class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black">2</span>
+                    <span class="text-[10px] font-black uppercase text-slate-400">Bairros</span>
+                </div>
+                <div class="h-[2px] bg-slate-200 flex-1 mx-4 -mt-6"></div>
+                <div class="step-indicator flex flex-col items-center gap-2" id="step-id-3">
+                    <span class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black">3</span>
+                    <span class="text-[10px] font-black uppercase text-slate-400">Plano</span>
+                </div>
+            </div>
+
+            <!-- ETAPA 1: Identificação -->
+            <div id="step-1" class="step-content space-y-8 animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-slate-700 font-bold mb-3 text-lg" for="nome">Seu Nome / Nome Comercial</label>
+                        <input class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all text-lg font-medium" id="nome" placeholder="Ex: João da Van" type="text" />
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 font-bold mb-3 text-lg" for="whatsMotorista">WhatsApp</label>
+                        <input class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all text-lg font-medium" id="whatsMotorista" placeholder="(41) 99999-9999" type="tel" />
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="whatsMotorista">WhatsApp</label>
-                    <input class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all" id="whatsMotorista" placeholder="(41) 99999-9999" type="tel" />
-                </div>
-                <div>
-                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="cidade">Cidade</label>
-                    <select class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all appearance-none bg-white" id="cidade">
+                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="cidade">Selecione sua Cidade</label>
+                    <select class="w-full rounded-2xl border-2 border-slate-200 p-5 focus:border-blue-600 focus:outline-none transition-all appearance-none bg-white text-lg font-bold" id="cidade">
                         <option value="Curitiba">Curitiba</option>
                         <option value="São José dos Pinhais">São José dos Pinhais</option>
                         <option value="Pinhais">Pinhais</option>
@@ -187,40 +208,74 @@
                         <option value="Ponta Grossa">Ponta Grossa</option>
                     </select>
                 </div>
-                <div>
-                    <label class="block text-slate-700 font-bold mb-3 text-lg" for="plano">Plano de Destaque</label>
-                    <select class="w-full rounded-2xl border-2 border-slate-200 p-4 focus:border-blue-600 focus:outline-none transition-all appearance-none bg-white" id="plano">
-                        <option value="7">Express (7 dias) - R$ 20,00</option>
-                        <option value="15">Intermediário (15 dias) - R$ 35,00</option>
-                        <option value="30" selected>Profissional (Mensal) - R$ 60,00</option>
-                        <option value="365">Anual - R$ 490,00</option>
-                    </select>
+                <div class="pt-6 border-t border-slate-100 flex justify-end">
+                    <button onclick="nextStep(2)" class="px-12 py-5 bg-blue-600 text-white rounded-full font-black text-xl shadow-xl hover:bg-blue-700 transition-all active:scale-95 flex items-center gap-3">
+                        Escolher Bairros
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
 
-            <div class="mb-10">
-                <h3 class="text-2xl font-black text-slate-800 mb-6">Onde quer aparecer no topo?</h3>
-                <div class="flex flex-wrap gap-3 mb-8" id="chipsMaisProcurados"></div>
+            <!-- ETAPA 2: Bairros -->
+            <div id="step-2" class="step-content space-y-8 hidden animate-fade-in">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-black text-slate-800">Onde você atende?</h3>
+                    <p class="text-slate-500 font-medium">Selecione as regiões para aparecer no topo.</p>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mb-6" id="chipsMaisProcurados"></div>
                 
                 <div class="relative mb-6">
                     <span class="absolute inset-y-0 left-5 flex items-center text-slate-400"><i class="fa-solid fa-search"></i></span>
                     <input class="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-slate-100 bg-slate-50 focus:bg-white focus:border-blue-600 focus:outline-none transition-all" id="buscaItem" placeholder="Buscar bairro ou escola..." type="text" />
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar" id="listaItens"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto pr-4 custom-scrollbar" id="listaItens"></div>
+
+                <div class="pt-8 border-t border-slate-100 flex justify-between items-center">
+                    <button onclick="nextStep(1)" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
+                    </button>
+                    <button onclick="nextStep(3)" class="px-12 py-5 bg-blue-600 text-white rounded-full font-black text-xl shadow-xl hover:bg-blue-700 transition-all active:scale-95 flex items-center gap-3">
+                        Escolher Plano
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
 
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-8 p-10 bg-blue-50 rounded-[2rem] border border-blue-100">
-                <div>
-                  <p class="text-blue-700 font-black text-2xl mb-1">Total do Investimento</p>
-                  <p class="text-blue-600/70 font-bold text-lg" id="resumoValores">R$ 0,00</p>
+            <!-- ETAPA 3: Plano -->
+            <div id="step-3" class="step-content space-y-8 hidden animate-fade-in">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-black text-slate-800">Finalizar Destaque</h3>
+                    <p class="text-slate-500 font-medium text-lg">Escolha o tempo de visibilidade e confirme.</p>
                 </div>
-                <div class="text-center lg:text-right">
-                    <button class="whatsapp-button px-10 py-5 rounded-full font-black text-xl shadow-xl flex items-center gap-4" id="enviarWhats">
-                        <i class="fa-brands fa-whatsapp fa-xl"></i>
-                        Confirmar e Chamar no WhatsApp
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <label class="block text-slate-700 font-bold mb-3 text-lg" for="plano">Selecione o Plano</label>
+                        <select class="w-full rounded-2xl border-2 border-slate-200 p-5 focus:border-blue-600 focus:outline-none transition-all appearance-none bg-white font-bold text-lg" id="plano">
+                            <option value="7">Express (7 dias) - R$ 20,00</option>
+                            <option value="15">Intermediário (15 dias) - R$ 35,00</option>
+                            <option value="30" selected>Profissional (Mensal) - R$ 60,00</option>
+                            <option value="365">Anual - R$ 490,00</option>
+                        </select>
+                        <p class="mt-4 text-slate-400 text-sm font-medium">Bairros selecionados: <span id="resumoQtd" class="text-blue-600 font-black">0</span></p>
+                    </div>
+
+                    <div class="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 text-center">
+                        <p class="text-blue-700 font-black text-xl mb-1 uppercase tracking-wider">Total a Investir</p>
+                        <div id="resumoValores" class="text-blue-600 font-black">-</div>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-6">
+                    <button onclick="nextStep(2)" class="text-slate-400 font-bold hover:text-slate-600 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
                     </button>
-                    <p class="mt-4 text-xs text-slate-400 font-medium">Pagamento via PIX após confirmação dos dados.</p>
+                    <button class="whatsapp-button w-full sm:w-auto px-12 py-6 rounded-full font-black text-xl shadow-2xl flex items-center justify-center gap-4 group" id="enviarWhats">
+                        <i class="fa-brands fa-whatsapp fa-2xl group-hover:scale-110 transition-transform"></i>
+                        Confirmar e Ativar Agora
+                    </button>
                 </div>
             </div>
           </div>
@@ -352,7 +407,44 @@
     const planoEl = document.getElementById('plano');
     const resumoValoresEl = document.getElementById('resumoValores');
 
+    // Navegação Steps
+    window.nextStep = (n) => {
+        if (n === 2) {
+            const nome = nomeEl.value.trim();
+            const zap = whatsMotoristaEl.value.trim();
+            if (!nome || !zap) { alert("Preencha seu nome e whatsapp!"); return; }
+        }
+        if (n === 3) {
+            const sel = getSelecionados();
+            if (sel.length === 0) { alert("Selecione pelo menos 1 bairro!"); return; }
+        }
+
+        document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+        document.getElementById('step-' + n).classList.remove('hidden');
+
+        // Update indicators
+        document.querySelectorAll('.step-indicator span:first-child').forEach((el, idx) => {
+            if (idx + 1 < n) {
+                el.classList.remove('bg-slate-200', 'bg-blue-600', 'text-slate-500');
+                el.classList.add('bg-emerald-500', 'text-white');
+                el.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else if (idx + 1 === n) {
+                el.classList.remove('bg-slate-200', 'bg-emerald-500', 'text-slate-500');
+                el.classList.add('bg-blue-600', 'text-white');
+                el.textContent = n;
+            } else {
+                el.classList.remove('bg-blue-600', 'bg-emerald-500', 'text-white');
+                el.classList.add('bg-slate-200', 'text-slate-500');
+                el.textContent = idx + 1;
+            }
+        });
+        
+        if(n === 3) atualizarResumo();
+        window.scrollTo({ top: document.getElementById('solicitar').offsetTop - 30, behavior: 'smooth' });
+    };
+
     const datasetByCity = (city) => {
+      // ... (sem alterações)
       if (city === "Curitiba") return CURITIBA;
       if (city === "São José dos Pinhais") return SJP;
       if (city === "Foz do Iguaçu") return FOZ_DO_IGUAÇU;
@@ -432,19 +524,22 @@
       const res = calcularTotal();
       const qtd = getSelecionados().length;
       
+      const resumoQtdEl = document.getElementById('resumoQtd');
+      if(resumoQtdEl) resumoQtdEl.textContent = qtd + (qtd === 1 ? ' bairro' : ' bairros');
+
       if (qtd === 0) {
           resumoValoresEl.innerHTML = "R$ 0,00";
           return;
       }
       
-      let html = `<span class="text-3xl">R$ ${res.valorFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>`;
+      let html = `<span class="text-4xl">R$ ${res.valorFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>`;
       if (res.desconto > 0) {
-          html += `<br><span class="text-emerald-500 text-sm font-bold uppercase tracking-tight">Economia de ${res.desconto}% aplicada!</span>`;
+          html += `<br><span class="text-emerald-500 text-sm font-black uppercase tracking-tight">Economia de ${res.desconto}% multi-bairro</span>`;
       }
       resumoValoresEl.innerHTML = html;
     }
 
-    enviarWhatsBtn.addEventListener('click', () => {
+    enviarWhatsBtn.addEventListener('click', async () => {
       const nome = (nomeEl.value || "").trim();
       const whatsMotorista = (whatsMotoristaEl.value || "").trim();
       const city = cidadeEl.value;
@@ -453,7 +548,24 @@
 
       if (!nome) { alert("Por favor, informe seu nome."); return; }
       if (!whatsMotorista) { alert("Informe seu WhatsApp para contato."); return; }
-      if (itens.length === 0) { alert("Selecione pelo menos um bairro ou escola para destacar."); return; }
+      if (itens.length === 0) { alert("Selecione pelo menos um bairro ou escola."); return; }
+
+      // CAPTURA DE LEAD (AJAX)
+      enviarWhatsBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processando...';
+      enviarWhatsBtn.disabled = true;
+
+      try {
+          const formData = new FormData();
+          formData.append('ajax_action', 'capture_lead');
+          formData.append('nome', nome);
+          formData.append('whatsapp', whatsMotorista);
+          formData.append('cidade', city);
+          formData.append('plano', res.planoLabel);
+          formData.append('bairros', itens.join(', '));
+          formData.append('valor_total', res.valorFinal);
+
+          await fetch('/gerenciar-destaques.php', { method: 'POST', body: formData });
+      } catch (e) { console.error("Erro lead:", e); }
 
       const msg = `Olá! Tenho interesse em destacar minha van no site Van Escolar Paraná.
 
@@ -462,16 +574,22 @@ Nome: ${nome}
 WhatsApp: ${whatsMotorista}
 Cidade: ${city}
 
-📋 *PLANILHA DO PEDIDO*
+📋 *PEDIDO*
 Plano: ${res.planoLabel}
 Bairros (${itens.length}): ${itens.join(', ')}
 
 💰 *VALOR TOTAL*
-R$ ${res.valorFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})} ${res.desconto > 0 ? '(Com '+res.desconto+'% de desconto multi-bairro)' : ''}
+R$ ${res.valorFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})} ${res.desconto > 0 ? '(Desconto aplicado)' : ''}
 
-Após sua confirmação, realizarei o pagamento via PIX. Aguardo retorno para ativação!`;
+Realizarei o pagamento via PIX. Aguardo retorno para ativação!`;
 
       window.open(`https://wa.me/${NUMERO_ADMIN}?text=${encodeURIComponent(msg)}`, "_blank");
+      
+      // Restaurar botão
+      setTimeout(() => {
+          enviarWhatsBtn.innerHTML = '<i class="fa-brands fa-whatsapp fa-2xl"></i> Confirmar e Ativar Agora';
+          enviarWhatsBtn.disabled = false;
+      }, 2000);
     });
 
     cidadeEl.addEventListener('change', () => {
