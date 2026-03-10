@@ -20,7 +20,7 @@ if (!$bairro_slug || !isset($neighborhoods_data[$bairro_slug])) {
     exit;
 }
 
-// 1. Detector de Tabelas Robusto (Garante que pegamos a tabela que tem os dados das vans)
+// 1. Detector de Tabelas Robusto
 try {
     $stmt = $pdo->query("SHOW TABLES");
     $all_tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -38,7 +38,6 @@ try {
         }
     }
 
-    // Garante que a tabela de destaques existe para não quebrar a query principal
     if (!in_array('destaques_premium', $all_tables)) {
         $pdo->exec("CREATE TABLE IF NOT EXISTS `destaques_premium` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,58 +45,69 @@ try {
             `prefixo` VARCHAR(50),
             `bairro` VARCHAR(255) NOT NULL,
             `vencimento` DATE NOT NULL,
-            INDEX (`permissionario`), INDEX (`bairro`), INDEX (`vencimento`)
+            INDEX (`bairro`), INDEX (`vencimento`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
     }
 } catch (Exception $e) { $table_name = 'vans'; }
 
 $neighborhood = $neighborhoods_data[$bairro_slug];
-$nome_bairro_exibicao = str_replace('-', ' ', $bairro_slug);
-if ($bairro_slug == 'ahu') {
-    $nome_bairro_exibicao = 'Ahú';
-} else {
-    $nome_bairro_exibicao = ucwords($nome_bairro_exibicao);
+$nome_bairro_exibicao = ucwords(str_replace('-', ' ', $bairro_slug));
+
+// Função para limpar acentos para busca
+function sanitizeForSearch($str) {
+    $map = ['á'=>'a','à'=>'a','ã'=>'a','â'=>'a','é'=>'e','ê'=>'e','í'=>'i','ó'=>'o','ô'=>'o','õ'=>'o','ú'=>'u','ç'=>'c'];
+    return str_replace(array_keys($map), array_values($map), mb_strtolower($str));
 }
+
+$bairro_busca = sanitizeForSearch($nome_bairro_exibicao);
+if ($bairro_slug == 'ahu') $nome_bairro_exibicao = 'Ahú'; // Para exibição visual
 
 $vans = [];
 try {
-    // Nova lógica: Verifica na tabela 'destaques_premium' se este motorista pagou destaque especificamente para ESTE bairro
-    $query = "SELECT v.*, 
-              (SELECT COUNT(*) FROM `destaques_premium` d 
-               WHERE (d.permissionario = v.permissionario AND d.prefixo = v.prefixo) 
-               AND d.bairro = :bairro_nome 
-               AND d.vencimento >= CURDATE()) as is_premium_active 
-              FROM `$table_name` v 
-              WHERE v.bairro_referencia LIKE :bairro_query 
-              ORDER BY is_premium_active DESC, v.permissionario ASC";
+    // 1. Tenta busca exata com o nome exibido (com acentos se houver)
+    // Ordenamos por permissionario para ser justo
+    $query = "SELECT * FROM `$table_name` 
+              WHERE `bairro_referencia` LIKE :bairro_query 
+              ORDER BY `permissionario` ASC";
               
     $stmt = $pdo->prepare($query);
-    $stmt->execute([
-        'bairro_nome' => $nome_bairro_exibicao,
-        'bairro_query' => '%' . $nome_bairro_exibicao . '%'
-    ]);
+    $stmt->execute(['bairro_query' => '%' . $nome_bairro_exibicao . '%']);
     $vans = $stmt->fetchAll();
     
-    // DEBUG OCULTO (Veja no código fonte da página)
-    echo "\n<!-- DEBUG: Bairro: $nome_bairro_exibicao | Tabela: $table_name | Encontrados: " . count($vans) . " -->\n";
-    
-    // Se não retornar nada com o nome bonito, tenta buscar pelo slug aproximado
-    if (empty($vans)) {
-       function removeAccents($str) {
-           return str_replace(['á', 'à', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç'], ['a', 'a', 'a', 'a', 'e', 'e', 'i', 'o', 'o', 'o', 'u', 'c'], mb_strtolower($str));
-       }
-       $bairro_clean = removeAccents($nome_bairro_exibicao);
-       $stmt = $pdo->prepare($query);
-       $stmt->execute([
-           'bairro_nome' => $nome_bairro_exibicao,
-           'bairro_query' => '%' . $bairro_clean . '%'
-       ]);
-       $vans = $stmt->fetchAll();
+    // 2. Se falhou, tenta busca sem acentos
+    if (empty($vans) && $nome_bairro_exibicao !== $bairro_busca) {
+        $stmt->execute(['bairro_query' => '%' . $bairro_busca . '%']);
+        $vans = $stmt->fetchAll();
     }
-} catch (PDOException $e) {
-    // echo "DEBUG: Erro: " . $e->getMessage();
-}
 
+    // 3. Processa destaques de forma separada no PHP para não quebrar a query SQL
+    $destaques_stmt = $pdo->prepare("SELECT permissionario, prefixo FROM `destaques_premium` WHERE `bairro` = ? AND `vencimento` >= CURDATE()");
+    $destaques_stmt->execute([$nome_bairro_exibicao]);
+    $lista_premium = $destaques_stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Mapeia quem é premium
+    foreach ($vans as &$v) {
+        $v['is_premium_active'] = 0;
+        foreach ($lista_premium as $p) {
+            if ($v['permissionario'] == $p['permissionario']) {
+                $v['is_premium_active'] = 1;
+                break;
+            }
+        }
+    }
+    unset($v);
+
+    // Re-ordena: Premium primeiro
+    usort($vans, function($a, $b) {
+        if ($a['is_premium_active'] != $b['is_premium_active']) {
+            return $b['is_premium_active'] - $a['is_premium_active'];
+        }
+        return strcmp($a['permissionario'], $b['permissionario']);
+    });
+
+} catch (PDOException $e) {
+    // echo "DEBUG: Erro SQL: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
