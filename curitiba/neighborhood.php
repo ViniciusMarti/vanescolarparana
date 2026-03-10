@@ -51,23 +51,34 @@ try {
 
 $vans = [];
 try {
-    $stmt = $pdo->prepare("SELECT * FROM `$table_name` WHERE `bairro_referencia` LIKE :bairro ORDER BY `ano` DESC");
+    // Busca vans priorizando as que têm premium_until válido (maior ou igual a hoje)
+    // Ordenamos primeiro por quem é premium e depois por prefixo ou ano
+    $query = "SELECT *, 
+              CASE WHEN premium_until >= CURDATE() THEN 1 ELSE 0 END as is_premium_active 
+              FROM `$table_name` 
+              WHERE `bairro_referencia` LIKE :bairro 
+              ORDER BY is_premium_active DESC, `permissionario` ASC";
+              
+    $stmt = $pdo->prepare($query);
     $stmt->execute(['bairro' => '%' . $nome_bairro_exibicao . '%']);
     $vans = $stmt->fetchAll();
     
-    // Se não retornar nada com o nome bonito, tenta buscar pelo slug aproximado (ex: sem acentos)
+    // Se não retornar nada com o nome bonito, tenta buscar pelo slug aproximado
     if (empty($vans)) {
-       // Função simples para remover acentos para busca
        function removeAccents($str) {
            return str_replace(['á', 'à', 'ã', 'â', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç'], ['a', 'a', 'a', 'a', 'e', 'e', 'i', 'o', 'o', 'o', 'u', 'c'], mb_strtolower($str));
        }
        $bairro_clean = removeAccents($nome_bairro_exibicao);
-       $stmt = $pdo->prepare("SELECT * FROM `$table_name` WHERE `bairro_referencia` LIKE :bairro ORDER BY `ano` DESC");
+       $query = "SELECT *, 
+                 CASE WHEN premium_until >= CURDATE() THEN 1 ELSE 0 END as is_premium_active 
+                 FROM `$table_name` 
+                 WHERE `bairro_referencia` LIKE :bairro 
+                 ORDER BY is_premium_active DESC, `permissionario` ASC";
+       $stmt = $pdo->prepare($query);
        $stmt->execute(['bairro' => '%' . $bairro_clean . '%']);
        $vans = $stmt->fetchAll();
     }
 } catch (PDOException $e) {
-    // Em caso de erro na tabela, talvez o nome seja outro. Vamos logar discretamente.
     // echo "DEBUG: Erro ao buscar vans: " . $e->getMessage();
 }
 
@@ -164,7 +175,7 @@ try {
                     $celular_limpo = preg_replace('/\D/', '', $van['celular'] ?: $van['telefone_fixo'] ?: '');
                     $msg_whatsapp = urlencode("Olá! Vi seu número no site Van Escolar Paraná. Gostaria de saber mais sobre o transporte escolar no " . $nome_bairro_exibicao . ".");
                     $whatsapp_link = "https://wa.me/55" . $celular_limpo . "?text=" . $msg_whatsapp;
-                    $is_premium = $index < 3; // Mantemos a lógica de destaque para os 3 primeiros da lista
+                    $is_premium = (isset($van['is_premium_active']) && $van['is_premium_active'] == 1);
                 ?>
                 <div class="van-card bg-white p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                     <div class="space-y-3 flex-1">
