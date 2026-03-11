@@ -323,6 +323,19 @@ function renderCidade($cidade_slug) {
     }
 
     $cidade_decoded = findCidadeBySlug($cidade_slug);
+    
+    // IF NOT FOUND BY SLUG, TRY DIRECT MATCH (handles old accented URLs)
+    if (!$cidade_decoded) {
+        $stmt_direct = $pdo_escolas->prepare("SELECT DISTINCT nome_municipio FROM escolas WHERE nome_municipio = ?");
+        $stmt_direct->execute([$cidade_slug]);
+        $direct_match = $stmt_direct->fetchColumn();
+        if ($direct_match) {
+            // Found by direct name, redirect to slug version
+            header("Location: /escolas/cidade/" . slugify($direct_match), true, 301);
+            exit;
+        }
+    }
+
     if (!$cidade_decoded) {
         header("Location: /escolas/cidades");
         exit;
@@ -376,6 +389,18 @@ function renderBairro($cidade_slug, $bairro_slug) {
     }
 
     $cidade_decoded = findCidadeBySlug($cidade_slug);
+    
+    // Redirect if it's the raw name instead of slug
+    if (!$cidade_decoded && !empty($cidade_slug)) {
+         $stmt_direct = $pdo_escolas->prepare("SELECT DISTINCT nome_municipio FROM escolas WHERE nome_municipio = ?");
+         $stmt_direct->execute([$cidade_slug]);
+         $direct_match = $stmt_direct->fetchColumn();
+         if ($direct_match) {
+             header("Location: /escolas/cidade/" . slugify($direct_match) . "/" . $bairro_slug, true, 301);
+             exit;
+         }
+    }
+
     $bairro_decoded = findBairroBySlug($cidade_decoded, $bairro_slug);
 
     if (!$cidade_decoded) {
