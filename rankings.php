@@ -406,7 +406,7 @@ function renderRankingPage($config, $local, $local_where, $limit) {
                                         <i class="fa-solid fa-display text-xs w-4"></i>
                                     </span>
                                     <span title="Quadra Esportiva" class="p-1.5 border <?php echo $esc['quadra_esportes'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
-                                        <i class="fa-solid fa-medal text-xs w-4"></i>
+                                        <i class="fa-solid fa-soccer-ball text-xs w-4"></i>
                                     </span>
                                     <span title="Internet para Alunos" class="p-1.5 border <?php echo $esc['internet_alunos'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
                                         <i class="fa-solid fa-globe text-xs w-4"></i>
