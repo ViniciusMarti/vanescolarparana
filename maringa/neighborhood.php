@@ -163,14 +163,58 @@ try {
 
   <header class="glass-nav sticky top-0 z-[100] transition-all duration-300">
     <nav class="container mx-auto flex h-20 items-center justify-between px-6 lg:px-12">
-      <a class="flex items-center gap-4 group" href="/"><img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-comum.png" /></a>
+      <a class="flex items-center gap-4 group" href="/"><img alt="Van Escolar Paraná" class="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-comum.png" /></a>
+      
+      <!-- Desktop Menu -->
       <div class="hidden md:flex items-center gap-8 text-sm md:text-base">
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>
         <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:shadow-lg hover:scale-105 transition-all active:scale-95 px-6 py-2.5" href="/destaque-sua-van/">⭐ Destaque sua Van</a>
       </div>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-900 focus:outline-none rounded-xl hover:bg-slate-100 transition-all">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+      </button>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+        <div id="mobile-menu-content" class="absolute top-0 right-0 w-80 h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
+            <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+            <nav class="flex flex-col gap-6 text-left">
+                <a href="/" class="text-2xl font-black text-slate-800">Início</a>
+                <a href="/sobre/" class="text-2xl font-black text-slate-800">Sobre</a>
+                <a href="/informativos/" class="text-2xl font-black text-slate-800">Informativos</a>
+                <div class="h-px bg-slate-100 my-4"></div>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-6 rounded-3xl text-center font-black text-xl shadow-xl shadow-blue-100 italic">⭐ Destaque sua Van</a>
+                <p class="text-slate-400 text-center text-sm mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
+            </nav>
+        </div>
+    </div>
   </header>
+
+  <script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const content = document.getElementById('mobile-menu-content');
+        const isOpening = menu.classList.contains('opacity-0');
+        
+        if(isOpening) {
+            menu.classList.replace('opacity-0', 'opacity-100');
+            menu.classList.remove('pointer-events-none');
+            content.classList.replace('translate-x-full', 'translate-x-0');
+            document.body.style.overflow = 'hidden';
+        } else {
+            menu.classList.replace('opacity-100', 'opacity-0');
+            menu.classList.add('pointer-events-none');
+            content.classList.replace('translate-x-0', 'translate-x-full');
+            document.body.style.overflow = '';
+        }
+    }
+  </script>
 
   <main class="container mx-auto px-4 py-8 max-w-4xl">
     
@@ -203,7 +247,7 @@ try {
                     $whatsapp_link = "https://wa.me/55" . $celular_limpo . "?text=" . $msg_whatsapp;
                     $is_premium = (isset($van['is_premium_active']) && $van['is_premium_active'] == 1);
                 ?>
-                <div class="van-card <?php echo $is_premium ? 'ring-4 ring-amber-400 border-amber-200 bg-amber-50/50 shadow-xl shadow-amber-100' : 'bg-white border-slate-100 shadow-sm'; ?> p-6 sm:p-8 rounded-[2.5rem] hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+                <div class="van-card <?php echo $is_premium ? 'ring-4 ring-amber-400 border-amber-200 bg-amber-50/50 shadow-xl shadow-amber-100' : 'bg-white border-slate-100 shadow-sm'; ?> p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
                     <?php if ($is_premium): ?>
                         <div class="absolute top-0 right-0 w-32 h-32 bg-amber-200/20 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                     <?php endif; ?>
@@ -216,7 +260,7 @@ try {
                                 </span>
                             </div>
                         <?php endif; ?>
-                        <h3 class="text-3xl font-black text-slate-900 leading-tight"><?php echo htmlspecialchars($van['permissionario']); ?></h3>
+                        <h3 class="text-2xl md:text-3xl font-black text-slate-900 leading-tight"><?php echo htmlspecialchars($van['permissionario']); ?></h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-sm font-medium text-slate-500">
                             <p><strong>Van Ano:</strong> <?php echo htmlspecialchars($van['ano'] ?: '---'); ?></p>
                             <p><strong>Placa:</strong> <?php echo htmlspecialchars($van['modelo_placa'] ?: '---'); ?></p>

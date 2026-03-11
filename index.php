@@ -157,10 +157,12 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
     <nav class="container mx-auto flex h-20 items-center justify-between px-6 lg:px-12">
       <a class="flex items-center gap-4 group" href="/">
         <div class="relative overflow-hidden p-1 rounded-lg">
-          <img alt="Van Escolar Paraná" class="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+          <img alt="Van Escolar Paraná" class="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
             src="/logo-comum.png" />
         </div>
       </a>
+      
+      <!-- Menu Desktop -->
       <div class="hidden md:flex items-center gap-8">
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors"
@@ -172,14 +174,52 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
           </span>
         </a>
       </div>
-      <!-- Menu Mobile (Placeholder for later) -->
-      <button class="md:hidden text-slate-900 focus:outline-none">
+
+      <!-- Botão Menu Mobile -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-900 hover:bg-slate-100 rounded-xl transition-all focus:outline-none" aria-label="Abrir Menu">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+          <path id="menu-icon-path" d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
         </svg>
       </button>
     </nav>
+
+    <!-- Menu Mobile Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+        <div id="mobile-menu-content" class="absolute top-0 right-0 w-80 h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
+            <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+            <nav class="flex flex-col gap-6">
+                <a href="/" class="text-2xl font-black text-slate-800">Início</a>
+                <a href="/sobre/" class="text-2xl font-black text-slate-800">Sobre</a>
+                <a href="/informativos/" class="text-2xl font-black text-slate-800">Informativos</a>
+                <div class="h-px bg-slate-100 my-4"></div>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-6 rounded-3xl text-center font-black text-xl shadow-xl shadow-blue-100 italic">⭐ Destaque sua Van</a>
+                <p class="text-slate-400 text-center text-sm mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
+            </nav>
+        </div>
+    </div>
   </header>
+
+  <script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const content = document.getElementById('mobile-menu-content');
+        const isOpening = menu.classList.contains('opacity-0');
+        
+        if(isOpening) {
+            menu.classList.replace('opacity-0', 'opacity-100');
+            menu.classList.remove('pointer-events-none');
+            content.classList.replace('translate-x-full', 'translate-x-0');
+            document.body.style.overflow = 'hidden';
+        } else {
+            menu.classList.replace('opacity-100', 'opacity-0');
+            menu.classList.add('pointer-events-none');
+            content.classList.replace('translate-x-0', 'translate-x-full');
+            document.body.style.overflow = '';
+        }
+    }
+  </script>
 
   <main>
     <!-- Hero Section -->
@@ -201,9 +241,9 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
             Vans Regulamentadas em Todo o Paraná
           </div>
 
-          <h1 class="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight animate-fade-in"
+          <h1 class="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight animate-fade-in px-4"
             style="animation-delay: 0.2s">
-            O Caminho da Escola <br />
+            O Caminho da Escola <br class="md:hidden" />
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800">
               Nunca foi tão Seguro.
             </span>
@@ -226,8 +266,8 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
                 </svg>
               </div>
               <input
-                class="w-full h-18 py-6 pl-16 pr-8 bg-white border border-slate-200 rounded-[2rem] text-lg text-slate-900 shadow-2xl focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-400 font-medium"
-                id="search-input" placeholder="Digite seu bairro ou cidade..." type="text" />
+                class="w-full h-18 py-6 pl-14 md:pl-16 pr-8 bg-white border border-slate-200 rounded-[2rem] text-base md:text-lg text-slate-900 shadow-2xl focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-400 font-medium"
+                id="search-input" placeholder="Buscar bairro ou cidade..." type="text" />
             </div>
             <div
               class="bg-white/95 backdrop-blur-xl border border-slate-100 rounded-[1.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] mt-4 hidden absolute w-full z-[80] text-left overflow-hidden translate-y-2 transition-transform"
@@ -305,10 +345,10 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
           </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
           <!-- Curitiba (Main Card) -->
           <a href="/curitiba/"
-            class="md:col-span-8 md:row-span-2 group relative overflow-hidden rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all duration-500">
+            class="md:col-span-8 md:row-span-2 min-h-[350px] md:min-h-[580px] group relative overflow-hidden rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all duration-500">
             <img alt="Curitiba"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               src="/curitiba/pexels-viniciusvieirafotografia-34237573.jpg" />
@@ -324,7 +364,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
 
           <!-- Londrina -->
           <a href="/londrina/"
-            class="md:col-span-4 group relative overflow-hidden rounded-[2.5rem] shadow-lg hover:shadow-xl transition-all duration-500">
+            class="md:col-span-4 min-h-[250px] md:min-h-[280px] group relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-lg hover:shadow-xl transition-all duration-500">
             <img alt="Londrina"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               src="/imagens/londrina.jpg" />
@@ -337,7 +377,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
 
           <!-- Maringá -->
           <a href="/maringa/"
-            class="md:col-span-4 group relative overflow-hidden rounded-[2.5rem] shadow-lg hover:shadow-xl transition-all duration-500">
+            class="md:col-span-4 min-h-[250px] md:min-h-[280px] group relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-lg hover:shadow-xl transition-all duration-500">
             <img alt="Maringá"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               src="/imagens/maringa.jpg" />
