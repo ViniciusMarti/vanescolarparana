@@ -11,6 +11,25 @@ $cidades = [
     'sao-jose-dos-pinhais' => 'São José dos Pinhais'
 ];
 
+// Helper to slugify
+function slugify($text) {
+    if (!$text) return "";
+    $text = mb_strtolower($text, 'UTF-8');
+    $map = [
+        'á' => 'a', 'à' => 'a', 'ã' => 'a', 'â' => 'a', 'ä' => 'a',
+        'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i',
+        'ó' => 'o', 'ò' => 'o', 'õ' => 'o', 'ô' => 'o', 'ö' => 'o',
+        'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u',
+        'ç' => 'c', 'ñ' => 'n'
+    ];
+    $text = strtr($text, $map);
+    $text = preg_replace('~[^\w\d]+~u', '-', $text);
+    $text = trim($text, '-');
+    $text = preg_replace('~-+~', '-', $text);
+    return empty($text) ? 'n-a' : $text;
+}
+
 $app_data = [];
 
 foreach ($cidades as $slug_cidade => $nome_cidade) {
@@ -474,7 +493,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
           $cidades_escolas = ['Curitiba', 'Londrina', 'Maringá', 'Cascavel', 'Ponta Grossa', 'São José dos Pinhais', 'Foz do Iguaçu', 'Colombo'];
           foreach ($cidades_escolas as $cid):
           ?>
-            <a href="/escolas/cidade/<?php echo urlencode($cid); ?>" class="px-8 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-800 font-black hover:border-blue-600 hover:text-blue-700 hover:bg-white hover:shadow-xl transition-all"><?php echo $cid; ?></a>
+            <a href="/escolas/cidade/<?php echo slugify($cid); ?>" class="px-8 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-800 font-black hover:border-blue-600 hover:text-blue-700 hover:bg-white hover:shadow-xl transition-all"><?php echo $cid; ?></a>
           <?php endforeach; ?>
         </div>
         <div class="mt-12">
