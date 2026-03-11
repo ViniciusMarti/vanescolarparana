@@ -367,9 +367,16 @@ function renderCidade($cidade_slug) {
     $title = "Escolas em $cidade_decoded - Bairros e Regiões | Van Escolar Paraná";
     $description = "Confira a lista de bairros atendidos e todas as escolas disponíveis em $cidade_decoded, Paraná.";
 
-    $stmt = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ? ORDER BY bairro");
-    $stmt->execute([$cidade_decoded]);
-    $bairros = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    try {
+        $stmt = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ? ORDER BY bairro");
+        $stmt->execute([$cidade_decoded]);
+        $bairros = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    } catch (PDOException $e) {
+        // DIAGNOSTIC: Show all columns if 'bairro' fails
+        $stmt_cols = $pdo_escolas->query("DESCRIBE escolas");
+        $all_cols = $stmt_cols->fetchAll(PDO::FETCH_COLUMN);
+        die("Erro de Coluna. Colunas disponiveis na tabela escolas: " . implode(", ", $all_cols));
+    }
 
     ?>
     <section class="py-16 bg-slate-50 border-b">
