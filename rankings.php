@@ -52,7 +52,7 @@ function formatBinary($val) {
 }
 
 $slug = $_GET['slug'] ?? '';
-$cache_key = "rankings_v1_" . ($slug ?: 'index');
+$cache_key = "rankings_v2_" . ($slug ?: 'index');
 
 $cached_content = getCache($cache_key);
 if ($cached_content && !isset($_GET['nocache'])) {
