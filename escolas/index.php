@@ -105,16 +105,62 @@ ob_start();
             <a class="flex items-center gap-4 group" href="/">
                 <img alt="Van Escolar Paraná" class="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105" src="/logo-comum.png" />
             </a>
+            
+            <!-- Menu Desktop -->
             <div class="hidden md:flex items-center gap-8">
                 <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
                 <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>
-                <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/escolas">Escolas</a>
+                <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/escolas/">Escolas</a>
                 <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 hover:shadow-lg transition-all active:scale-95" href="/destaque-sua-van/">
                     <span class="px-6 py-2.5 transition-all duration-75 bg-blue-600 rounded-full hover:bg-opacity-0">Destaque sua Van</span>
                 </a>
             </div>
+
+            <!-- Botão Menu Mobile -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-900 hover:bg-slate-100 rounded-xl transition-all focus:outline-none" aria-label="Abrir Menu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon-path" d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+                </svg>
+            </button>
         </nav>
+
+        <!-- Menu Mobile Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+            <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+            <div id="mobile-menu-content" class="absolute top-0 right-0 w-[280px] h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
+                <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8 rounded-xl hover:bg-slate-50">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </button>
+                <nav class="flex flex-col gap-4">
+                    <a href="/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Início</a>
+                    <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
+                    <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
+                    <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
+                    <div class="h-px bg-slate-100 my-4"></div>
+                    <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
+                </nav>
+            </div>
+        </div>
     </header>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const content = document.getElementById('mobile-menu-content');
+            const isOpening = menu.classList.contains('opacity-0');
+            if(isOpening) {
+                menu.classList.replace('opacity-0', 'opacity-100');
+                menu.classList.remove('pointer-events-none');
+                content.classList.replace('translate-x-full', 'translate-x-0');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.replace('opacity-100', 'opacity-0');
+                menu.classList.add('pointer-events-none');
+                content.classList.replace('translate-x-0', 'translate-x-full');
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
 
     <main>
         <?php echo $content; ?>

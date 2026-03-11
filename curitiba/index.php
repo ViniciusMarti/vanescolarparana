@@ -69,6 +69,7 @@ try {
       <div class="hidden md:flex items-center gap-8 text-sm md:text-base font-semibold">
         <a class="text-slate-600 hover:text-blue-700 transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 transition-colors" href="/informativos/">Informativos</a>
+        <a class="text-slate-600 hover:text-blue-700 transition-colors" href="/escolas/">Escolas</a>
         <a class="px-6 py-2.5 bg-blue-600 text-white rounded-full font-bold shadow-sm hover:shadow-lg transition-all active:scale-95" href="/destaque-sua-van/">Destaque sua Van</a>
       </div>
 
@@ -92,6 +93,7 @@ try {
                 <a href="/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Início</a>
                 <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
                 <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
+                <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
                 <div class="h-px bg-slate-100 my-4"></div>
                 <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
             </nav>

@@ -168,6 +168,8 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors"
           href="/informativos/">Informativos</a>
+        <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors"
+          href="/escolas/">Escolas</a>
         <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 hover:shadow-lg transition-all active:scale-95"
           href="/destaque-sua-van/">
           <span class="px-6 py-2.5 transition-all duration-75 bg-blue-600 rounded-full hover:bg-opacity-0">
@@ -198,6 +200,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
                 <a href="/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Início</a>
                 <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
                 <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
+                <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
                 <div class="h-px bg-slate-100 my-4"></div>
                 <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
             </nav>
@@ -457,6 +460,25 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
           </div>
           <!-- Efeito de Luz -->
           <div class="absolute -top-24 -right-24 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all duration-700"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Escolas por Cidade (SEO) -->
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-6 lg:px-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-6 font-primary">Guia de Escolas no Paraná</h2>
+        <p class="text-slate-600 font-medium mb-12 max-w-2xl mx-auto">Explore dados detalhados de infraestrutura e alunos nas principais cidades do estado.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <?php 
+          $cidades_escolas = ['Curitiba', 'Londrina', 'Maringá', 'Cascavel', 'Ponta Grossa', 'São José dos Pinhais', 'Foz do Iguaçu', 'Colombo'];
+          foreach ($cidades_escolas as $cid):
+          ?>
+            <a href="/escolas/cidade/<?php echo urlencode($cid); ?>" class="px-8 py-4 bg-slate-50 border border-slate-100 rounded-2xl text-slate-800 font-black hover:border-blue-600 hover:text-blue-700 hover:bg-white hover:shadow-xl transition-all"><?php echo $cid; ?></a>
+          <?php endforeach; ?>
+        </div>
+        <div class="mt-12">
+          <a href="/escolas/cidades" class="text-blue-700 font-black hover:underline italic">Ver todas as 399 cidades →</a>
         </div>
       </div>
     </section>
