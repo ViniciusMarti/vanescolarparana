@@ -72,6 +72,12 @@ RewriteRule ^escolas/escola/([^/]+)/?$ escolas/index.php?route=escola&id_slug=$1
 RewriteRule ^escolas/?$ escolas/index.php?route=home [L,QSA]
 RewriteRule ^sitemap_escolas\.xml$ escolas/sitemap.php [L]
 
+# ------------------------------------------------------------------------------
+# DINÂMICO: RANKINGS SEO
+# ------------------------------------------------------------------------------
+RewriteRule ^rankings/([^/]+)/?$ rankings.php?slug=$1 [L,QSA]
+RewriteRule ^rankings/?$ rankings.php [L,QSA]
+
 
 # ------------------------------------------------------------------------------
 # DESEMPENHO: APROVEITAR O CACHE DO NAVEGADOR

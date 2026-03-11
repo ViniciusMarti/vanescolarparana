@@ -159,6 +159,7 @@ ob_start();
                 <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
                 <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>
                 <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/escolas/">Escolas</a>
+                <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/rankings/">Rankings</a>
                 <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 hover:shadow-lg transition-all active:scale-95" href="/destaque-sua-van/">
                     <span class="px-6 py-2.5 transition-all duration-75 bg-blue-600 rounded-full hover:bg-opacity-0">Destaque sua Van</span>
                 </a>
@@ -184,6 +185,7 @@ ob_start();
                     <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
                     <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
                     <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
+                    <a href="/rankings/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Rankings</a>
                     <div class="h-px bg-slate-100 my-4"></div>
                     <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
                 </nav>
@@ -221,6 +223,7 @@ ob_start();
             <div class="mt-4 flex justify-center gap-4">
                 <a href="/escolas/cidades" class="text-gray-400 hover:text-white transition-colors">Cidades</a>
                 <a href="/escolas" class="text-gray-400 hover:text-white transition-colors">Escolas</a>
+                <a href="/rankings" class="text-gray-400 hover:text-white transition-colors border-l pl-4 border-gray-700 font-bold">Rankings</a>
                 <a href="/" class="text-gray-400 hover:text-white transition-colors">Home</a>
             </div>
         </div>
