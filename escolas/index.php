@@ -21,13 +21,44 @@ function setCache($key, $content) {
 
 // Helper functions for SEO and formatting
 function slugify($text) {
-    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
-    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-    $text = preg_replace('~[^-\w]+~', '', $text);
+    if (!$text) return "";
+    $text = mb_strtolower($text, 'UTF-8');
+    $map = [
+        'á' => 'a', 'à' => 'a', 'ã' => 'a', 'â' => 'a', 'ä' => 'a',
+        'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i',
+        'ó' => 'o', 'ò' => 'o', 'õ' => 'o', 'ô' => 'o', 'ö' => 'o',
+        'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u',
+        'ç' => 'c', 'ñ' => 'n'
+    ];
+    $text = strtr($text, $map);
+    $text = preg_replace('~[^\w\d]+~u', '-', $text);
     $text = trim($text, '-');
     $text = preg_replace('~-+~', '-', $text);
-    $text = strtolower($text);
     return empty($text) ? 'n-a' : $text;
+}
+
+function findCidadeBySlug($slug) {
+    global $pdo_escolas;
+    if (!$pdo_escolas) return null;
+    $stmt = $pdo_escolas->query("SELECT DISTINCT nome_municipio FROM escolas");
+    $cidades = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    foreach($cidades as $c) {
+        if (slugify($c) === $slug) return $c;
+    }
+    return null;
+}
+
+function findBairroBySlug($cidade, $slug) {
+    global $pdo_escolas;
+    if (!$pdo_escolas || empty($slug)) return "";
+    $stmt = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ?");
+    $stmt->execute([$cidade]);
+    $bairros = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    foreach($bairros as $b) {
+        if (slugify($b) === $slug) return $b;
+    }
+    return "";
 }
 
 function formatBinary($val) {
@@ -275,7 +306,7 @@ function renderCidades() {
         <div class="container mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 <?php foreach ($cidades as $cidade): ?>
-                    <a href="/escolas/cidade/<?php echo urlencode($cidade); ?>" class="p-4 border border-slate-100 rounded-xl hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/30 transition-all font-bold text-center bg-white shadow-sm"><?php echo $cidade; ?></a>
+                    <a href="/escolas/cidade/<?php echo slugify($cidade); ?>" class="p-4 border border-slate-100 rounded-xl hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/30 transition-all font-bold text-center bg-white shadow-sm"><?php echo $cidade; ?></a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -283,16 +314,22 @@ function renderCidades() {
     <?php
 }
 
-function renderCidade($cidade) {
+function renderCidade($cidade_slug) {
     global $pdo_escolas, $title, $description;
-    $cidade_decoded = urldecode($cidade);
-    $title = "Escolas em $cidade_decoded - Bairros e Regiões | Van Escolar Paraná";
-    $description = "Confira a lista de bairros atendidos e todas as escolas disponíveis em $cidade_decoded, Paraná.";
-
+    
     if (!$pdo_escolas) {
         echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
         return;
     }
+
+    $cidade_decoded = findCidadeBySlug($cidade_slug);
+    if (!$cidade_decoded) {
+        header("Location: /escolas/cidades");
+        exit;
+    }
+
+    $title = "Escolas em $cidade_decoded - Bairros e Regiões | Van Escolar Paraná";
+    $description = "Confira a lista de bairros atendidos e todas as escolas disponíveis em $cidade_decoded, Paraná.";
 
     $stmt = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ? ORDER BY bairro");
     $stmt->execute([$cidade_decoded]);
@@ -319,7 +356,7 @@ function renderCidade($cidade) {
                 <?php foreach ($bairros as $bairro): 
                     $bairro_label = $bairro ?: 'Lista Geral';
                     ?>
-                    <a href="/escolas/cidade/<?php echo urlencode($cidade_decoded); ?>/<?php echo urlencode($bairro); ?>" class="p-8 border border-slate-100 rounded-3xl hover:border-blue-600 hover:shadow-xl transition-all group bg-slate-50/50">
+                    <a href="/escolas/cidade/<?php echo slugify($cidade_decoded); ?>/<?php echo slugify($bairro); ?>" class="p-8 border border-slate-100 rounded-3xl hover:border-blue-600 hover:shadow-xl transition-all group bg-slate-50/50">
                         <h3 class="text-xl font-black text-slate-800 group-hover:text-blue-700 leading-tight"><?php echo $bairro_label; ?></h3>
                         <p class="text-[10px] font-black tracking-widest text-blue-600 mt-4 uppercase">Ver Escolas →</p>
                     </a>
@@ -330,10 +367,22 @@ function renderCidade($cidade) {
     <?php
 }
 
-function renderBairro($cidade, $bairro) {
+function renderBairro($cidade_slug, $bairro_slug) {
     global $pdo_escolas, $title, $description;
-    $cidade_decoded = urldecode($cidade);
-    $bairro_decoded = urldecode($bairro);
+    
+    if (!$pdo_escolas) {
+        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
+        return;
+    }
+
+    $cidade_decoded = findCidadeBySlug($cidade_slug);
+    $bairro_decoded = findBairroBySlug($cidade_decoded, $bairro_slug);
+
+    if (!$cidade_decoded) {
+        header("Location: /escolas/cidades");
+        exit;
+    }
+
     $title = "Escolas no Bairro $bairro_decoded em $cidade_decoded | Van Escolar Paraná";
     $description = "Lista completa de escolas localizadas no bairro $bairro_decoded em $cidade_decoded. Veja detalhes de infraestrutura e alunos.";
 
@@ -341,11 +390,6 @@ function renderBairro($cidade, $bairro) {
     $page = isset($_GET['p']) ? max(1, intval($_GET['p'])) : 1;
     $perPage = 20;
     $offset = ($page - 1) * $perPage;
-
-    if (!$pdo_escolas) {
-        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
-        return;
-    }
 
     $stmt_count = $pdo_escolas->prepare("SELECT COUNT(*) FROM escolas WHERE nome_municipio=? AND bairro=?");
     $stmt_count->execute([$cidade_decoded, $bairro_decoded]);
@@ -364,7 +408,7 @@ function renderBairro($cidade, $bairro) {
                 <span class="mx-2">/</span>
                 <a href="/escolas/cidades" class="hover:text-blue-600">Municípios</a>
                 <span class="mx-2">/</span>
-                <a href="/escolas/cidade/<?php echo urlencode($cidade_decoded); ?>" class="hover:text-blue-600"><?php echo $cidade_decoded; ?></a>
+                <a href="/escolas/cidade/<?php echo slugify($cidade_decoded); ?>" class="hover:text-blue-600"><?php echo $cidade_decoded; ?></a>
                 <span class="mx-2">/</span>
                 <span class="text-slate-600"><?php echo $bairro_decoded ?: 'Bairro'; ?></span>
             </nav>
@@ -465,7 +509,7 @@ function renderEscola($id_slug) {
             <nav class="flex mb-8 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <a href="/escolas" class="hover:text-blue-600">Escolas</a>
                 <span class="mx-2">/</span>
-                <a href="/escolas/cidade/<?php echo urlencode($municipio); ?>" class="hover:text-blue-600"><?php echo $municipio; ?></a>
+                <a href="/escolas/cidade/<?php echo slugify($municipio); ?>" class="hover:text-blue-600"><?php echo $municipio; ?></a>
                 <span class="mx-2">/</span>
                 <span class="text-slate-600"><?php echo $nome; ?></span>
             </nav>

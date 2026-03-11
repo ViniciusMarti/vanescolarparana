@@ -2,16 +2,6 @@
 header("Content-Type: application/xml; charset=utf-8");
 require_once __DIR__ . '/../config/db_escolas.php';
 
-function slugify($text) {
-    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
-    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-    $text = preg_replace('~[^-\w]+~', '', $text);
-    $text = trim($text, '-');
-    $text = preg_replace('~-+~', '-', $text);
-    $text = strtolower($text);
-    return empty($text) ? 'n-a' : $text;
-}
-
 $base_url = "https://www.vanescolarparana.com";
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -21,28 +11,46 @@ echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 echo "<url><loc>$base_url/escolas</loc><priority>1.0</priority></url>";
 echo "<url><loc>$base_url/escolas/cidades</loc><priority>0.8</priority></url>";
 
-// Cidades
+// Helper to slugify (copied for standalone execution)
+function slugify($text) {
+    if (!$text) return "";
+    $text = mb_strtolower($text, 'UTF-8');
+    $map = [
+        'á' => 'a', 'à' => 'a', 'ã' => 'a', 'â' => 'a', 'ä' => 'a',
+        'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i',
+        'ó' => 'o', 'ò' => 'o', 'õ' => 'o', 'ô' => 'o', 'ö' => 'o',
+        'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u',
+        'ç' => 'c', 'ñ' => 'n'
+    ];
+    $text = strtr($text, $map);
+    $text = preg_replace('~[^\w\d]+~u', '-', $text);
+    $text = trim($text, '-');
+    $text = preg_replace('~-+~', '-', $text);
+    return empty($text) ? 'n-a' : $text;
+}
+
+// 2. Cidades
 $stmt = $pdo_escolas->query("SELECT DISTINCT nome_municipio FROM escolas");
-while ($cidade = $stmt->fetchColumn()) {
-    $cidade_url = "$base_url/escolas/cidade/" . urlencode($cidade);
-    echo "<url><loc>$cidade_url</loc><priority>0.7</priority></url>";
+while ($row = $stmt->fetch()) {
+    $cidade = slugify($row['nome_municipio']);
+    echo "<url><loc>{$base_url}/escolas/cidade/{$cidade}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n";
     
-    // Bairros da Cidade
+    // 3. Bairros dentro da cidade
     $stmt2 = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ?");
-    $stmt2->execute([$cidade]);
-    while ($bairro = $stmt2->fetchColumn()) {
-        if (!$bairro) continue;
-        $bairro_url = $cidade_url . "/" . urlencode($bairro);
-        echo "<url><loc>$bairro_url</loc><priority>0.6</priority></url>";
+    $stmt2->execute([$row['nome_municipio']]);
+    while ($row2 = $stmt2->fetch()) {
+        if (!$row2['bairro']) continue;
+        $bairro = slugify($row2['bairro']);
+        echo "<url><loc>{$base_url}/escolas/cidade/{$cidade}/{$bairro}</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>\n";
     }
 }
 
-// Escolas
+// 4. Escolas Individuais
 $stmt = $pdo_escolas->query("SELECT id_escola, nome_escola FROM escolas");
-while ($escola = $stmt->fetch()) {
-    $escola_url = "$base_url/escolas/escola/" . $escola['id_escola'] . "-" . slugify($escola['nome_escola']);
-    echo "<url><loc>$escola_url</loc><priority>0.5</priority></url>";
+while ($row = $stmt->fetch()) {
+    $slug = slugify($row['nome_escola']);
+    echo "<url><loc>{$base_url}/escolas/escola/{$row['id_escola']}-{$slug}</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>\n";
 }
-
 echo '</urlset>';
 ?>
