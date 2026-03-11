@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/config/db_escolas.php';
 
+if (!$pdo_escolas) {
+    die("Desculpe, o sistema de rankings está temporariamente fora do ar por problemas de conexão com o banco de dados.");
+}
+
 // SIMPLE CACHE SYSTEM
 function getCachePath($key) {
     if (!is_dir(__DIR__ . '/escolas/cache')) mkdir(__DIR__ . '/escolas/cache', 0777, true);
