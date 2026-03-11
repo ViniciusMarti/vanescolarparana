@@ -396,7 +396,15 @@ function renderRankingPage($config, $local, $local_where, $limit) {
                                 <div class="text-sm text-slate-500 font-medium"><?php echo $esc['nome_municipio']; ?></div>
                             </td>
                             <td class="py-6 px-4 hidden md:table-cell">
-                                <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-black uppercase"><?php echo $esc['rede_escolar']; ?></span>
+                                <?php 
+                                $rede = mb_strtolower($esc['rede_escolar']);
+                                $color_class = 'bg-slate-100 text-slate-600';
+                                if (strpos($rede, 'privada') !== false) $color_class = 'bg-amber-100 text-amber-700';
+                                elseif (strpos($rede, 'estadual') !== false) $color_class = 'bg-indigo-100 text-indigo-700';
+                                elseif (strpos($rede, 'municipal') !== false) $color_class = 'bg-emerald-100 text-emerald-700';
+                                elseif (strpos($rede, 'federal') !== false) $color_class = 'bg-purple-100 text-purple-700';
+                                ?>
+                                <span class="px-3 py-1 <?php echo $color_class; ?> rounded-full text-[10px] font-black uppercase"><?php echo $esc['rede_escolar']; ?></span>
                             </td>
                             <td class="py-6 px-4 text-center">
                                 <span class="font-bold text-blue-600"><?php echo number_format($esc['total_alunos'], 0, ',', '.'); ?></span>
