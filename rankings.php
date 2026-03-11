@@ -174,6 +174,7 @@ $content = ob_get_clean();
     <meta content="#2563eb" name="theme-color" />
     <link href="/icone-favicon.png" rel="icon" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         :root { --primary-gradient: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
@@ -240,6 +241,9 @@ $content = ob_get_clean();
                 document.body.style.overflow = '';
             }
         }
+        
+        // Initialize Lucide Icons
+        lucide.createIcons();
     </script>
 
     <main><?php echo $content; ?></main>
@@ -390,11 +394,19 @@ function renderRankingPage($config, $local, $local_where, $limit) {
                                 <span class="font-bold text-blue-600"><?php echo number_format($esc['total_alunos'], 0, ',', '.'); ?></span>
                             </td>
                             <td class="py-6 px-4 hidden lg:table-cell">
-                                <div class="flex gap-2">
-                                    <span class="px-2 py-0.5 border <?php echo $esc['biblioteca'] ? 'border-green-200 text-green-700 bg-green-50' : 'border-slate-100 text-slate-300'; ?> rounded text-[9px] font-bold">BIB</span>
-                                    <span class="px-2 py-0.5 border <?php echo $esc['laboratorio_informatica'] ? 'border-green-200 text-green-700 bg-green-50' : 'border-slate-100 text-slate-300'; ?> rounded text-[9px] font-bold">LAB</span>
-                                    <span class="px-2 py-0.5 border <?php echo $esc['quadra_esportes'] ? 'border-green-200 text-green-700 bg-green-50' : 'border-slate-100 text-slate-300'; ?> rounded text-[9px] font-bold">QUA</span>
-                                    <span class="px-2 py-0.5 border <?php echo $esc['internet_alunos'] ? 'border-green-200 text-green-700 bg-green-50' : 'border-slate-100 text-slate-300'; ?> rounded text-[9px] font-bold">WWW</span>
+                                <div class="flex gap-3">
+                                    <span title="Biblioteca" class="p-1.5 border <?php echo $esc['biblioteca'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
+                                        <i data-lucide="book" class="w-4 h-4"></i>
+                                    </span>
+                                    <span title="Laboratório de Informática" class="p-1.5 border <?php echo $esc['laboratorio_informatica'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
+                                        <i data-lucide="monitor" class="w-4 h-4"></i>
+                                    </span>
+                                    <span title="Quadra Esportiva" class="p-1.5 border <?php echo $esc['quadra_esportes'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
+                                        <i data-lucide="medal" class="w-4 h-4"></i>
+                                    </span>
+                                    <span title="Internet para Alunos" class="p-1.5 border <?php echo $esc['internet_alunos'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
+                                        <i data-lucide="globe" class="w-4 h-4"></i>
+                                    </span>
                                 </div>
                             </td>
                             <td class="py-6 px-4 text-right">
