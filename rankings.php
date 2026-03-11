@@ -60,6 +60,7 @@ if ($cached_content && !isset($_GET['nocache'])) {
     exit;
 }
 
+ob_start();
 // Configuration of Rankings templates
 $rankings_config = [
     'melhores-escolas' => [
