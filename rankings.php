@@ -326,6 +326,8 @@ function renderRankingPage($config, $local, $local_where, $limit) {
     global $pdo_escolas;
     
     $where = $local_where ?: '1=1';
+    $where .= " AND nome_escola IS NOT NULL AND nome_escola != ''";
+    
     if (!empty($config['sql_where'])) {
         $where .= " AND " . $config['sql_where'];
     }

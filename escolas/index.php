@@ -362,7 +362,7 @@ function renderCidade($cidade_slug) {
     }
 
     // List schools directly for the city since 'bairro' column is missing in DB
-    $stmt = $pdo_escolas->prepare("SELECT * FROM escolas WHERE nome_municipio = ? ORDER BY nome_escola");
+    $stmt = $pdo_escolas->prepare("SELECT * FROM escolas WHERE nome_municipio = ? AND nome_escola IS NOT NULL AND nome_escola != '' ORDER BY nome_escola");
     $stmt->execute([$cidade_decoded]);
     $escolas = $stmt->fetchAll();
 
@@ -414,8 +414,8 @@ function renderEscola($id_slug) {
     $stmt->execute([$id]);
     $escola = $stmt->fetch();
 
-    if (!$escola) {
-        echo "<div class='container mx-auto p-20 text-center font-bold'>Escola não encontrada.</div>";
+    if (!$escola || empty(trim($escola['nome_escola']))) {
+        echo "<div class='container mx-auto p-20 text-center font-bold'>Escola não encontrada ou sem nome cadastrado.</div>";
         return;
     }
 

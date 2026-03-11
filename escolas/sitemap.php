@@ -38,7 +38,7 @@ while ($row = $stmt->fetch()) {
 }
 
 // 4. Escolas Individuais
-$stmt = $pdo_escolas->query("SELECT id_escola, nome_escola FROM escolas");
+$stmt = $pdo_escolas->query("SELECT id_escola, nome_escola FROM escolas WHERE nome_escola IS NOT NULL AND nome_escola != ''");
 while ($row = $stmt->fetch()) {
     $slug = slugify($row['nome_escola']);
     echo "<url><loc>{$base_url}/escolas/escola/{$row['id_escola']}-{$slug}</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>\n";
