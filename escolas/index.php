@@ -445,11 +445,11 @@ function renderEscola($id_slug) {
     
     $infra = [];
     if($escola['biblioteca']) $infra[] = "biblioteca";
-    if($escola['laboratorio']) $infra[] = "laboratório";
-    if($escola['quadra']) $infra[] = "quadra esportiva";
+    if($escola['laboratorio_informatica']) $infra[] = "laboratório de informática";
+    if($escola['quadra_esportes']) $infra[] = "quadra esportiva";
     if($escola['cozinha']) $infra[] = "cozinha";
     if($escola['refeitorio']) $infra[] = "refeitório";
-    if($escola['internet']) $infra[] = "acesso à internet";
+    if($escola['internet_alunos']) $infra[] = "acesso à internet para alunos";
     
     if(!empty($infra)) {
         if(count($infra) > 1) {
@@ -541,11 +541,11 @@ function renderEscola($id_slug) {
                         </li>
                         <li class="flex flex-col">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Laboratório</span>
-                            <span class="font-bold text-slate-700 text-lg"><?php echo formatBinary($escola['laboratorio']); ?></span>
+                            <span class="font-bold text-slate-700 text-lg"><?php echo formatBinary($escola['laboratorio_informatica']); ?></span>
                         </li>
                         <li class="flex flex-col">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Quadra</span>
-                            <span class="font-bold text-slate-700 text-lg"><?php echo formatBinary($escola['quadra']); ?></span>
+                            <span class="font-bold text-slate-700 text-lg"><?php echo formatBinary($escola['quadra_esportes']); ?></span>
                         </li>
                         <li class="flex flex-col">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Refeitório</span>
@@ -553,7 +553,7 @@ function renderEscola($id_slug) {
                         </li>
                         <li class="flex flex-col">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Internet</span>
-                            <span class="font-bold text-slate-700 text-lg"><?php echo formatBinary($escola['internet']); ?></span>
+                            <span class="font-bold text-slate-700 text-lg"><?php echo formatBinary($escola['internet_alunos']); ?></span>
                         </li>
                         <li class="flex flex-col">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Cozinha</span>
@@ -572,20 +572,20 @@ function renderEscola($id_slug) {
                             <span class="font-black text-slate-800"><?php echo formatBinary($escola['banheiro_pne']); ?></span>
                         </li>
                         <li class="flex justify-between items-center border-b border-slate-50 pb-3">
-                            <span class="font-bold text-slate-500">Dependências PNE</span>
-                            <span class="font-black text-slate-800"><?php echo formatBinary($escola['acessibilidade_pne'] ?? 0); ?></span>
+                            <span class="font-bold text-slate-500">Rampas de Acesso</span>
+                            <span class="font-black text-slate-800"><?php echo formatBinary($escola['acessibilidade_rampas'] ?? 0); ?></span>
                         </li>
                     </ul>
                     <h3 class="text-xl font-black text-slate-900 mb-4">Ensino</h3>
                     <div class="flex flex-wrap gap-2">
                         <?php 
                         $modalidades = [
-                            'creche' => $escola['creche'] ?? 0,
-                            'pré-escola' => $escola['pre_escola'] ?? 0,
-                            'fundamental 1' => $escola['fundamental_1'] ?? 0,
-                            'fundamental 2' => $escola['fundamental_2'] ?? 0,
-                            'médio' => $escola['ensino_medio'] ?? 0,
-                            'especial' => $escola['educacao_especial'] ?? 0
+                            'creche' => $escola['tem_creche'] ?? 0,
+                            'pré-escola' => $escola['tem_pre_escola'] ?? 0,
+                            'fundamental 1' => $escola['tem_fundamental_1'] ?? 0,
+                            'fundamental 2' => $escola['tem_fundamental_2'] ?? 0,
+                            'médio' => $escola['tem_ensino_medio'] ?? 0,
+                            'especial' => $escola['tem_educacao_especial'] ?? 0
                         ];
                         foreach($modalidades as $label => $val):
                             if($val):
@@ -605,13 +605,13 @@ function renderEscola($id_slug) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
                     <?php 
                     $faqs = [
-                        ["A escola possui laboratório?", "Sim, a escola $nome possui laboratório para atividades práticas." , $escola['laboratorio']],
-                        ["Existe quadra esportiva disponível?", "Sim, a instituição conta com quadra para prática de esportes." , $escola['quadra']],
+                        ["A escola possui laboratório?", "Sim, a escola $nome possui laboratório de informática para atividades práticas." , $escola['laboratorio_informatica']],
+                        ["Existe quadra esportiva disponível?", "Sim, a instituição conta com quadra para prática de esportes." , $escola['quadra_esportes']],
                         ["A escola é acessível para PCD?", "A escola possui banheiro adaptado para pessoas com deficiência." , $escola['banheiro_pne']],
                         ["Tem biblioteca no local?", "Sim, os alunos possuem acesso à biblioteca para estudos e pesquisas." , $escola['biblioteca']],
-                        ["Os alunos têm acesso à internet?", "Sim, a escola disponibiliza acesso à rede mundial de computadores." , $escola['internet']],
-                        ["A escola oferece ensino médio?", "Esta instituição oferece a modalidade de ensino médio." , $escola['ensino_medio'] ?? 0],
-                        ["Existe atendimento de educação especial?", "Sim, a escola oferece suporte para educação especial." , $escola['educacao_especial'] ?? 0],
+                        ["Os alunos têm acesso à internet?", "Sim, a escola disponibiliza acesso à rede mundial de computadores para os estudantes." , $escola['internet_alunos']],
+                        ["A escola oferece ensino médio?", "Esta instituição oferece a modalidade de ensino médio." , $escola['tem_ensino_medio'] ?? 0],
+                        ["Existe atendimento de educação especial?", "Sim, a escola oferece suporte para educação especial." , $escola['tem_educacao_especial'] ?? 0],
                         ["Quantos alunos estudam nesta escola?", "Atualmente a escola atende um total de " . $escola['total_alunos'] . " alunos." , 1],
                         ["A escola possui refeitório para os alunos?", "Sim, a estrutura conta com refeitório para alimentação escolar." , $escola['refeitorio']],
                         ["Existe parque infantil ou área recreativa?", "Sim, a escola possui espaços destinados ao lazer infantil." , $escola['parque_infantil'] ?? 0]
