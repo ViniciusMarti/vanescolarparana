@@ -62,6 +62,16 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(curitiba|londrina|maringa|foz-do-iguacu|ponta-grossa|sao-jose-dos-pinhais)/([^/.]+)/?$ $1/neighborhood.php?bairro=$2 [L,QSA]
 
+# ------------------------------------------------------------------------------
+# DINÂMICO: ESCOLAS (GERAÇÃO MASSIVA SEO)
+# ------------------------------------------------------------------------------
+RewriteRule ^escolas/cidades/?$ escolas/index.php?route=cidades [L,QSA]
+RewriteRule ^escolas/cidade/([^/]+)/([^/]+)/?$ escolas/index.php?route=bairro&cidade=$1&bairro=$2 [L,QSA]
+RewriteRule ^escolas/cidade/([^/]+)/?$ escolas/index.php?route=cidade&cidade=$1 [L,QSA]
+RewriteRule ^escolas/escola/([^/]+)/?$ escolas/index.php?route=escola&id_slug=$1 [L,QSA]
+RewriteRule ^escolas/?$ escolas/index.php?route=home [L,QSA]
+RewriteRule ^sitemap_escolas\.xml$ escolas/sitemap.php [L]
+
 
 # ------------------------------------------------------------------------------
 # DESEMPENHO: APROVEITAR O CACHE DO NAVEGADOR
