@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require_once __DIR__ . '/../config/db_escolas.php';
 
 // SIMPLE CACHE SYSTEM
@@ -93,8 +89,8 @@ $cidade_param = $_GET['cidade'] ?? '';
 $bairro_param = $_GET['bairro'] ?? '';
 $id_slug = $_GET['id_slug'] ?? '';
 
-// Generate Cache Key (Versioned to force clear)
-$cache_key = "v2_route_{$route}_c_{$cidade_param}_b_{$bairro_param}_id_{$id_slug}";
+// Generate Cache Key (Version v3)
+$cache_key = "v3_route_{$route}_c_{$cidade_param}_b_{$bairro_param}_id_{$id_slug}";
 
 $cached_content = getCache($cache_key, 86400); 
 if ($cached_content && !isset($_GET['nocache'])) {
@@ -116,8 +112,6 @@ if ($route == 'home') {
     renderCidades();
 } elseif ($route == 'cidade' && $cidade_param) {
     renderCidade($cidade_param);
-} elseif ($route == 'bairro' && $cidade_param && $bairro_param) {
-    renderBairro($cidade_param, $bairro_param);
 } elseif ($route == 'escola' && $id_slug) {
     renderEscola($id_slug);
 } else {
@@ -364,19 +358,10 @@ function renderCidade($cidade_slug) {
         exit;
     }
 
-    $title = "Escolas em $cidade_decoded - Bairros e Regiões | Van Escolar Paraná";
-    $description = "Confira a lista de bairros atendidos e todas as escolas disponíveis em $cidade_decoded, Paraná.";
-
-    try {
-        $stmt = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ? ORDER BY bairro");
-        $stmt->execute([$cidade_decoded]);
-        $bairros = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    } catch (PDOException $e) {
-        // DIAGNOSTIC: Show all columns if 'bairro' fails
-        $stmt_cols = $pdo_escolas->query("DESCRIBE escolas");
-        $all_cols = $stmt_cols->fetchAll(PDO::FETCH_COLUMN);
-        die("Erro de Coluna. Colunas disponiveis na tabela escolas: " . implode(", ", $all_cols));
-    }
+    // List schools directly for the city since 'bairro' column is missing in DB
+    $stmt = $pdo_escolas->prepare("SELECT * FROM escolas WHERE nome_municipio = ? ORDER BY nome_escola");
+    $stmt->execute([$cidade_decoded]);
+    $escolas = $stmt->fetchAll();
 
     ?>
     <section class="py-16 bg-slate-50 border-b">
@@ -388,130 +373,30 @@ function renderCidade($cidade_slug) {
                 <span class="mx-2">/</span>
                 <span class="text-slate-600"><?php echo $cidade_decoded; ?></span>
             </nav>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Bairros de <?php echo $cidade_decoded; ?></h1>
-            <p class="text-slate-600 font-medium italic">Selecione o bairro para listar as escolas da região.</p>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Escolas em <?php echo $cidade_decoded; ?></h1>
+            <p class="text-slate-600 font-medium italic">Encontramos <?php echo count($escolas); ?> instituições de ensino neste município.</p>
         </div>
     </section>
 
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <?php foreach ($bairros as $bairro): 
-                    $bairro_label = $bairro ?: 'Lista Geral';
-                    ?>
-                    <a href="/escolas/cidade/<?php echo slugify($cidade_decoded); ?>/<?php echo slugify($bairro); ?>" class="p-8 border border-slate-100 rounded-3xl hover:border-blue-600 hover:shadow-xl transition-all group bg-slate-50/50">
-                        <h3 class="text-xl font-black text-slate-800 group-hover:text-blue-700 leading-tight"><?php echo $bairro_label; ?></h3>
-                        <p class="text-[10px] font-black tracking-widest text-blue-600 mt-4 uppercase">Ver Escolas →</p>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-    <?php
-}
-
-function renderBairro($cidade_slug, $bairro_slug) {
-    global $pdo_escolas, $title, $description;
-    
-    if (!$pdo_escolas) {
-        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
-        return;
-    }
-
-    $cidade_decoded = findCidadeBySlug($cidade_slug);
-    
-    // Redirect if it's the raw name instead of slug
-    if (!$cidade_decoded && !empty($cidade_slug)) {
-         $stmt_direct = $pdo_escolas->prepare("SELECT DISTINCT nome_municipio FROM escolas WHERE nome_municipio = ?");
-         $stmt_direct->execute([$cidade_slug]);
-         $direct_match = $stmt_direct->fetchColumn();
-         if ($direct_match) {
-             header("Location: /escolas/cidade/" . slugify($direct_match) . "/" . $bairro_slug, true, 301);
-             exit;
-         }
-    }
-
-    $bairro_decoded = findBairroBySlug($cidade_decoded, $bairro_slug);
-
-    if (!$cidade_decoded) {
-        header("Location: /escolas/cidades");
-        exit;
-    }
-
-    $title = "Escolas no Bairro $bairro_decoded em $cidade_decoded | Van Escolar Paraná";
-    $description = "Lista completa de escolas localizadas no bairro $bairro_decoded em $cidade_decoded. Veja detalhes de infraestrutura e alunos.";
-
-    // Pagination
-    $page = isset($_GET['p']) ? max(1, intval($_GET['p'])) : 1;
-    $perPage = 20;
-    $offset = ($page - 1) * $perPage;
-
-    $stmt_count = $pdo_escolas->prepare("SELECT COUNT(*) FROM escolas WHERE nome_municipio=? AND bairro=?");
-    $stmt_count->execute([$cidade_decoded, $bairro_decoded]);
-    $total = $stmt_count->fetchColumn();
-    $totalPages = ceil($total / $perPage);
-
-    $stmt = $pdo_escolas->prepare("SELECT * FROM escolas WHERE nome_municipio=? AND bairro=? ORDER BY nome_escola LIMIT $perPage OFFSET $offset");
-    $stmt->execute([$cidade_decoded, $bairro_decoded]);
-    $escolas = $stmt->fetchAll();
-
-    ?>
-    <section class="py-16 bg-slate-50 border-b">
-        <div class="container mx-auto px-6 lg:px-12">
-            <nav class="flex mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <a href="/escolas" class="hover:text-blue-600">Escolas</a>
-                <span class="mx-2">/</span>
-                <a href="/escolas/cidades" class="hover:text-blue-600">Municípios</a>
-                <span class="mx-2">/</span>
-                <a href="/escolas/cidade/<?php echo slugify($cidade_decoded); ?>" class="hover:text-blue-600"><?php echo $cidade_decoded; ?></a>
-                <span class="mx-2">/</span>
-                <span class="text-slate-600"><?php echo $bairro_decoded ?: 'Bairro'; ?></span>
-            </nav>
-            <h1 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Escolas: <?php echo $bairro_decoded ?: 'não identificado'; ?> (<?php echo $cidade_decoded; ?>)</h1>
-            <p class="text-slate-600 font-medium">Exibindo instituições de ensino localizadas no bairro.</p>
-        </div>
-    </section>
-
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <?php foreach ($escolas as $escola): 
-                    $slug = slugify($escola['nome_escola']);
-                    ?>
-                    <a href="/escolas/escola/<?php echo $escola['id_escola']; ?>-<?php echo $slug; ?>" class="school-card p-8 rounded-3xl bg-white flex flex-col justify-between">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php foreach ($escolas as $esc): ?>
+                    <a href="/escolas/escola/<?php echo $esc['id_escola']; ?>-<?php echo slugify($esc['nome_escola']); ?>" class="p-6 border border-slate-100 rounded-3xl hover:border-blue-600 hover:shadow-xl transition-all group bg-slate-50/50 flex flex-col justify-between">
                         <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full"><?php echo $escola['rede_escolar']; ?></span>
-                                <?php if($escola['banheiro_pne']): ?>
-                                    <span class="text-lg" title="Acessibilidade PCD">♿</span>
-                                <?php endif; ?>
-                            </div>
-                            <h2 class="text-xl font-black text-slate-800 mb-2 leading-tight"><?php echo $escola['nome_escola']; ?></h2>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded"><?php echo $escola['zona_localizacao']; ?></span>
-                                <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded"><?php echo $escola['total_alunos']; ?> Alunos</span>
-                            </div>
+                            <span class="px-3 py-1 bg-white border border-slate-200 rounded-full text-[10px] font-black uppercase text-slate-500 mb-4 inline-block"><?php echo $esc['rede_escolar']; ?></span>
+                            <h3 class="text-lg font-black text-slate-800 group-hover:text-blue-700 leading-tight mb-2"><?php echo $esc['nome_escola']; ?></h3>
+                            <p class="text-sm text-slate-500 font-medium"><?php echo $esc['zona_localizacao']; ?></p>
                         </div>
-                        <div class="flex items-center gap-2 mt-4 text-blue-700 font-bold text-xs group-hover:gap-4 transition-all">
-                            VER FICHA COMPLETA 
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        </div>
+                        <p class="text-[10px] font-black tracking-widest text-blue-600 mt-6 uppercase">Ver Detalhes →</p>
                     </a>
                 <?php endforeach; ?>
             </div>
-
-            <!-- Pagination -->
-            <?php if ($totalPages > 1): ?>
-                <div class="mt-16 flex justify-center gap-2">
-                    <?php for($i=1; $i<=$totalPages; $i++): ?>
-                        <a href="?p=<?php echo $i; ?>" class="w-10 h-10 flex items-center justify-center rounded-lg font-bold <?php echo $i==$page ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'; ?>"><?php echo $i; ?></a>
-                    <?php endfor; ?>
-                </div>
-            <?php endif; ?>
         </div>
     </section>
     <?php
 }
+
 
 function renderEscola($id_slug) {
     global $pdo_escolas, $title, $description;

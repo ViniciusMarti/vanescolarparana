@@ -35,15 +35,6 @@ $stmt = $pdo_escolas->query("SELECT DISTINCT nome_municipio FROM escolas");
 while ($row = $stmt->fetch()) {
     $cidade = slugify($row['nome_municipio']);
     echo "<url><loc>{$base_url}/escolas/cidade/{$cidade}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n";
-    
-    // 3. Bairros dentro da cidade
-    $stmt2 = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ?");
-    $stmt2->execute([$row['nome_municipio']]);
-    while ($row2 = $stmt2->fetch()) {
-        if (!$row2['bairro']) continue;
-        $bairro = slugify($row2['bairro']);
-        echo "<url><loc>{$base_url}/escolas/cidade/{$cidade}/{$bairro}</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>\n";
-    }
 }
 
 // 4. Escolas Individuais
