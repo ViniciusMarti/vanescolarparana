@@ -250,6 +250,11 @@ function renderCidades() {
     $title = "Cidades com Escolas no Paraná | Van Escolar Paraná";
     $description = "Lista de todos os municípios do Paraná com dados detalhados das escolas municipais e estaduais.";
 
+    if (!$pdo_escolas) {
+        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados. Por favor, tente novamente mais tarde.</div>";
+        return;
+    }
+
     $stmt = $pdo_escolas->query("SELECT DISTINCT nome_municipio FROM escolas ORDER BY nome_municipio");
     $cidades = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -283,6 +288,11 @@ function renderCidade($cidade) {
     $cidade_decoded = urldecode($cidade);
     $title = "Escolas em $cidade_decoded - Bairros e Regiões | Van Escolar Paraná";
     $description = "Confira a lista de bairros atendidos e todas as escolas disponíveis em $cidade_decoded, Paraná.";
+
+    if (!$pdo_escolas) {
+        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
+        return;
+    }
 
     $stmt = $pdo_escolas->prepare("SELECT DISTINCT bairro FROM escolas WHERE nome_municipio = ? ORDER BY bairro");
     $stmt->execute([$cidade_decoded]);
@@ -331,6 +341,11 @@ function renderBairro($cidade, $bairro) {
     $page = isset($_GET['p']) ? max(1, intval($_GET['p'])) : 1;
     $perPage = 20;
     $offset = ($page - 1) * $perPage;
+
+    if (!$pdo_escolas) {
+        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
+        return;
+    }
 
     $stmt_count = $pdo_escolas->prepare("SELECT COUNT(*) FROM escolas WHERE nome_municipio=? AND bairro=?");
     $stmt_count->execute([$cidade_decoded, $bairro_decoded]);
@@ -403,6 +418,11 @@ function renderEscola($id_slug) {
     global $pdo_escolas, $title, $description;
     $id = intval(explode('-', $id_slug)[0]);
     
+    if (!$pdo_escolas) {
+        echo "<div class='container mx-auto p-20 text-center font-bold'>Erro na conexão com o banco de dados.</div>";
+        return;
+    }
+
     $stmt = $pdo_escolas->prepare("SELECT * FROM escolas WHERE id_escola = ?");
     $stmt->execute([$id]);
     $escola = $stmt->fetch();
