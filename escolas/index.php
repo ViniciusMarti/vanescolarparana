@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../config/db_escolas.php';
 
 // SIMPLE CACHE SYSTEM
@@ -22,14 +26,24 @@ function setCache($key, $content) {
 // Helper functions for SEO and formatting
 function slugify($text) {
     if (!$text) return "";
-    $text = mb_strtolower($text, 'UTF-8');
+    if (function_exists('mb_strtolower')) {
+        $text = mb_strtolower($text, 'UTF-8');
+    } else {
+        $text = strtolower($text);
+    }
     $map = [
         'á' => 'a', 'à' => 'a', 'ã' => 'a', 'â' => 'a', 'ä' => 'a',
         'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
         'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i',
         'ó' => 'o', 'ò' => 'o', 'õ' => 'o', 'ô' => 'o', 'ö' => 'o',
         'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u',
-        'ç' => 'c', 'ñ' => 'n'
+        'ç' => 'c', 'ñ' => 'n',
+        'Á' => 'a', 'À' => 'a', 'Ã' => 'a', 'Â' => 'a', 'Ä' => 'a',
+        'É' => 'e', 'È' => 'e', 'Ê' => 'e', 'Ë' => 'e',
+        'Í' => 'i', 'Ì' => 'i', 'Î' => 'i', 'Ï' => 'i',
+        'Ó' => 'o', 'Ò' => 'o', 'Õ' => 'o', 'Ô' => 'o', 'Ö' => 'o',
+        'Ú' => 'u', 'Ù' => 'u', 'Û' => 'u', 'Ü' => 'u',
+        'Ç' => 'c', 'Ñ' => 'n'
     ];
     $text = strtr($text, $map);
     $text = preg_replace('~[^\w\d]+~u', '-', $text);
@@ -41,9 +55,18 @@ function slugify($text) {
 function findCidadeBySlug($slug) {
     global $pdo_escolas;
     if (!$pdo_escolas) return null;
-    $stmt = $pdo_escolas->query("SELECT DISTINCT nome_municipio FROM escolas");
-    $cidades = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    foreach($cidades as $c) {
+    
+    static $cidades_map = null;
+    if ($cidades_map === null) {
+        try {
+            $stmt = $pdo_escolas->query("SELECT DISTINCT nome_municipio FROM escolas");
+            $cidades_map = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+    
+    foreach($cidades_map as $c) {
         if (slugify($c) === $slug) return $c;
     }
     return null;
@@ -70,10 +93,10 @@ $cidade_param = $_GET['cidade'] ?? '';
 $bairro_param = $_GET['bairro'] ?? '';
 $id_slug = $_GET['id_slug'] ?? '';
 
-// Generate Cache Key
-$cache_key = "route_{$route}_c_{$cidade_param}_b_{$bairro_param}_id_{$id_slug}";
+// Generate Cache Key (Versioned to force clear)
+$cache_key = "v2_route_{$route}_c_{$cidade_param}_b_{$bairro_param}_id_{$id_slug}";
 
-$cached_content = getCache($cache_key, 86400); // 24h cache
+$cached_content = getCache($cache_key, 86400); 
 if ($cached_content && !isset($_GET['nocache'])) {
     echo $cached_content;
     exit;
