@@ -135,6 +135,7 @@ ob_start();
     <link href="<?php echo $canonical; ?>" rel="canonical" />
     <link href="/icone-favicon.png" rel="icon" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         :root { --primary-gradient: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
@@ -187,7 +188,7 @@ ob_start();
                     <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
                     <a href="/rankings/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Rankings</a>
                     <div class="h-px bg-slate-100 my-4"></div>
-                    <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
+                    <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all"><i class="fa-solid fa-star mr-2"></i> Destaque sua Van</a>
                 </nav>
             </div>
         </div>
@@ -263,15 +264,15 @@ function renderHome() {
                     <p class="text-slate-600 text-lg leading-relaxed">Encontre a escola ideal para seus filhos comparando a estrutura física e as modalidades oferecidas. Para motoristas de transporte escolar, o guia é uma ferramenta essencial para identificar escolas por bairro e planejar rotas.</p>
                     <ul class="space-y-4">
                         <li class="flex items-center gap-3 font-bold text-slate-700">
-                            <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs">✓</span>
+                            <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-[10px]"><i class="fa-solid fa-check"></i></span>
                             Mais de 9.500 escolas cadastradas
                         </li>
                         <li class="flex items-center gap-3 font-bold text-slate-700">
-                            <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs">✓</span>
+                            <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-[10px]"><i class="fa-solid fa-check"></i></span>
                             Dados de acessibilidade e infraestrutura
                         </li>
                         <li class="flex items-center gap-3 font-bold text-slate-700">
-                            <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs">✓</span>
+                            <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-[10px]"><i class="fa-solid fa-check"></i></span>
                             Modalidades do Infantil ao Ensino Médio
                         </li>
                     </ul>
@@ -391,7 +392,7 @@ function renderCidade($cidade_slug) {
                             <h3 class="text-lg font-black text-slate-800 group-hover:text-blue-700 leading-tight mb-2"><?php echo $esc['nome_escola']; ?></h3>
                             <p class="text-sm text-slate-500 font-medium"><?php echo $esc['zona_localizacao']; ?></p>
                         </div>
-                        <p class="text-[10px] font-black tracking-widest text-blue-600 mt-6 uppercase">Ver Detalhes →</p>
+                        <p class="text-[10px] font-black tracking-widest text-blue-600 mt-6 uppercase">Ver Detalhes <i class="fa-solid fa-arrow-right ml-1"></i></p>
                     </a>
                 <?php endforeach; ?>
             </div>
@@ -462,7 +463,7 @@ function renderEscola($id_slug) {
                     <div class="flex items-center gap-4 mb-6">
                         <span class="px-5 py-2 bg-blue-100 text-blue-800 rounded-full text-xs font-black uppercase tracking-wider"><?php echo $escola['rede_escolar']; ?></span>
                         <?php if($escola['banheiro_pne']): ?>
-                            <span class="text-3xl" title="Acessibilidade PCD">♿</span>
+                            <span class="text-3xl text-blue-600" title="Acessibilidade PCD"><i class="fa-solid fa-wheelchair"></i></span>
                         <?php endif; ?>
                     </div>
                     <h1 class="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 tracking-tight"><?php echo $nome; ?></h1>
@@ -499,7 +500,7 @@ function renderEscola($id_slug) {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Informações Gerais -->
                 <div class="bg-white border-2 border-slate-50 rounded-[2rem] p-10 hover:border-blue-100 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl mb-8">📍</div>
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl mb-8"><i class="fa-solid fa-location-dot"></i></div>
                     <h3 class="text-2xl font-black text-slate-900 mb-8">Informações Gerais</h3>
                     <ul class="space-y-6">
                         <li class="flex flex-col">
@@ -519,7 +520,7 @@ function renderEscola($id_slug) {
 
                 <!-- Estrutura da Escola -->
                 <div class="bg-white border-2 border-slate-50 rounded-[2rem] p-10 hover:border-blue-100 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 text-2xl mb-8">🏢</div>
+                    <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 text-2xl mb-8"><i class="fa-solid fa-building"></i></div>
                     <h3 class="text-2xl font-black text-slate-900 mb-8">Estrutura Física</h3>
                     <ul class="grid grid-cols-2 gap-y-6 gap-x-4">
                         <li class="flex flex-col">
@@ -551,7 +552,7 @@ function renderEscola($id_slug) {
 
                 <!-- Acessibilidade e Modalidades -->
                 <div class="bg-white border-2 border-slate-50 rounded-[2rem] p-10 hover:border-blue-100 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 text-2xl mb-8">♿</div>
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 text-2xl mb-8"><i class="fa-solid fa-wheelchair"></i></div>
                     <h3 class="text-2xl font-black text-slate-900 mb-8">Acessibilidade</h3>
                     <ul class="space-y-4 mb-10">
                         <li class="flex justify-between items-center border-b border-slate-50 pb-3">
@@ -607,7 +608,7 @@ function renderEscola($id_slug) {
                     foreach($faqs as $faq):
                     ?>
                     <div class="bg-white p-2 rounded-2xl">
-                        <h4 class="font-black text-slate-800 text-lg mb-2">● <?php echo $faq[0]; ?></h4>
+                        <h4 class="font-black text-slate-800 text-lg mb-2"><i class="fa-solid fa-circle text-[8px] mr-2 text-blue-600"></i> <?php echo $faq[0]; ?></h4>
                         <p class="text-slate-500 font-medium leading-relaxed pl-6"><?php echo $faq[2] ? $faq[1] : "No momento não dispomos dessa informação ou a estrutura não está disponível conforme os dados da Secretaria de Educação."; ?></p>
                     </div>
                     <?php endforeach; ?>

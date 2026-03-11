@@ -174,7 +174,7 @@ $content = ob_get_clean();
     <meta content="#2563eb" name="theme-color" />
     <link href="/icone-favicon.png" rel="icon" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         :root { --primary-gradient: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
@@ -241,9 +241,6 @@ $content = ob_get_clean();
                 document.body.style.overflow = '';
             }
         }
-        
-        // Initialize Lucide Icons
-        lucide.createIcons();
     </script>
 
     <main><?php echo $content; ?></main>
@@ -291,7 +288,7 @@ function renderRankingsHome() {
                     <a href="/rankings/<?php echo $key; ?>-parana" class="p-8 border border-slate-100 rounded-3xl hover:border-blue-500 hover:shadow-xl transition-all bg-slate-50/50 group">
                         <h3 class="text-xl font-bold text-slate-800 group-hover:text-blue-700 mb-4"><?php echo str_replace(['{limit}', '{local}'], [50, 'Paraná'], $config['title']); ?></h3>
                         <p class="text-sm text-slate-500 line-clamp-2"><?php echo $config['text']; ?></p>
-                        <p class="text-[10px] font-black text-blue-600 mt-6 uppercase tracking-widest">Acessar Ranking →</p>
+                        <p class="text-[10px] font-black text-blue-600 mt-6 uppercase tracking-widest">Acessar Ranking <i class="fa-solid fa-arrow-right ml-1"></i></p>
                     </a>
                 <?php endforeach; ?>
             </div>
@@ -305,10 +302,10 @@ function renderRankingsHome() {
                     <div class="space-y-4 p-6 border border-slate-100 rounded-3xl bg-white">
                         <h4 class="text-lg font-black text-slate-900 border-b pb-2"><?php echo $c_name; ?></h4>
                         <ul class="space-y-2">
-                            <li><a href="/rankings/melhores-escolas-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">● Melhores Escolas</a></li>
-                            <li><a href="/rankings/escolas-com-laboratorio-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">● Com Laboratório</a></li>
-                            <li><a href="/rankings/escolas-com-quadra-esportiva-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">● Com Quadra</a></li>
-                            <li><a href="/rankings/maiores-escolas-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">● Maiores Escolas</a></li>
+                            <li><a href="/rankings/melhores-escolas-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium"><i class="fa-solid fa-circle text-[6px] mr-2 opacity-40"></i> Melhores Escolas</a></li>
+                            <li><a href="/rankings/escolas-com-laboratorio-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium"><i class="fa-solid fa-circle text-[6px] mr-2 opacity-40"></i> Com Laboratório</a></li>
+                            <li><a href="/rankings/escolas-com-quadra-esportiva-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium"><i class="fa-solid fa-circle text-[6px] mr-2 opacity-40"></i> Com Quadra</a></li>
+                            <li><a href="/rankings/maiores-escolas-<?php echo $c_slug; ?>" class="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium"><i class="fa-solid fa-circle text-[6px] mr-2 opacity-40"></i> Maiores Escolas</a></li>
                         </ul>
                     </div>
                 <?php endforeach; ?>
@@ -398,16 +395,16 @@ function renderRankingPage($config, $local, $local_where, $limit) {
                             <td class="py-6 px-4 hidden lg:table-cell">
                                 <div class="flex gap-3">
                                     <span title="Biblioteca" class="p-1.5 border <?php echo $esc['biblioteca'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
-                                        <i data-lucide="book" class="w-4 h-4"></i>
+                                        <i class="fa-solid fa-book text-xs w-4"></i>
                                     </span>
                                     <span title="Laboratório de Informática" class="p-1.5 border <?php echo $esc['laboratorio_informatica'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
-                                        <i data-lucide="monitor" class="w-4 h-4"></i>
+                                        <i class="fa-solid fa-display text-xs w-4"></i>
                                     </span>
                                     <span title="Quadra Esportiva" class="p-1.5 border <?php echo $esc['quadra_esportes'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
-                                        <i data-lucide="medal" class="w-4 h-4"></i>
+                                        <i class="fa-solid fa-medal text-xs w-4"></i>
                                     </span>
                                     <span title="Internet para Alunos" class="p-1.5 border <?php echo $esc['internet_alunos'] ? 'border-blue-200 text-blue-600 bg-blue-50' : 'border-slate-100 text-slate-300'; ?> rounded-lg transition-colors">
-                                        <i data-lucide="globe" class="w-4 h-4"></i>
+                                        <i class="fa-solid fa-globe text-xs w-4"></i>
                                     </span>
                                 </div>
                             </td>

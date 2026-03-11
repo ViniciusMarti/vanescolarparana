@@ -102,11 +102,9 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
   <link href="https://fonts.googleapis.com" rel="dns-prefetch" />
   <link href="https://fonts.gstatic.com" rel="dns-prefetch" />
   <!-- Tailwind CSS (CDN) -->
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <!-- Google Fonts (display=swap) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
-    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="/fontawesome/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
   <!-- Base styles & a11y -->
   <style>
     :root {
@@ -194,7 +192,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
         <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 hover:shadow-lg transition-all active:scale-95"
           href="/destaque-sua-van/">
           <span class="px-6 py-2.5 transition-all duration-75 bg-blue-600 rounded-full hover:bg-opacity-0">
-            Destaque sua Van
+            <i class="fa-solid fa-star mr-2 text-[10px]"></i> Destaque sua Van
           </span>
         </a>
       </div>
@@ -224,7 +222,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
                 <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
                 <a href="/rankings/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Rankings</a>
                 <div class="h-px bg-slate-100 my-4"></div>
-                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all"><i class="fa-solid fa-star mr-2"></i> Destaque sua Van</a>
             </nav>
             <p class="text-slate-400 text-center text-xs mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
         </div>
@@ -477,7 +475,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
           </div>
           <div class="relative z-10 w-full md:w-auto">
             <a href="/destaque-sua-van/" class="block text-center px-10 py-5 bg-white text-blue-700 rounded-full font-black text-lg md:text-2xl shadow-xl hover:bg-blue-50 transition-all active:scale-95 whitespace-nowrap">
-              Destaque seu Negócio 🚛
+              Destaque seu Negócio <i class="fa-solid fa-van-shuttle ml-2"></i>
             </a>
           </div>
           <!-- Efeito de Luz -->
@@ -500,7 +498,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
           <?php endforeach; ?>
         </div>
         <div class="mt-12">
-          <a href="/escolas/cidades" class="text-blue-700 font-black hover:underline italic">Ver todas as 399 cidades →</a>
+          <a href="/escolas/cidades" class="text-blue-700 font-black hover:underline italic">Ver todas as 399 cidades <i class="fa-solid fa-arrow-right ml-1"></i></a>
         </div>
       </div>
     </section>

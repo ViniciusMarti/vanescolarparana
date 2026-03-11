@@ -27,7 +27,7 @@ try {
   <meta content="#2563eb" name="theme-color" />
   <link href="/icone-favicon.png" rel="icon" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="/fontawesome/css/all.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; font-size: 18px; }
     .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
@@ -78,7 +78,7 @@ try {
                 <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
                 <a href="/escolas/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Escolas</a>
                 <div class="h-px bg-slate-100 my-4"></div>
-                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all"><i class="fa-solid fa-star mr-2"></i> Destaque sua Van</a>
             </nav>
             <p class="text-slate-400 text-center text-xs mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
         </div>
@@ -137,7 +137,7 @@ try {
     <section class="py-12 bg-slate-50 border-b border-slate-200">
       <div class="container mx-auto px-4 lg:px-12">
         <div class="flex items-center gap-4 mb-8">
-            <span class="text-4xl text-blue-600">⭐</span>
+            <span class="text-4xl text-blue-600"><i class="fa-solid fa-star"></i></span>
             <h2 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">Bairros mais buscados</h2>
         </div>
         
@@ -180,7 +180,7 @@ try {
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-16 pb-10 border-b-2 border-slate-50 gap-6">
           <h2 class="text-4xl font-black text-slate-800 tracking-tight">Todos os Bairros Atendidos</h2>
           <div class="flex items-center gap-3 bg-blue-50 text-blue-700 px-8 py-4 rounded-full font-bold text-base">
-            <span>🔍</span>
+            <span><i class="fa-solid fa-magnifying-glass mr-2"></i></span>
             Organizado em ordem alfabética
           </div>
         </div>
@@ -207,7 +207,7 @@ try {
           </div>
           <div class="relative z-10 w-full md:w-auto">
             <a href="/destaque-sua-van/" class="block text-center px-10 py-5 bg-white text-blue-900 rounded-full font-black text-lg md:text-xl shadow-xl hover:bg-blue-50 transition-all active:scale-95 whitespace-nowrap">
-              Destaque seu Negócio 🚛
+              Destaque seu Negócio <i class="fa-solid fa-van-shuttle ml-2"></i>
             </a>
           </div>
           <div class="absolute -top-24 -right-24 w-80 h-80 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-all duration-700"></div>
@@ -270,3 +270,4 @@ try {
 
 </body>
 </html>
+

@@ -134,7 +134,7 @@ try {
   
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="/fontawesome/css/all.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   
   <style>
     body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; font-size: 16px; }
@@ -172,7 +172,7 @@ try {
       <div class="hidden md:flex items-center gap-8 text-sm md:text-base">
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/sobre/">Sobre</a>
         <a class="text-slate-600 hover:text-blue-700 font-semibold transition-colors" href="/informativos/">Informativos</a>
-        <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:shadow-lg hover:scale-105 transition-all active:scale-95 px-6 py-2.5" href="/destaque-sua-van/">⭐ Destaque sua Van</a>
+        <a class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-white rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:shadow-lg hover:scale-105 transition-all active:scale-95 px-6 py-2.5" href="/destaque-sua-van/"><i class="fa-solid fa-star"></i> Destaque sua Van</a>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -196,7 +196,7 @@ try {
                 <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
                 <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
                 <div class="h-px bg-slate-100 my-4"></div>
-                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all"><i class="fa-solid fa-star"></i> Destaque sua Van</a>
             </nav>
             <p class="text-slate-400 text-center text-xs mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
         </div>
@@ -238,15 +238,15 @@ try {
       </h2>
       <div class="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto pb-6 -mx-4 px-4 md:mx-0 md:px-0 snap-x snap-mandatory no-scrollbar">
         <div class="flex-shrink-0 w-[280px] md:w-auto snap-center step-card p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-slate-100 bg-white">
-          <div class="text-3xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center">👀</div>
+          <div class="text-3xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center"><i class="fa-solid fa-eye text-blue-600"></i></div>
           <div><p class="font-bold text-lg">1. Olhe a lista</p><p class="text-gray-500 text-sm italic">Escolha um motorista</p></div>
         </div>
         <div class="flex-shrink-0 w-[280px] md:w-auto snap-center step-card p-6 rounded-2xl flex items-start gap-4 shadow-md border-2 border-blue-100 bg-blue-50/30">
-          <div class="text-3xl bg-blue-100/50 w-12 h-12 rounded-xl flex items-center justify-center">📱</div>
+          <div class="text-3xl bg-blue-100/50 w-12 h-12 rounded-xl flex items-center justify-center"><i class="fa-solid fa-mobile-screen-button text-blue-600"></i></div>
           <div><p class="font-bold text-lg text-blue-900">2. Clique no Botão</p><p class="text-blue-700/70 text-sm italic">Tire dúvidas no Whats</p></div>
         </div>
         <div class="flex-shrink-0 w-[280px] md:w-auto snap-center step-card p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-slate-100 bg-white">
-          <div class="text-3xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center">🤝</div>
+          <div class="text-3xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center"><i class="fa-solid fa-handshake text-blue-600"></i></div>
           <div><p class="font-bold text-lg">3. Combine direto</p><p class="text-gray-500 text-sm italic">Simples e seguro</p></div>
         </div>
       </div>
@@ -272,7 +272,7 @@ try {
                         <?php if ($is_premium): ?>
                             <div class="flex items-center">
                                 <span class="bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-amber-200 flex items-center gap-2">
-                                    <span>⭐</span> Motorista em Destaque
+                                    <span><i class="fa-solid fa-star"></i></span> Motorista em Destaque
                                 </span>
                             </div>
                         <?php endif; ?>
@@ -299,7 +299,7 @@ try {
             <?php endforeach; ?>
         <?php else: ?>
             <div class="bg-slate-50 p-16 rounded-[3rem] text-center border-4 border-dashed border-slate-200 group hover:border-blue-200 transition-all duration-500">
-                <div class="w-24 h-24 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce">🚐</div>
+                <div class="w-24 h-24 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce"><i class="fa-solid fa-bus"></i></div>
                 <h3 class="text-3xl font-black text-slate-800 mb-4">Nenhum motorista disponível em <?php echo $neighborhood['title']; ?></h3>
                 <p class="text-slate-500 font-medium text-xl mb-10 max-w-xl mx-auto">Ainda não temos transportadores cadastrados para esta região específica. Seja o pioneiro e domine as buscas aqui!</p>
                 <a href="/destaque-sua-van/" class="inline-flex items-center gap-4 px-12 py-6 bg-blue-600 text-white rounded-full font-black text-2xl shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all">
@@ -322,7 +322,7 @@ try {
                 </div>
                 <div class="flex flex-col items-center gap-4 w-full lg:w-auto">
                     <a href="/destaque-sua-van/" class="w-full lg:w-auto px-10 py-5 bg-white text-blue-900 rounded-full font-black text-xl md:text-2xl shadow-xl hover:bg-blue-50 hover:scale-105 active:scale-95 transition-all whitespace-nowrap">
-                        Aparecer no Topo ⭐
+                        Aparecer no Topo <i class="fa-solid fa-star"></i>
                     </a>
                     <p class="text-blue-300 text-xs font-bold md:opacity-0 md:group-hover:opacity-100 transition-opacity">Planos a partir de R$ 20,00</p>
                 </div>
@@ -333,7 +333,7 @@ try {
 
     <!-- Aviso de Segurança Super Claro -->
     <section class="bg-yellow-50 border-2 border-yellow-200 rounded-3xl p-6 md:p-8 mb-12 flex flex-col sm:flex-row items-center gap-4 md:gap-6">
-      <div class="text-4xl md:text-5xl">⚠️</div>
+      <div class="text-4xl md:text-5xl"><i class="fa-solid fa-triangle-exclamation text-yellow-600"></i></div>
       <div>
         <h3 class="text-lg md:text-xl font-bold text-yellow-900 mb-1">Dica importante de segurança:</h3>
         <p class="text-yellow-800 text-sm md:text-base leading-relaxed font-medium">
@@ -359,7 +359,7 @@ try {
     <div class="mt-8 text-xs text-gray-400">© <span id="current-year"><?php echo date('Y'); ?></span> Todos os direitos reservados.</div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+  
   
   <script>
     // Script adicional se necessário
@@ -368,3 +368,4 @@ try {
 
 </body>
 </html>
+
