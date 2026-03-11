@@ -70,31 +70,35 @@ $rankings_config = [
     'melhores-escolas' => [
         'title' => 'Top {limit} Melhores Escolas em {local} (Mais Equipadas)',
         'description' => 'Confira o ranking das {limit} escolas mais bem equipadas em {local}. Lista baseada em infraestrutura como laboratórios, bibliotecas e quadras.',
-        'sql_order' => '(biblioteca + laboratorio_informatica + quadra_esportes + parque_infantil + internet_alunos + acessibilidade_rampas + banheiro_pne) DESC',
+        'sql_order' => '(biblioteca + laboratorio_informatica + quadra_esportes + parque_infantil + internet_alunos + acessibilidade_rampas + banheiro_pne) DESC, total_alunos DESC',
         'text' => 'Este ranking apresenta as instituições de ensino em {local} que possuem a infraestrutura mais completa, considerando itens essenciais para o desenvolvimento pedagógico e bem-estar dos alunos.'
     ],
     'escolas-com-laboratorio' => [
         'title' => 'Top {limit} Escolas com Laboratório de Informática em {local}',
         'description' => 'Veja as melhores escolas que oferecem laboratório de informática em {local}. Rankings atualizados para SEO.',
         'sql_where' => 'laboratorio_informatica = 1',
+        'sql_order' => 'total_alunos DESC',
         'text' => 'O acesso à tecnologia é fundamental na educação moderna. Abaixo, listamos as escolas em {local} que disponibilizam laboratórios de informática equipados para seus estudantes.'
     ],
     'escolas-com-biblioteca' => [
         'title' => 'Top {limit} Escolas com Biblioteca em {local}',
         'description' => 'Lista das {limit} melhores escolas de {local} que possuem biblioteca e incentivo à leitura.',
         'sql_where' => 'biblioteca = 1',
+        'sql_order' => 'total_alunos DESC',
         'text' => 'A biblioteca é o coração de uma escola. Conheça as instituições de {local} que investem em acervo literário e espaços de estudo para os alunos.'
     ],
     'escolas-com-quadra-esportiva' => [
         'title' => 'Top {limit} Escolas com Quadra Esportiva em {local}',
         'description' => 'Ranking das escolas de {local} com melhor infraestrutura para esportes e quadras poliesportivas.',
         'sql_where' => 'quadra_esportes = 1',
+        'sql_order' => 'total_alunos DESC',
         'text' => 'A prática de esportes auxilia no desenvolvimento físico e social. Confira as escolas em {local} que possuem quadras esportivas em suas dependências.'
     ],
     'escolas-com-acessibilidade-pcd' => [
         'title' => 'Top {limit} Escolas com Acessibilidade PCD em {local}',
         'description' => 'Encontre escolas acessíveis com banheiro PNE e rampas em {local}. Guia completo de educação inclusiva.',
         'sql_where' => 'banheiro_pne = 1',
+        'sql_order' => 'total_alunos DESC',
         'text' => 'A inclusão é um direito. Este ranking destaca as escolas em {local} que possuem infraestrutura adaptada, como banheiros PNE e acessibilidade para pessoas com deficiência.'
     ],
     'maiores-escolas' => [
