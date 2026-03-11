@@ -137,7 +137,7 @@ try {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   
   <style>
-    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; font-size: 18px; }
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; font-size: 16px; }
     .btn-whatsapp { background-color: #25d366; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.2s; }
     .btn-whatsapp:hover { background-color: #128c7e; transform: scale(1.02); }
     .step-card { background: white; border: 2px solid #e2e8f0; }
@@ -145,11 +145,14 @@ try {
     .van-card { border: 1px solid #e2e8f0; transition: border-color 0.2s; }
     .van-card:hover { border-color: #2563eb; }
     .seo-content { line-height: 1.6; }
-    .seo-content h2 { font-size: 2.25rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 1.25rem; text-align: center; color: #1e293b; }
-    .seo-content h3 { font-size: 1.5rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.85rem; color: #2563eb; }
+    .seo-content h2 { font-size: 1.5rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 1.25rem; text-align: center; color: #1e293b; }
+    @media (min-width: 768px) { .seo-content h2 { font-size: 1.75rem; } }
+    .seo-content h3 { font-size: 1.25rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.85rem; color: #2563eb; }
     .seo-content p { margin-bottom: 1.15rem; color: #475569; }
     .seo-content ul { list-style: disc; margin-left: 1.5rem; margin-bottom: 1.25rem; }
     .seo-content strong { color: #1e293b; font-weight: 700; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
   
   <script>
@@ -178,20 +181,24 @@ try {
       </button>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
-        <div id="mobile-menu-content" class="absolute top-0 right-0 w-80 h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
-            <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <!-- Menu Mobile Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+        <!-- Bloqueio de fundo -->
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+        
+        <!-- Conteúdo do Menu -->
+        <div id="mobile-menu-content" class="absolute top-0 right-0 w-[280px] h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
+            <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8 rounded-xl hover:bg-slate-50">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <nav class="flex flex-col gap-6 text-left">
-                <a href="/" class="text-2xl font-black text-slate-800">Início</a>
-                <a href="/sobre/" class="text-2xl font-black text-slate-800">Sobre</a>
-                <a href="/informativos/" class="text-2xl font-black text-slate-800">Informativos</a>
+            <nav class="flex flex-col gap-4 text-left">
+                <a href="/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Início</a>
+                <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
+                <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
                 <div class="h-px bg-slate-100 my-4"></div>
-                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-6 rounded-3xl text-center font-black text-xl shadow-xl shadow-blue-100 italic">⭐ Destaque sua Van</a>
-                <p class="text-slate-400 text-center text-sm mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
             </nav>
+            <p class="text-slate-400 text-center text-xs mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
         </div>
     </div>
   </header>
@@ -219,20 +226,29 @@ try {
   <main class="container mx-auto px-4 py-8 max-w-4xl">
     
     <div class="bg-blue-600 rounded-3xl p-8 mb-12 text-white shadow-xl relative overflow-hidden">
-        <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Procurando Van Escolar no <?php echo $nome_bairro_exibicao; ?>?</h1>
-        <p class="text-xl md:text-2xl text-blue-50 font-medium">Ajudamos você a encontrar o transporte mais seguro para seus filhos.</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold mb-4">Procurando Van Escolar no <?php echo $nome_bairro_exibicao; ?>?</h1>
+        <p class="text-lg md:text-xl text-blue-50 font-medium">Ajudamos você a encontrar o transporte mais seguro para seus filhos.</p>
     </div>
 
     <!-- Passo a Passo Simples -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800">
+      <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800">
         <span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center text-lg">?</span>
         Como funciona o site
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center sm:text-left">
-        <div class="step-card p-6 rounded-2xl flex items-start gap-4"><div class="text-3xl">👀</div><div><p class="font-bold text-lg">1. Olhe a lista</p><p class="text-gray-600 text-sm">Escolha um motorista abaixo.</p></div></div>
-        <div class="step-card p-6 rounded-2xl flex items-start gap-4 text-blue-800 bg-blue-50 border-blue-200"><div class="text-3xl">📱</div><div><p class="font-bold text-lg">2. Clique no Botão</p><p class="text-blue-700/80 text-sm">Toque em "Falar no WhatsApp".</p></div></div>
-        <div class="step-card p-6 rounded-2xl flex items-start gap-4"><div class="text-3xl">🤝</div><div><p class="font-bold text-lg">3. Combine direto</p><p class="text-gray-600 text-sm">Tire dúvidas sobre preço e horários.</p></div></div>
+      <div class="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto pb-6 -mx-4 px-4 md:mx-0 md:px-0 snap-x snap-mandatory no-scrollbar">
+        <div class="flex-shrink-0 w-[280px] md:w-auto snap-center step-card p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-slate-100 bg-white">
+          <div class="text-3xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center">👀</div>
+          <div><p class="font-bold text-lg">1. Olhe a lista</p><p class="text-gray-500 text-sm italic">Escolha um motorista</p></div>
+        </div>
+        <div class="flex-shrink-0 w-[280px] md:w-auto snap-center step-card p-6 rounded-2xl flex items-start gap-4 shadow-md border-2 border-blue-100 bg-blue-50/30">
+          <div class="text-3xl bg-blue-100/50 w-12 h-12 rounded-xl flex items-center justify-center">📱</div>
+          <div><p class="font-bold text-lg text-blue-900">2. Clique no Botão</p><p class="text-blue-700/70 text-sm italic">Tire dúvidas no Whats</p></div>
+        </div>
+        <div class="flex-shrink-0 w-[280px] md:w-auto snap-center step-card p-6 rounded-2xl flex items-start gap-4 shadow-sm border border-slate-100 bg-white">
+          <div class="text-3xl bg-slate-50 w-12 h-12 rounded-xl flex items-center justify-center">🤝</div>
+          <div><p class="font-bold text-lg">3. Combine direto</p><p class="text-gray-500 text-sm italic">Simples e seguro</p></div>
+        </div>
       </div>
     </section>
 
@@ -260,7 +276,7 @@ try {
                                 </span>
                             </div>
                         <?php endif; ?>
-                        <h3 class="text-2xl md:text-3xl font-black text-slate-900 leading-tight"><?php echo htmlspecialchars($van['permissionario']); ?></h3>
+                        <h3 class="text-xl md:text-2xl font-black text-slate-900 leading-tight"><?php echo htmlspecialchars($van['permissionario']); ?></h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-sm font-medium text-slate-500">
                             <p><strong>Van Ano:</strong> <?php echo htmlspecialchars($van['ano'] ?: '---'); ?></p>
                             <p><strong>Placa:</strong> <?php echo htmlspecialchars($van['modelo_placa'] ?: '---'); ?></p>
@@ -294,22 +310,22 @@ try {
 <?php endif; ?>
 
         <!-- Publicidade Estratégica para Motoristas -->
-        <div class="mt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-950 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-[0_30px_60px_-15px_rgba(30,58,138,0.5)] group">
+        <div class="mt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-950 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 text-white relative overflow-hidden shadow-[0_30px_60px_-15px_rgba(30,58,138,0.5)] group">
             <!-- Efeito de Luz -->
             <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full -mr-32 -mt-32 blur-[100px] group-hover:bg-blue-400/30 transition-all duration-700"></div>
             <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full -ml-32 -mb-32 blur-[80px]"></div>
-
-            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 text-center lg:text-left">
+            
+            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
                 <div class="max-w-2xl">
-                    <span class="inline-block px-4 py-1.5 bg-blue-500/20 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-widest text-blue-300 mb-6 border border-blue-500/30">Área do Transportador</span>
-                    <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">Você é motorista em <span class="text-blue-400"><?php echo $neighborhood['title']; ?></span>?</h2>
-                    <p class="text-xl text-blue-100/80 font-medium leading-relaxed">Não perca mais clientes por não ser visto. Leve sua van para o topo agora mesmo e multiplique seus contatos no WhatsApp.</p>
+                    <span class="inline-block px-4 py-1.5 bg-blue-500/20 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-blue-300 mb-6 border border-blue-500/30">Área do Transportador</span>
+                    <h2 class="text-2xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight">Você é motorista no <span class="text-blue-400"><?php echo $nome_bairro_exibicao; ?></span>?</h2>
+                    <p class="text-lg md:text-xl text-blue-100/80 font-medium leading-relaxed">Não perca mais clientes por não ser visto. Leve sua van para o topo e multiplique seus contatos.</p>
                 </div>
-                <div class="flex flex-col items-center gap-4">
-                    <a href="/destaque-sua-van/" class="px-12 py-6 bg-white text-blue-900 rounded-full font-black text-2xl shadow-xl hover:bg-blue-50 hover:scale-105 active:scale-95 transition-all whitespace-nowrap">
+                <div class="flex flex-col items-center gap-4 w-full lg:w-auto">
+                    <a href="/destaque-sua-van/" class="w-full lg:w-auto px-10 py-5 bg-white text-blue-900 rounded-full font-black text-xl md:text-2xl shadow-xl hover:bg-blue-50 hover:scale-105 active:scale-95 transition-all whitespace-nowrap">
                         Aparecer no Topo ⭐
                     </a>
-                    <p class="text-blue-300 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">Planos a partir de R$ 20,00</p>
+                    <p class="text-blue-300 text-xs font-bold md:opacity-0 md:group-hover:opacity-100 transition-opacity">Planos a partir de R$ 20,00</p>
                 </div>
             </div>
         </div>
@@ -317,12 +333,12 @@ try {
     </section>
 
     <!-- Aviso de Segurança Super Claro -->
-    <section class="bg-yellow-50 border-2 border-yellow-200 rounded-3xl p-8 mb-12 flex flex-col sm:flex-row items-center gap-6">
-      <div class="text-5xl">⚠️</div>
+    <section class="bg-yellow-50 border-2 border-yellow-200 rounded-3xl p-6 md:p-8 mb-12 flex flex-col sm:flex-row items-center gap-4 md:gap-6">
+      <div class="text-4xl md:text-5xl">⚠️</div>
       <div>
-        <h3 class="text-xl font-bold text-yellow-900 mb-2">Dica importante de segurança:</h3>
-        <p class="text-yellow-800 leading-relaxed font-medium">
-          Antes de fechar qualquer contrato, peça para ver o <strong>alvará da URBS ou Prefeitura</strong> do motorista. No site oficial da prefeitura de <?php echo $cidade_nome_limpo; ?> você também pode conferir se a van está em dia. Segurança em primeiro lugar!
+        <h3 class="text-lg md:text-xl font-bold text-yellow-900 mb-1">Dica importante de segurança:</h3>
+        <p class="text-yellow-800 text-sm md:text-base leading-relaxed font-medium">
+          Antes de fechar qualquer contrato, peça para ver o <strong>alvará da URBS ou Prefeitura</strong>. No site oficial da prefeitura de <?php echo $cidade_nome_limpo; ?> você confere se a van está em dia.
         </p>
       </div>
     </section>
@@ -350,14 +366,6 @@ try {
     // Script adicional se necessário
   </script>
 
-  <!-- Botão Flutuante Espaço do Motorista -->
-  <a href="/destaque-sua-van/" class="fixed bottom-8 right-8 z-[200] group">
-    <div class="bg-blue-600 text-white flex items-center gap-4 px-8 py-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 relative overflow-hidden">
-      <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
-      <span class="text-2xl">⭐</span>
-      <span class="font-black text-sm uppercase tracking-widest hidden lg:inline">É Motorista? Apareça no Topo!</span>
-      <span class="font-black text-xs uppercase tracking-widest lg:hidden">Apareça no Topo 🚐</span>
-    </div>
-  </a>
+
 </body>
 </html>

@@ -116,9 +116,10 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
       background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
     }
 
-    .search-glow:focus-within {
+    /* Glow removido a pedido do usuário */
+    /* .search-glow:focus-within {
       box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
-    }
+    } */
 
     /* Animações */
     @keyframes fadeIn {
@@ -184,19 +185,23 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
     </nav>
 
     <!-- Menu Mobile Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
-        <div id="mobile-menu-content" class="absolute top-0 right-0 w-80 h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
-            <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <div id="mobile-menu" class="fixed inset-0 z-[150] opacity-0 pointer-events-none transition-all duration-300 md:hidden">
+        <!-- Bloqueio de fundo -->
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+        
+        <!-- Conteúdo do Menu -->
+        <div id="mobile-menu-content" class="absolute top-0 right-0 w-[280px] h-full bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col p-8">
+            <button onclick="toggleMobileMenu()" class="self-end p-2 text-slate-500 hover:text-slate-900 mb-8 rounded-xl hover:bg-slate-50">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <nav class="flex flex-col gap-6">
-                <a href="/" class="text-2xl font-black text-slate-800">Início</a>
-                <a href="/sobre/" class="text-2xl font-black text-slate-800">Sobre</a>
-                <a href="/informativos/" class="text-2xl font-black text-slate-800">Informativos</a>
+            <nav class="flex flex-col gap-4">
+                <a href="/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Início</a>
+                <a href="/sobre/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Sobre</a>
+                <a href="/informativos/" class="text-xl font-bold text-slate-800 p-4 rounded-2xl hover:bg-slate-50 transition-colors">Informativos</a>
                 <div class="h-px bg-slate-100 my-4"></div>
-                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-6 rounded-3xl text-center font-black text-xl shadow-xl shadow-blue-100 italic">⭐ Destaque sua Van</a>
-                <p class="text-slate-400 text-center text-sm mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
+                <a href="/destaque-sua-van/" class="bg-blue-600 text-white p-5 rounded-3xl text-center font-black text-lg shadow-xl shadow-blue-100 italic active:scale-95 transition-all">⭐ Destaque sua Van</a>
             </nav>
+            <p class="text-slate-400 text-center text-xs mt-auto">Van Escolar Paraná © <?php echo date('Y'); ?></p>
         </div>
     </div>
   </header>
@@ -223,7 +228,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
 
   <main>
     <!-- Hero Section -->
-    <section class="relative pt-12 pb-24 lg:pt-20 lg:pb-40 overflow-hidden">
+    <section class="relative pt-12 pb-24 lg:pt-20 lg:pb-40 z-10">
       <!-- Imagem de Fundo Hero -->
       <div class="absolute inset-0 -z-20">
         <img src="/imagens/hero_van_modern.png" class="w-full h-full object-cover opacity-15" alt="Van Escolar Segura">
@@ -241,7 +246,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
             Vans Regulamentadas em Todo o Paraná
           </div>
 
-          <h1 class="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight animate-fade-in px-4"
+          <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight animate-fade-in px-4"
             style="animation-delay: 0.2s">
             O Caminho da Escola <br class="md:hidden" />
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800">
@@ -249,7 +254,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
             </span>
           </h1>
 
-          <p class="text-xl text-slate-600 max-w-2xl mx-auto font-medium animate-fade-in leading-relaxed"
+          <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto font-medium animate-fade-in leading-relaxed"
             style="animation-delay: 0.3s">
             Encontre transportadores escolares certificados por bairro. <br class="hidden sm:block" />
             Fale direto com o motorista pelo WhatsApp.
@@ -266,7 +271,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
                 </svg>
               </div>
               <input
-                class="w-full h-18 py-6 pl-14 md:pl-16 pr-8 bg-white border border-slate-200 rounded-[2rem] text-base md:text-lg text-slate-900 shadow-2xl focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-400 font-medium"
+                class="w-full h-18 py-6 pl-14 md:pl-16 pr-8 bg-white border border-slate-200 rounded-[2rem] text-base md:text-lg text-slate-900 shadow-2xl focus:border-slate-300 focus:outline-none transition-all placeholder:text-slate-400 font-medium"
                 id="search-input" placeholder="Buscar bairro ou cidade..." type="text" />
             </div>
             <div
@@ -330,8 +335,8 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
       <div class="container mx-auto px-6 lg:px-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div class="space-y-4">
-            <h2 class="text-4xl font-black text-slate-900 leading-tight">Cidades Atendidas</h2>
-            <p class="text-lg text-slate-600 font-medium">Encontre o transporte ideal nas principais regiões do estado.
+            <h2 class="text-2xl md:text-3xl font-black text-slate-900 leading-tight">Cidades Atendidas</h2>
+            <p class="text-base md:text-lg text-slate-600 font-medium">Encontre o transporte ideal nas principais regiões do estado.
             </p>
           </div>
           <a class="group inline-flex items-center gap-2 text-blue-700 font-bold hover:text-indigo-800 transition-colors"
@@ -356,8 +361,8 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
             <div class="absolute bottom-0 left-0 p-10 space-y-2">
               <span
                 class="px-4 py-1 bg-blue-600/20 backdrop-blur-md border border-white/20 text-white text-xs font-bold rounded-full uppercase tracking-widest">Capital</span>
-              <h3 class="text-4xl font-black text-white">Curitiba</h3>
-              <p class="text-white/80 font-medium text-lg max-w-md">Acesse a maior rede de transporte escolar da capital
+              <h3 class="text-2xl md:text-3xl font-black text-white">Curitiba</h3>
+              <p class="text-white/80 font-medium text-base max-w-md">Acesse a maior rede de transporte escolar da capital
                 paranaense.</p>
             </div>
           </a>
@@ -370,7 +375,7 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
               src="/imagens/londrina.jpg" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
             <div class="absolute bottom-0 left-0 p-8">
-              <h3 class="text-2xl font-black text-white">Londrina</h3>
+              <h3 class="text-xl font-black text-white">Londrina</h3>
               <p class="text-white/70 text-sm font-bold">Norte do Paraná</p>
             </div>
           </a>
@@ -421,9 +426,9 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
     </section>
 
     <!-- Bairros Populares -->
-    <section class="py-24 bg-white">
+    <section class="py-16 md:py-24 bg-white">
       <div class="container mx-auto px-6 lg:px-12 text-center">
-        <h2 class="text-3xl font-black text-slate-900 mb-16">Buscas Populares em Curitiba</h2>
+        <h2 class="text-xl md:text-2xl font-black text-slate-900 mb-12 md:mb-16">Buscas Populares em Curitiba</h2>
         <div class="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
           <?php 
           $populares = ['agua-verde', 'batel', 'centro', 'santa-felicidade', 'bigorrilho', 'cabral', 'portao', 'jardim-botanico', 'boa-vista', 'juveve'];
@@ -440,13 +445,13 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
     <!-- Área do Motorista (Incentivo) -->
     <section class="py-20 bg-slate-50">
       <div class="container mx-auto px-6 lg:px-12">
-        <div class="bg-gradient-to-r from-blue-700 to-indigo-900 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-12 group">
+        <div class="bg-gradient-to-br from-blue-700 to-indigo-900 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 group">
           <div class="relative z-10 text-center md:text-left">
-            <h2 class="text-4xl font-black mb-4 tracking-tight leading-tight">Você é motorista de Van Escolar?</h2>
-            <p class="text-blue-100 text-xl font-medium max-w-xl">Receba mais contatos de pais no seu bairro todos os dias. Apareça no topo das buscas do Paraná!</p>
+            <h2 class="text-2xl md:text-3xl font-black mb-4 tracking-tight leading-tight">Você é motorista de Van Escolar?</h2>
+            <p class="text-blue-100 text-base md:text-xl font-medium max-w-xl">Receba mais contatos de pais no seu bairro todos os dias. Apareça no topo das buscas do Paraná!</p>
           </div>
-          <div class="relative z-10">
-            <a href="/destaque-sua-van/" class="inline-block px-12 py-6 bg-white text-blue-700 rounded-full font-black text-2xl shadow-xl hover:bg-blue-50 transition-all active:scale-95 whitespace-nowrap">
+          <div class="relative z-10 w-full md:w-auto">
+            <a href="/destaque-sua-van/" class="block text-center px-10 py-5 bg-white text-blue-700 rounded-full font-black text-lg md:text-2xl shadow-xl hover:bg-blue-50 transition-all active:scale-95 whitespace-nowrap">
               Destaque seu Negócio 🚛
             </a>
           </div>
@@ -507,14 +512,6 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
     document.addEventListener('click', e => { if (!results.contains(e.target) && e.target !== input) results.classList.add('hidden'); });
   </script>
 
-  <!-- Botão Flutuante Espaço do Motorista -->
-  <a href="/destaque-sua-van/" class="fixed bottom-8 right-8 z-[200] group">
-    <div class="bg-blue-600 text-white flex items-center gap-4 px-8 py-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 relative overflow-hidden">
-      <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
-      <span class="text-2xl">⭐</span>
-      <span class="font-black text-sm uppercase tracking-widest hidden lg:inline">É Motorista? Apareça no Topo!</span>
-      <span class="font-black text-xs uppercase tracking-widest lg:hidden">Apareça no Topo 🚐</span>
-    </div>
-  </a>
+
 </body>
 </html>
