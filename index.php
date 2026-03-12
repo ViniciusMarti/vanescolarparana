@@ -561,5 +561,14 @@ foreach ($cidades as $slug_cidade => $nome_cidade) {
   </script>
 
 
+  <!-- Botão Flutuante Espaço do Motorista -->
+  <a href="/destaque-sua-van/" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[200] group">
+    <div class="bg-blue-600 text-white flex items-center gap-3 md:gap-4 px-6 md:px-8 py-4 md:py-5 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 relative overflow-hidden">
+      <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
+      <span class="text-xl md:text-2xl">⭐</span>
+      <span class="font-black text-[10px] md:text-sm uppercase tracking-widest hidden lg:inline">É Motorista? Apareça no Topo!</span>
+      <span class="font-black text-[12px] uppercase tracking-widest lg:hidden italic">Apareça no Topo!</span>
+    </div>
+  </a>
 </body>
 </html>

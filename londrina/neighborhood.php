@@ -304,10 +304,9 @@ try {
                 <p class="text-slate-500 font-medium text-xl mb-10 max-w-xl mx-auto">Ainda não temos transportadores cadastrados para esta região específica. Seja o pioneiro e domine as buscas aqui!</p>
                 <a href="/destaque-sua-van/" class="inline-flex items-center gap-4 px-12 py-6 bg-blue-600 text-white rounded-full font-black text-2xl shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all">
                     <span>QUERO SER O PRIMEIRO</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
                 </a>
             </div>
-<?php endif; ?>
+        <?php endif; ?>
 
         <!-- Publicidade Estratégica para Motoristas -->
         <div class="mt-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-950 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 text-white relative overflow-hidden shadow-[0_30px_60px_-15px_rgba(30,58,138,0.5)] group">
